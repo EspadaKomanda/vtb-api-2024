@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using UserService.Repository;
 using UserService.Database;
 
 var builder = WebApplication.CreateBuilder(args);
