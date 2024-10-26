@@ -9,4 +9,6 @@ public class Role
 
   [Required]
   public string Name { get; set; } = null!;
+
+  public bool IsProtected { get; set; }
 }
