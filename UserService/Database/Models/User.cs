@@ -23,5 +23,16 @@ public class User
   public PersonalData PersonalData { get; set; } = null!;
   public long PersonalDataId { get; set; }
 
+  [Required]
+  public bool IsActivated { get; set; } = false;
+
+  [Required]
+  public bool IsTerminated { get; set; } = false;
+  public string? TerminationReason { get; set; }
+  public DateTime? AllowRecreationAt { get; set; }
+
+  [Required]
+  public DateTime RegistrationDate { get; set; }
+
   public string? Salt;
 }
