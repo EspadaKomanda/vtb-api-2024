@@ -10,6 +10,7 @@ public class ApplicationContext : DbContext
     public DbSet<Role> Roles { get; set; } = null!;
     public DbSet<PersonalData> PersonalDatas { get; set; } = null!;
     public DbSet<VisitedTour> VisitedTours { get; set; } = null!;
+    public DbSet<RegistrationCode> RegistrationCodes { get; set; } = null!;
 
     public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
     {
