@@ -11,8 +11,7 @@ public class RegistrationCode
     public long Id { get; set; }
 
     [Required]
-    [Column(TypeName = "VARCHAR")]
-    [StringLength(6)]
+    [Column(TypeName = "VARCHAR(6)")]
     public string Code { get; set; } = null!;
 
     public DateTime ExpirationDate { get; set; } = DateTime.Now.AddMinutes(10);

@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace UserService.Database.Models;
 
@@ -7,7 +8,17 @@ public class User
   [Key]
   public long Id { get; set; }
   [Required]
+  [Column(TypeName = "VARCHAR(18)")]
+  [MinLength(3)]
+  [MaxLength(18)]
   public string Username { get; set; } = null!;
+
+  [EmailAddress]
+  public string? Email { get; set; }
+
+  [Phone]
+  public string? Phone { get; set; }
+
   [Required]
   public string Password { get; set; } = null!;
 
