@@ -4,30 +4,30 @@ using Microsoft.EntityFrameworkCore;
 
 namespace UserService.Repository
 {
-    public class Repository<TEntity>(ApplicationContext empDBContext) : IRepository<TEntity> where TEntity : class
+    public class Repository<TEntity>(ApplicationContext db) : IRepository<TEntity> where TEntity : class
     {
-        private readonly ApplicationContext _empDBContext = empDBContext;
+        private readonly ApplicationContext _db = db;
 
         public bool Add(TEntity entity)
         {
-            _empDBContext.Set<TEntity>().Add(entity);
-            return _empDBContext.SaveChanges()>= 0;
+            _db.Set<TEntity>().Add(entity);
+            return _db.SaveChanges()>= 0;
         }
         public bool AddMany(IEnumerable<TEntity> entities)
         {
-            _empDBContext.Set<TEntity>().AddRange(entities);
-            return _empDBContext.SaveChanges()>= 0;
+            _db.Set<TEntity>().AddRange(entities);
+            return _db.SaveChanges()>= 0;
         }
         public bool Delete(TEntity entity)
         {
-            _empDBContext.Set<TEntity>().Remove(entity);
-            return _empDBContext.SaveChanges()>= 0;
+            _db.Set<TEntity>().Remove(entity);
+            return _db.SaveChanges()>= 0;
         }
         public bool DeleteMany(Expression<Func<TEntity, bool>> predicate)
         {
             var entities = Find(predicate);
-            _empDBContext.Set<TEntity>().RemoveRange(entities);
-            return _empDBContext.SaveChanges()>= 0;
+            _db.Set<TEntity>().RemoveRange(entities);
+            return _db.SaveChanges()>= 0;
         }
         public TEntity FindOne(Expression<Func<TEntity, bool>> predicate, FindOptions? findOptions = null)
         {
@@ -43,21 +43,21 @@ namespace UserService.Repository
         }
         public bool Update(TEntity entity)
         {
-            _empDBContext.Set<TEntity>().Update(entity);
-            return _empDBContext.SaveChanges()>= 0;
+            _db.Set<TEntity>().Update(entity);
+            return _db.SaveChanges()>= 0;
         }
         public bool Any(Expression<Func<TEntity, bool>> predicate)
         {
-            return _empDBContext.Set<TEntity>().Any(predicate);
+            return _db.Set<TEntity>().Any(predicate);
         }
         public int Count(Expression<Func<TEntity, bool>> predicate)
         {
-            return _empDBContext.Set<TEntity>().Count(predicate);
+            return _db.Set<TEntity>().Count(predicate);
         }
         private DbSet<TEntity> Get(FindOptions? findOptions = null)
         {
             findOptions ??= new FindOptions();
-            var entity = _empDBContext.Set<TEntity>();
+            var entity = _db.Set<TEntity>();
             if (findOptions.IsAsNoTracking && findOptions.IsIgnoreAutoIncludes)
             {
                 entity.IgnoreAutoIncludes().AsNoTracking();
