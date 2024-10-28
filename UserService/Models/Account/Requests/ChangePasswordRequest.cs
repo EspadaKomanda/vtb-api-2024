@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using UserService.Attributes.Validation;
 
-namespace UserService.Models.Requests;
+namespace UserService.Models.Account.Requests;
 
 /// <summary>
 /// Запрос на изменение пароля.

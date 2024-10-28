@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace UserService.Models.Requests;
+namespace UserService.Models.Account.Requests;
 
 /// <summary>
 /// Запрос на повторное отправку кода регистрации.

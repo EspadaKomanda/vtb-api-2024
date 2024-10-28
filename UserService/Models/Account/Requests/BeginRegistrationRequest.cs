@@ -1,12 +1,12 @@
 using System.ComponentModel.DataAnnotations;
 using UserService.Attributes.Validation;
 
-namespace UserService.Models.Requests;
+namespace UserService.Models.Account.Requests;
 
 /// <summary>
 /// Запрос на регистрацию пользователя.
 /// </summary>
-public class RegisterRequest
+public class BeginRegistrationRequest
 {
     [Required]
     [EmailAddress]

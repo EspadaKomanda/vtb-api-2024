@@ -1,4 +1,4 @@
-namespace UserService.Models.Requests;
+namespace UserService.Models.Account.Requests;
 
 /// <summary>
 /// Запрос на получение данных для входа в аккаунт.

@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace UserService.Models.Responses;
+namespace UserService.Models.Account.Responses;
 
 /// <summary>
 /// Результат запроса на проверку актуальности кода регистрации.

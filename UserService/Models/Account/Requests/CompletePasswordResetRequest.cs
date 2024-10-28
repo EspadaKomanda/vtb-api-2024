@@ -1,12 +1,12 @@
 using System.ComponentModel.DataAnnotations;
 using UserService.Attributes.Validation;
 
-namespace UserService.Models.Requests;
+namespace UserService.Models.Account.Requests;
 
 /// <summary>
 /// Запрос на завершение сброса пароля.
 /// </summary>
-public class CompleteResetRequest
+public class CompletePasswordResetRequest
 {
     [EmailAddress]
     public string Email { get; set; } = null!;
