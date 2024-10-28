@@ -1,6 +1,7 @@
 nav a {
     padding: 10px 24px;
     transition: font-size 0.5s ease-in-out;
+    color: #ffffff;
 }
 
 nav a:hover {
@@ -10,5 +11,25 @@ nav a:hover {
 .active {
     border: 3px solid #0085FF;
     border-radius: 41px;
+}
+
+@media (max-width: 1500px) {
+    nav a {
+        color: #49426d;
+    }
+}
+
+@media (max-width: 450px) {
+    nav a {
+        color: #ffffff;
+        background-color: #4A5068;
+        border-radius: 41px;
+    }
+
+    .active {
+        border: 3px solid #0E162D;
+        border-radius: 41px;
+    }
+    
 }
 

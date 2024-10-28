@@ -14,7 +14,7 @@ export default function NavigationComponent() {
 
     return (
         <nav className="conteiner">
-            <ul className="flex justify-between text-3xl font-bold text-white ">
+            <ul className="flex flex-wrap gap-y-10 justify-evenly text-3xl font-bold text-white ">
                 <li>
                     <Link href="/" className={currentPath === "/" ? "active" : ""}>
                         Главная
