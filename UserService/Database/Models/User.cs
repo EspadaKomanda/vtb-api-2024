@@ -14,7 +14,7 @@ public class User
   public string Username { get; set; } = null!;
 
   [EmailAddress]
-  public string? Email { get; set; }
+  public string Email { get; set; } = null!;
 
   [Phone]
   public string? Phone { get; set; }

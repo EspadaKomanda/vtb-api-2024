@@ -1,21 +1,24 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace UserService.Models.Requests;
+namespace UserService.Models.Responses;
 
 /// <summary>
-/// Запрос на регистрацию пользователя.
+/// Данные для доступа к аккаунту.
 /// </summary>
-public class RegisterRequest
+public class AccountAccessDataResponse
 {
     [Required]
-    [EmailAddress]
+    public long UserId { get; set; }
+
+    [Required]
     public string Email { get; set; } = null!;
 
-    // TODO: Add validation
     [Required]
     public string Username { get; set; } = null!;
 
-    // TODO: Add validation
     [Required]
     public string Password { get; set; } = null!;
+
+    [Required]
+    public string Salt { get; set; } = null!;
 }
