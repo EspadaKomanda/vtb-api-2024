@@ -1,0 +1,14 @@
+nav a {
+    padding: 10px 24px;
+    transition: font-size 0.5s ease-in-out;
+}
+
+nav a:hover {
+    font-size: 34px;
+}
+
+.active {
+    border: 3px solid #0085FF;
+    border-radius: 41px;
+}
+
