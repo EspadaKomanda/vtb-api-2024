@@ -1,9 +1,15 @@
+using Serilog;
 using Microsoft.EntityFrameworkCore;
 using UserService.Repository;
 using UserService.Database;
 using UserService.Database.Models;
+using UserService.Util;
 
 var builder = WebApplication.CreateBuilder(args);
+
+Logging.configureLogging();
+
+builder.Host.UseSerilog();
 
 builder.Services.AddDbContext<ApplicationContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
