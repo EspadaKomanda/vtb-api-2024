@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using UserService.Attributes.Validation;
 
 namespace UserService.Database.Models;
 
@@ -15,10 +16,10 @@ public class Meta
   public string Name { get; set; } = null!;
   [Required]
   public string Surname { get; set; } = null!;
-  [Required]
-  public string Patronymic { get; set; } = null!;
+  public string? Patronymic { get; set; }
 
   [Required]
+  [ValidAge]
   public DateTime Birthday { get; set; }
 
   public string? Avatar { get; set; }

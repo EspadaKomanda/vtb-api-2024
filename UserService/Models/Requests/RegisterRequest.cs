@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using UserService.Attributes.Validation;
 
 namespace UserService.Models.Requests;
 
@@ -13,9 +14,11 @@ public class RegisterRequest
 
     // TODO: Add validation
     [Required]
+    [ValidUsername]
     public string Username { get; set; } = null!;
 
     // TODO: Add validation
     [Required]
+    [ValidPassword]
     public string Password { get; set; } = null!;
 }

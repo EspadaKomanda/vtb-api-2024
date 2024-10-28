@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using UserService.Attributes.Validation;
 
 namespace UserService.Database.Models;
 
@@ -9,10 +10,10 @@ public class User
   public long Id { get; set; }
   [Required]
   [Column(TypeName = "VARCHAR(18)")]
-  [MinLength(3)]
-  [MaxLength(18)]
+  [ValidUsername]
   public string Username { get; set; } = null!;
 
+  [Required]
   [EmailAddress]
   public string Email { get; set; } = null!;
 

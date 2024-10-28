@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using UserService.Attributes.Validation;
 
 namespace UserService.Models.Requests;
 
@@ -13,6 +14,7 @@ public class ChangePasswordRequest
     public string OldPassword { get; set; } = null!;
 
     [Required]
+    [ValidPassword]
     public string NewPassword { get; set; } = null!;
 
     [Required]

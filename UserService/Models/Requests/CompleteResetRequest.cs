@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using UserService.Attributes.Validation;
 
 namespace UserService.Models.Requests;
 
@@ -11,11 +12,10 @@ public class CompleteResetRequest
     public string Email { get; set; } = null!;
 
     [Required]
-    [Length(36, 36)]
-    // TODO: guid
+    [ValidGuid]
     public string Code { get; set; } = null!;
 
     [Required]
-    // TODO: validation
+    [ValidPassword]
     public string NewPassword = null!;
 }

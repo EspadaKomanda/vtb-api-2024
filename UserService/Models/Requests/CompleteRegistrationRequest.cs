@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using UserService.Attributes.Validation;
 
 namespace UserService.Models.Requests;
 
@@ -16,15 +17,18 @@ public class CompleteRegistrationRequest
     public string RegistrationCode { get; set; } = null!;
 
     [Required]
+    [ValidName]
     public string Name { get; set; } = null!;
 
     [Required]
+    [ValidName]
     public string Surname { get; set; } = null!;
 
+    [ValidName]
     public string? Patronymic { get; set; }
 
     [Required]
-    // TODO: Ограничение по возрасту
+    [ValidAge]
     public DateTime Birthday { get; set; }
 
     public string? Avatar { get; set; }

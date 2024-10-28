@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using UserService.Attributes.Validation;
 
 namespace UserService.Models.Requests;
 
@@ -12,7 +13,6 @@ public class VerifyResetCodeRequest
     public string Email { get; set; } = null!;
 
     [Required]
-    // TODO: guid
-    [Length(36, 36)]
+    [ValidGuid]
     public string Code { get; set; } = null!;
 }
