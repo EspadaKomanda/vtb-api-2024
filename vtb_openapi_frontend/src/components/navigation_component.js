@@ -13,7 +13,7 @@ export default function NavigationComponent() {
     }, [pathname]);
 
     return (
-        <nav className="conteiner">
+        <nav className="container">
             <ul className="flex flex-wrap gap-y-10 justify-evenly text-3xl font-bold text-white ">
                 <li>
                     <Link href="/" className={currentPath === "/" ? "active" : ""}>
