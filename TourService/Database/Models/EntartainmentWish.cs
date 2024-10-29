@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace TourService.Database.Models
 {
-    public class EntartaimentWish
+    public class EntartainmentWish
     {
-
-        //TODO: Add validation attributes
         [Key]
         public long Id {get;set;}
+        [Required]
         public long UserId {get;set;}
         [ForeignKey("EntertaimentId")]
         public long EntertaimentId {get;set;}
-        public Entertaiment Entertaiment {get;set;}
+        [Required]
+        public Entertainment Entertaiment {get;set;} = null!;
     }
 }
