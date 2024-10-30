@@ -11,7 +11,7 @@ namespace TourService.Database.Models
     {
         [Key]
         public long Id {get;set;}
-        [EntertainmentName]
+        [TourName]
         public string Name {get;set;} = null!;
     }
 }

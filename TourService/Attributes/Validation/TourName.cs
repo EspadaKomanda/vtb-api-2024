@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 namespace TourService.Attributes.Validation
 {
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
-    sealed public class CategoryName : ValidationAttribute
+    sealed public class TourName : ValidationAttribute
     {
-        private static readonly string[] ProhibitedWords = { "admin", "administrator", "root", "sql", "drop", "select", "insert", "update", "delete" };
+        private static readonly string[] ProhibitedWords = { "admin", "administrator", "root" };
 
         public override bool IsValid(object? value)
         {
@@ -19,17 +19,17 @@ namespace TourService.Attributes.Validation
                 return false;
             }
 
-            var categoryName = value.ToString()!;
+            var benefitName = value.ToString()!;
 
-            if (string.IsNullOrWhiteSpace(categoryName) || 
-                !Regex.IsMatch(categoryName, @"^[а-яА-ЯёЁa-zA-Z0-9\s\-]+$"))
+            if (string.IsNullOrWhiteSpace(benefitName) || 
+                !Regex.IsMatch(benefitName, @"^[a-zA-Z0-9\s\-]+$"))
             {
                 return false;
             }
 
             foreach (var word in ProhibitedWords)
             {
-                if (categoryName.IndexOf(word, StringComparison.OrdinalIgnoreCase) >= 0)
+                if (benefitName.IndexOf(word, StringComparison.OrdinalIgnoreCase) >= 0)
                 {
                     return false;
                 }
@@ -38,10 +38,5 @@ namespace TourService.Attributes.Validation
             return true;
         }
 
-        public override string FormatErrorMessage(string name)
-        {
-            return $"'{name}' is not a valid tour category name.";
-        }
     }
-
 }

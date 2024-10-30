@@ -7,17 +7,8 @@ using System.Threading.Tasks;
 namespace TourService.Attributes.Validation
 {
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
-    sealed public class Rating : ValidationAttribute
+    sealed public class TourPrice : ValidationAttribute
     {
-        private readonly int _min;
-        private readonly int _max;
-
-        public Rating(int min = 1, int max = 5)
-        {
-            _min = min;
-            _max = max;
-        }
-
         public override bool IsValid(object? value)
         {
             if (value == null)
@@ -25,14 +16,13 @@ namespace TourService.Attributes.Validation
                 return false;
             }
 
-            if (value is int rating)
+            if (value is int price)
             {
-                return rating >= _min && rating <= _max;
+                return price > 0;
             }
 
             return false;
         }
 
-       
     }
 }

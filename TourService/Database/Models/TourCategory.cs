@@ -9,14 +9,15 @@ namespace TourService.Database.Models
 {
     public class TourCategory
     {
-        //TODO: Add validation attributes
         [Key]
         public long Id { get; set; }
         [ForeignKey("TourId")]
         public long TourId { get; set; }
-        public Tour Tour { get; set; }
+        [Required]
+        public Tour Tour { get; set; } = null!;
         [ForeignKey("CategoryId")]
         public long CategoryId { get; set; }
-        public Category Category{ get; set; }
+         [Required]
+        public Category Category{ get; set; } = null!;
     }
 }

@@ -9,14 +9,15 @@ namespace TourService.Database.Models
 {
     public class ReviewBenefit
     {
-        //TODO: Add validation attributes
         [Key]
         public long Id { get; set; }
         [ForeignKey("RewiewId")]
         public long ReviewId { get; set; }
-        public Review Review { get;set; }
+        [Required]
+        public Review Review { get;set; } = null!;
         [ForeignKey("BenefitId")]
         public long BenefitId { get; set; }
-        public Benefit Benefit { get; set; }
+        [Required]
+        public Benefit Benefit { get; set; } = null!;
     }
 }

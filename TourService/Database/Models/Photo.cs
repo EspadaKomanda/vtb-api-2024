@@ -9,7 +9,6 @@ namespace TourService.Database.Models
 {
     public class Photo
     {
-        //TODO: Add validation attributes
         [Key]
         public long Id { get; set; }
         [FileLink]

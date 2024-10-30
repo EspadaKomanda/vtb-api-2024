@@ -2,17 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace TourService.Attributes.Validation
 {
-    
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
-    sealed public class FileLink : ValidationAttribute
+    sealed public class Coordinates : ValidationAttribute
     {
-        private static readonly string[] ProhibitedWords = { "admin", "administrator", "root"};
-
         public override bool IsValid(object? value)
         {
             if (value == null)
@@ -20,25 +16,32 @@ namespace TourService.Attributes.Validation
                 return false;
             }
 
-            var fileLink = value.ToString()!;
+            var coordinateString = value.ToString()!;
+            var parts = coordinateString.Split(',');
 
-            if (string.IsNullOrWhiteSpace(fileLink) || 
-                !Regex.IsMatch(fileLink, @"^(http|https)://[^\s/$.?#].[^\s]*$"))
+            if (parts.Length != 2)
             {
                 return false;
             }
 
-            foreach (var word in ProhibitedWords)
+            if (double.TryParse(parts[0].Trim(), out double latitude) && 
+                double.TryParse(parts[1].Trim(), out double longitude))
             {
-                if (fileLink.IndexOf(word, StringComparison.OrdinalIgnoreCase) >= 0)
+                if (latitude < -90 || latitude > 90)
                 {
                     return false;
                 }
+
+                if (longitude < -180 || longitude > 180)
+                {
+                    return false;
+                }
+
+                return true;
             }
 
-            return true;
+            return false;
         }
-
-        
     }
+
 }

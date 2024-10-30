@@ -9,10 +9,9 @@ namespace TourService.Database.Models
 {
     public class Benefit
     {
-        //TODO: Add validation attributes
         [Key]
         public long Id { get; set; }
-        [BenefitName]
+        [TourName]
         public string Name { get; set; } = null!;
     }
 }

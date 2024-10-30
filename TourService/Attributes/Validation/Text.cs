@@ -1,17 +1,21 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace TourService.Attributes.Validation
 {
-    
+    using System;
+using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
+
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
-    sealed public class FileLink : ValidationAttribute
+    sealed public class Text : ValidationAttribute
     {
-        private static readonly string[] ProhibitedWords = { "admin", "administrator", "root"};
+        private static readonly string[] ProhibitedWords = 
+        { 
+               "admin", "administrator", "root" 
+        };
 
         public override bool IsValid(object? value)
         {
@@ -20,17 +24,21 @@ namespace TourService.Attributes.Validation
                 return false;
             }
 
-            var fileLink = value.ToString()!;
+            var reviewText = value.ToString()!;
 
-            if (string.IsNullOrWhiteSpace(fileLink) || 
-                !Regex.IsMatch(fileLink, @"^(http|https)://[^\s/$.?#].[^\s]*$"))
+            if (string.IsNullOrWhiteSpace(reviewText))
+            {
+                return false;
+            }
+
+            if (!Regex.IsMatch(reviewText, @"^[\p{L}\p{N}\s\p{P}]+$"))
             {
                 return false;
             }
 
             foreach (var word in ProhibitedWords)
             {
-                if (fileLink.IndexOf(word, StringComparison.OrdinalIgnoreCase) >= 0)
+                if (reviewText.IndexOf(word, StringComparison.OrdinalIgnoreCase) >= 0)
                 {
                     return false;
                 }
@@ -39,6 +47,7 @@ namespace TourService.Attributes.Validation
             return true;
         }
 
-        
+       
     }
+
 }

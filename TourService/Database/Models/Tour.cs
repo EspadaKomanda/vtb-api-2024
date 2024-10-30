@@ -1,25 +1,34 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using TourService.Attributes.Validation;
 
 namespace TourService.Database.Models
 {
     public class Tour
     {
-        //TODO: Add validation attributes
         [Key]
         public long Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
+        [TourName]
+        public string Name { get; set; } = null!;
+        [TourService.Attributes.Validation.Description]
+        public string Description { get; set; } = null!;
+        [TourName]
         public int Price {get; set; }
-        public string Address  { get; set; }
-        public string Coordinates { get; set; }
+        [TourAddress]
+        public string Address  { get; set; } = null!;
+        [Coordinates]
+        public string Coordinates { get; set; } = null!;
+        [Required]
         public double SettlementDistance {get; set; }
+        [Required]
         public bool IsActive { get; set; }
-        public string Comment { get; set;}
-        public ICollection<Photo> Photos { get; set; }
-        public ICollection<Review> Reviews { get; set; }
+        [Text]
+        public string Comment { get; set;} = null!;
+        public ICollection<Photo>? Photos { get; set; }
+        public ICollection<Review>? Reviews { get; set; }
     }
 }

@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 
 namespace TourService.Attributes.Validation
 {
-    
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
-    sealed public class EntertainmentName : ValidationAttribute
+    sealed public class Description : ValidationAttribute
     {
-        private static readonly string[] ProhibitedWords = { "admin", "administrator", "root", "sql", "drop", "select", "insert", "update", "delete" };
+        private static readonly string[] ProhibitedWords = 
+        { 
+            "admin", "administrator", "root" 
+        };
 
         public override bool IsValid(object? value)
         {
@@ -20,17 +22,21 @@ namespace TourService.Attributes.Validation
                 return false;
             }
 
-            var entertainmentName = value.ToString()!;
+            var description = value.ToString()!;
 
-            if (string.IsNullOrWhiteSpace(entertainmentName) || 
-                !Regex.IsMatch(entertainmentName, @"^[a-zA-Z0-9\s\-]+$"))
+            if (string.IsNullOrWhiteSpace(description))
+            {
+                return false;
+            }
+
+            if (!Regex.IsMatch(description, @"^[а-яА-ЯёЁa-zA-Z0-9\s\.\,\!\?\""\-]+$"))
             {
                 return false;
             }
 
             foreach (var word in ProhibitedWords)
             {
-                if (entertainmentName.IndexOf(word, StringComparison.OrdinalIgnoreCase) >= 0)
+                if (description.IndexOf(word, StringComparison.OrdinalIgnoreCase) >= 0)
                 {
                     return false;
                 }
@@ -39,9 +45,5 @@ namespace TourService.Attributes.Validation
             return true;
         }
 
-        public override string FormatErrorMessage(string name)
-        {
-            return $"'{name}' is not a valid entertainment name.";
-        }
     }
 }
