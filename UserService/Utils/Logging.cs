@@ -3,7 +3,7 @@ using Serilog;
 using Serilog.Exceptions;
 using Serilog.Sinks.OpenSearch;
 
-namespace UserService.Util;
+namespace UserService.Utils;
 
 public static class Logging
 {

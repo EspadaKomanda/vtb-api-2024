@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using UserService.Repository;
 using UserService.Database;
 using UserService.Database.Models;
-using UserService.Util;
+using UserService.Utils;
 
 var builder = WebApplication.CreateBuilder(args);
 
