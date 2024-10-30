@@ -1,3 +1,5 @@
+# ---> Custom
+*.Development.json
 # ---> VisualStudioCode
 .vscode/*
 !.vscode/settings.json

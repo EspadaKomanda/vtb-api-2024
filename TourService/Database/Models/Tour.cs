@@ -17,7 +17,7 @@ namespace TourService.Database.Models
         [TourService.Attributes.Validation.Description]
         public string Description { get; set; } = null!;
         [TourName]
-        public int Price {get; set; }
+        public double Price {get; set; }
         [TourAddress]
         public string Address  { get; set; } = null!;
         [Coordinates]

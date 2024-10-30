@@ -16,7 +16,7 @@ namespace TourService.Attributes.Validation
                 return false;
             }
 
-            if (value is int price)
+            if (value is double price)
             {
                 return price > 0;
             }
