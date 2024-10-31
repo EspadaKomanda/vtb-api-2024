@@ -22,6 +22,7 @@ namespace TourService.Database
         public DbSet<TourWish> TourWishes { get; set; }
         public DbSet<TourPaymentMethod> TourPaymentMethods { get; set;}
         public DbSet<PaymentMethod> PaymentMethods { get; set; }
+        public DbSet<PaymentVariant> PaymentVariants { get; set; }
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
             Database.EnsureCreated();

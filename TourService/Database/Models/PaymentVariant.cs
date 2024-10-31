@@ -7,13 +7,13 @@ using TourService.Attributes.Validation;
 
 namespace TourService.Database.Models
 {
-    public class PaymentMethod
+    public class PaymentVariant
     {
         [Key]
         public long Id { get; set; }
         [Required]
-        [TourName]
         public string Name { get; set; } = null!;
-        public ICollection<PaymentVariant>? PaymentVariants { get; set; } 
+        [TourPrice]
+        public double Price { get; set; }
     }
 }
