@@ -35,7 +35,7 @@ namespace TourService.Kafka
             _consumerPool = ConfigureConsumers(responseTopics.Count());
             
         }
-        public async Task BeginRecieving(List<string> responseTopics)
+        public void BeginRecieving(List<string> responseTopics)
         {
             int topicCount = 0;
             foreach(var consumer in _consumerPool)
