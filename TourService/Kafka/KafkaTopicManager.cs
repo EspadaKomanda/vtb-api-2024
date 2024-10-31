@@ -1,6 +1,6 @@
 ﻿using Confluent.Kafka;
 using Confluent.Kafka.Admin;
-using KafkaTestLib.KafkaException;
+using TourService.KafkaException;
 
 namespace TourService.Kafka;
 

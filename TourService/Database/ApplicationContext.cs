@@ -20,6 +20,8 @@ namespace TourService.Database
         public DbSet<Tour> Tours { get; set; }
         public DbSet<TourCategory> TourCategories { get; set; }
         public DbSet<TourWish> TourWishes { get; set; }
+        public DbSet<TourPaymentMethod> TourPaymentMethods { get; set;}
+        public DbSet<PaymentMethod> PaymentMethods { get; set; }
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
             Database.EnsureCreated();
