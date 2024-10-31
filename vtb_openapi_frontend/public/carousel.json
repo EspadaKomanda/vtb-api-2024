@@ -1,0 +1,18 @@
+[
+    {
+      "image": "/images/slider1.png",
+      "title": "Название 1",
+      "description": "Описание 1"
+    },
+    {
+      "image": "/images/bg1.png",
+      "title": "Название 2",
+      "description": "Описание 2"
+    },
+    {
+      "image": "/images/slider1.png",
+      "title": "Название 3",
+      "description": "Описание 3"
+    }
+]
+  
