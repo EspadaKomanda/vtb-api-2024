@@ -46,5 +46,6 @@ public class User
   [Required]
   public DateTime RegistrationDate { get; set; }
 
-  public string? Salt;
+  [Required]
+  public string Salt { get; set; } = null!;
 }
