@@ -12,7 +12,7 @@ public class RegistrationCode
 
     [Required]
     [Column(TypeName = "VARCHAR(6)")]
-    public string Code { get; set; } = null!;
+    public string Code { get; set; } = Guid.NewGuid().ToString();
 
     public DateTime ExpirationDate { get; set; } = DateTime.Now.AddMinutes(10);
 

@@ -3,6 +3,7 @@ using UserService.Exceptions.Account;
 using UserService.Models.Account.Requests;
 using UserService.Models.Account.Responses;
 using UserService.Repository;
+using UserService.Utils;
 
 namespace UserService.Services.Account;
 
@@ -95,14 +96,118 @@ public class AccountService(IRepository<User> userRepo, IRepository<Registration
         };
     }
 
-    public Task<BeginRegistrationResponse> BeginRegistration(BeginRegistrationRequest request)
+    public async Task<BeginRegistrationResponse> BeginRegistration(BeginRegistrationRequest request)
     {
-        throw new NotImplementedException();
+        User user;
+        try 
+        {
+            user = await _userRepo.FindOneAsync(u => u.Email == request.Email || u.Username == request.Username);
+            _logger.LogDebug($"Found user {user.Id} with email {request.Email} or username {request.Username}. Aborting registration");
+            
+            if (user.Email == request.Email)
+                throw new UserExistsException($"User with email {request.Email} already exists");
+
+            if (user.Username == request.Username)
+                throw new UserExistsException($"User with username {request.Username} already exists");
+        }
+        catch (NullReferenceException)
+        {
+            _logger.LogDebug($"Email {request.Email} and username {request.Username} are not taken, proceeding with registration");
+        }
+
+        // User creation
+        user = new User
+        {
+            Email = request.Email,
+            Username = request.Username,
+            Password = request.Password,
+            Salt = Guid.NewGuid().ToString()
+        };
+
+        try
+        {
+            await _userRepo.AddAsync(user);
+            _logger.LogDebug($"Inserted user {user.Id} with email {request.Email} and username {request.Username}");
+        }
+        catch (Exception e)
+        {
+            _logger.LogError($"Failed inserting user {user.Id} with email {request.Email} and username {request.Username}. {e}");
+            throw;
+        }
+
+        // Registration code creation
+        RegistrationCode regCode = new RegistrationCode
+        {
+            UserId = user.Id
+        };
+        try
+        {
+            await _regCodeRepo.AddAsync(regCode);
+            _logger.LogDebug($"Inserted registration code for user {user.Id}");
+        }
+        catch (Exception e)
+        {
+            _logger.LogError($"Failed inserting registration code for user {user.Id}. {e}");
+            throw;
+        }
+
+        // TODO: Send email
+        _logger.LogWarning($"Mailing backend is not yet implemented, registration code for user {user.Id} was not sent");
+
+        _logger.LogDebug($"Registration code for user {user.Id} sent");
+
+        _logger.LogDebug("Replying with success");
+        return new BeginRegistrationResponse
+        {
+            IsSuccess = true
+        };
     }
 
-    public Task<ChangePasswordResponse> ChangePassword(ChangePasswordRequest request)
+    public async Task<ChangePasswordResponse> ChangePassword(ChangePasswordRequest request, long userId)
     {
-        throw new NotImplementedException();
+        User user;
+        try 
+        {
+            user = await _userRepo.FindOneAsync(u => u.Id == userId);
+            _logger.LogDebug($"Found user {user.Id} with email {user.Email}");
+        }
+        catch (NullReferenceException)
+        {
+            _logger.LogDebug($"No user with id {userId} found to change password");
+            throw new UserNotFoundException($"No user with id {userId} found");
+        }
+
+        // Verify old password
+        var inputOldPasswordHash = BcryptUtils.HashPassword(request.OldPassword);
+        if (!BcryptUtils.VerifyPassword(request.OldPassword, user.Password))
+        {
+            _logger.LogDebug($"Old password did not match for user {user.Id}");
+        }
+
+        // Update password
+        user.Password = BcryptUtils.HashPassword(request.NewPassword);
+        try
+        {
+            _userRepo.Update(user);
+            _logger.LogDebug($"Updated password for user {user.Id}");
+        }
+        catch (Exception e)
+        {
+            _logger.LogError($"Failed updating password for user {user.Id}. {e}");
+            throw;
+        }
+
+        // TODO: Ask AuthService and ApiGateway to recache information
+        _logger.LogWarning($"Warning! UserService MUST notify AuthService and ApiGateway to recache information for user {user.Id}, but this feature is not yet implemented!");
+
+        // TODO: Send notification email
+        _logger.LogWarning($"Mailing backend is not yet implemented, notification for user {user.Id} was not sent");
+
+        _logger.LogDebug("Replying with success");
+        return new ChangePasswordResponse
+        {
+            IsSuccess = true
+        };
     }
 
     public Task<CompletePasswordResetResponse> CompletePasswordReset(CompletePasswordResetRequest request)

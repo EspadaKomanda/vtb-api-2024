@@ -17,7 +17,7 @@ public class ResetCode
     [Required]
     [ValidGuid]
     [Column(TypeName = "VARCHAR(36)")]
-    public string Code { get; set; } = null!;
+    public string Code { get; set; } = Guid.NewGuid().ToString();
 
     public DateTime ExpirationDate { get; set; } = DateTime.Now.AddMinutes(10);
 
