@@ -210,9 +210,49 @@ public class AccountService(IRepository<User> userRepo, IRepository<Registration
         };
     }
 
-    public Task<CompletePasswordResetResponse> CompletePasswordReset(CompletePasswordResetRequest request)
+    public async Task<CompletePasswordResetResponse> CompletePasswordReset(CompletePasswordResetRequest request)
     {
-        throw new NotImplementedException();
+        User user;
+        ResetCode resetCode;
+        try 
+        {
+            user = await _userRepo.FindOneAsync(u => u.Email == request.Email);
+            resetCode = await _resetCodeRepo.FindOneAsync(rc => rc.Code == request.Code);
+            _logger.LogDebug($"Found user {user.Id} with email {request.Email} and respective resetCode {resetCode.Id}");
+        }
+        catch (NullReferenceException)
+        {
+            _logger.LogDebug($"No user with email {request.Email} or reset code {request.Code} found");
+            throw new InvalidCodeException($"Invalid email or code");
+        }
+
+        // Update password
+        user.Password = BcryptUtils.HashPassword(request.NewPassword);
+        user.Salt = Guid.NewGuid().ToString();
+        try
+        {
+            // FIXME: Transaction must be implemented to prevent errors
+            _userRepo.Update(user);
+            _resetCodeRepo.Delete(resetCode);
+            _logger.LogDebug($"Updated password for user {user.Id}");
+        }
+        catch (Exception e)
+        {
+            _logger.LogError($"Failed updating password for user {user.Id}. {e}");
+            throw;
+        }
+
+        // TODO: Ask AuthService and ApiGateway to recache information
+        _logger.LogWarning($"Warning! UserService MUST notify AuthService and ApiGateway to recache information for user {user.Id}, but this feature is not yet implemented!");
+
+        // TODO: Send notification email
+        _logger.LogWarning($"Mailing backend is not yet implemented, notification for user {user.Id} was not sent");
+
+        _logger.LogDebug("Replying with success");
+        return new CompletePasswordResetResponse
+        {
+            IsSuccess = true
+        };
     }
 
     public Task<CompleteRegistrationResponse> CompleteRegistration(CompleteRegistrationRequest request)
