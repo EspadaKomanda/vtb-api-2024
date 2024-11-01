@@ -7,13 +7,15 @@ import Carousel from "../components/carousel_offers_component";
 
 export default function Home() {
   return (
-    <>
-      <header className="main-bg background-section pt-8">
+    <body>
+      <header className="main-bg background-section pt-8 mb-40 very-small:mb-0">
         <NavigationComponent/>
         <MainFeatures />
+      </header>
+      <main>
         <AccumulationComponent />
         <Carousel />
-      </header>
-    </>
+      </main>
+    </body>
   );
 }

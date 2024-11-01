@@ -20,6 +20,9 @@ module.exports = {
       backgroundImage: {
         'custom-gradient': 'linear-gradient(140deg , #9A82FF 35%, #0085FF 85%)',
       },
+      screens: {
+        'very-small': '450px',
+      },
     },
   },
   plugins: [],

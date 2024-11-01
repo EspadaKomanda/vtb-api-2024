@@ -21,7 +21,7 @@ export default function NavigationComponent() {
                     </Link>
                 </li>
                 <li>
-                    <Link href="/search_tour" className={currentPath === "/search_tour" ? "active" : ""} >
+                    <Link href="/search" className={currentPath === "/search" ? "active" : ""} >
                         Поиск по турам
                     </Link>
                 </li>
