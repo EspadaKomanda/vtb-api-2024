@@ -22,8 +22,6 @@ public class ResetCode
     public DateTime ExpirationDate { get; set; } = DateTime.Now.AddMinutes(10);
 
     [Required]
-    public User User { get; set; } = null!;
     public long UserId { get; set; }
-
-    
+    public virtual User User { get; set; } = null!;
 }

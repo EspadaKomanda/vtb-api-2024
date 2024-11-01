@@ -8,8 +8,8 @@ public class PersonalData
   public long Id { get; set; }
   
   [Required]
-  public User User { get; set; } = null!;
   public long UserId { get; set; }
+  public virtual User User { get; set; } = null!;
 
   public string? Passport { get; set; }
   public string? Snils { get; set; }

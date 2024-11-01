@@ -8,8 +8,8 @@ public class VisitedTour
   public long Id { get; set; }
 
   [Required]
-  public User User { get; set; } = null!;
   public long UserId { get; set; }
+  public virtual User User { get; set; } = null!;
 
   [Required]
   public long TourId { get; set; }
