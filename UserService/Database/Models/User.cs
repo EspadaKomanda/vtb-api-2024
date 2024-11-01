@@ -27,13 +27,12 @@ public class User
   public virtual Role Role { get; set; } = null!;
   public long RoleId { get; set; }
 
-  [Required]
-  public virtual Meta Meta { get; set; } = null!;
-  public long MetaId { get; set; }
+  public virtual Meta? Meta { get; set; } = null!;
+  public long? MetaId { get; set; }
 
   [Required]
-  public virtual PersonalData PersonalData { get; set; } = null!;
-  public long PersonalDataId { get; set; }
+  public virtual PersonalData? PersonalData { get; set; } = null!;
+  public long? PersonalDataId { get; set; }
 
   [Required]
   public bool IsActivated { get; set; } = false;
@@ -44,8 +43,10 @@ public class User
   public DateTime? AllowRecreationAt { get; set; }
 
   [Required]
-  public DateTime RegistrationDate { get; set; }
+  public DateTime RegistrationDate { get; set; } = DateTime.UtcNow;
 
   [Required]
-  public string Salt { get; set; } = null!;
+  [ValidGuid]
+  [Column(TypeName = "VARCHAR(36)")]
+  public string Salt { get; set; } = Guid.NewGuid().ToString();
 }
