@@ -60,7 +60,7 @@ public interface IAccountService
     /// об изменении пароля на почту пользователя, а также
     /// оповещает сервисы AuthService и ApiGateway об изменении.
     /// </summary>
-    Task<ChangePasswordResponse> ChangePassword(ChangePasswordRequest request);
+    Task<ChangePasswordResponse> ChangePassword(ChangePasswordRequest request, long userId);
 
     /// <summary>
     /// Позволяет получить данные для входа в аккаунт. Предназначен 
