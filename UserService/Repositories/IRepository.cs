@@ -14,4 +14,7 @@ public interface IRepository<TEntity> where TEntity : class
     bool DeleteMany(Expression<Func<TEntity, bool>> predicate);
     Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate);
     Task<int> CountAsync(Expression<Func<TEntity, bool>> predicate);
+    Task BeginTransactionAsync();
+    Task CommitTransactionAsync();
+    Task RollbackTransactionAsync();
 }
