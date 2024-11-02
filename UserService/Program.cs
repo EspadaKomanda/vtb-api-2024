@@ -16,12 +16,6 @@ builder.Services.AddDbContext<ApplicationContext>(options =>
 );
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-builder.Services.AddScoped<IRepository<User>, Repository<User>>();
-builder.Services.AddScoped<IRepository<Role>, Repository<Role>>();
-builder.Services.AddScoped<IRepository<Meta>, Repository<Meta>>();
-builder.Services.AddScoped<IRepository<VisitedTour>, Repository<VisitedTour>>();
-builder.Services.AddScoped<IRepository<RegistrationCode>, Repository<RegistrationCode>>();
-builder.Services.AddScoped<IRepository<PersonalData>, Repository<PersonalData>>();
 
 var app = builder.Build();
 

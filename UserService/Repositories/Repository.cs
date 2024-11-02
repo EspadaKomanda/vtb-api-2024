@@ -16,26 +16,22 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     public async Task<bool> AddAsync(TEntity entity)
     {
         await _empDBContext.Set<TEntity>().AddAsync(entity);
-        //return await _empDBContext.SaveChangesAsync()>= 0;
         return true;
     }
     public async Task<bool> AddManyAsync(IEnumerable<TEntity> entities)
     {
         await _empDBContext.Set<TEntity>().AddRangeAsync(entities);
-        //return await _empDBContext.SaveChangesAsync()>= 0;
         return true;
     }
     public bool Delete(TEntity entity)
     {
         _empDBContext.Set<TEntity>().Remove(entity);
-        //return _empDBContext.SaveChanges()>= 0;
         return true;
     }
     public bool DeleteMany(Expression<Func<TEntity, bool>> predicate)
     {
         var entities = Find(predicate);
         _empDBContext.Set<TEntity>().RemoveRange(entities);
-        //return _empDBContext.SaveChanges()>= 0;
         return true;
     }
     public async Task<TEntity> FindOneAsync(Expression<Func<TEntity, bool>> predicate, FindOptions? findOptions = null)
@@ -53,7 +49,6 @@ public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     public bool Update(TEntity entity)
     {
         _empDBContext.Set<TEntity>().Update(entity);
-        //return _empDBContext.SaveChanges()>= 0;
         return true;
     }
     public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate)

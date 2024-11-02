@@ -7,14 +7,9 @@ using UserService.Utils;
 
 namespace UserService.Services.Account;
 
-public class AccountService(IRepository<User> userRepo, IRepository<RegistrationCode> regCodeRepo, IRepository<ResetCode> resetCodeRepo, IRepository<Meta> metaRepo, IRepository<PersonalData> personalDataRepo, IUnitOfWork unitOfWork, ILogger<AccountService> logger) : IAccountService
+public class AccountService(IUnitOfWork unitOfWork, ILogger<AccountService> logger) : IAccountService
 {
-    private readonly IRepository<User> _userRepo = userRepo;
-    private readonly IRepository<RegistrationCode> _regCodeRepo = regCodeRepo;
-    private readonly IRepository<ResetCode> _resetCodeRepo = resetCodeRepo;
-    private readonly IRepository<Meta> _metaRepo = metaRepo;
-    private readonly IRepository<PersonalData> _personalDataRepo = personalDataRepo;
-    private readonly IUnitOfWork _unitOfWork = unitOfWork;
+    private readonly IUnitOfWork _uow = unitOfWork;
     private readonly ILogger<AccountService> _logger = logger;
 
     public async Task<AccountAccessDataResponse> AccountAccessData(AccountAccessDataRequest request)
@@ -28,7 +23,7 @@ public class AccountService(IRepository<User> userRepo, IRepository<Registration
         User user;
         try 
         {
-            user = await _userRepo.FindOneAsync(u => u.Email == request.Email || u.Username == request.Username);
+            user = await _uow.Users.FindOneAsync(u => u.Email == request.Email || u.Username == request.Username);
             _logger.LogDebug("Found user {user.Id} with email {request.Email} or username {request.Username}", user.Id, request.Email, request.Username);
         }
         catch (NullReferenceException)
@@ -52,7 +47,7 @@ public class AccountService(IRepository<User> userRepo, IRepository<Registration
         User user;
         try 
         {
-            user = await _userRepo.FindOneAsync(u => u.Email == request.Email);
+            user = await _uow.Users.FindOneAsync(u => u.Email == request.Email);
             _logger.LogDebug("Found user {user.Id} with email {request.Email}", user.Id, request.Email);
         }
         catch (NullReferenceException)
@@ -64,7 +59,7 @@ public class AccountService(IRepository<User> userRepo, IRepository<Registration
         ResetCode existingCode;
         try 
         {
-            existingCode = await _resetCodeRepo.FindOneAsync(rc => rc.UserId == user.Id);
+            existingCode = await _uow.ResetCodes.FindOneAsync(rc => rc.UserId == user.Id);
             _logger.LogDebug("Found existing reset code for user {user.Id}", user.Id);
 
             if (existingCode.ExpirationDate < DateTime.UtcNow)
@@ -73,7 +68,19 @@ public class AccountService(IRepository<User> userRepo, IRepository<Registration
                 
                 existingCode.ExpirationDate = DateTime.UtcNow.AddMinutes(10);
                 existingCode.Code = Guid.NewGuid().ToString();
-                _resetCodeRepo.Update(existingCode);
+
+                using var transaction = _uow.BeginTransaction();
+                try
+                {
+                    _uow.ResetCodes.Update(existingCode);
+                    transaction.SaveAndCommit();
+                }
+                catch (Exception e)
+                {
+                    _logger.LogError("Failed updating reset code for user {user.Id}. {e}", user.Id, e);
+                    transaction.Rollback();
+                    throw;
+                }
             }
             else
             {
@@ -104,7 +111,7 @@ public class AccountService(IRepository<User> userRepo, IRepository<Registration
         User user;
         try 
         {
-            user = await _userRepo.FindOneAsync(u => u.Email == request.Email || u.Username == request.Username);
+            user = await _uow.Users.FindOneAsync(u => u.Email == request.Email || u.Username == request.Username);
             _logger.LogDebug("Found user {user.Id} with email {request.Email} or username {request.Username}. Aborting registration", user.Id, request.Email, request.Username);
             
             if (user.Email == request.Email)
@@ -129,7 +136,7 @@ public class AccountService(IRepository<User> userRepo, IRepository<Registration
 
         try
         {
-            await _userRepo.AddAsync(user);
+            await _uow.Users.AddAsync(user);
             _logger.LogDebug("Inserted user {user.Id} with email {request.Email} and username {request.Username}", user.Id, request.Email, request.Username);
         }
         catch (Exception e)
@@ -143,16 +150,21 @@ public class AccountService(IRepository<User> userRepo, IRepository<Registration
         {
             UserId = user.Id
         };
+
+        using var transaction = _uow.BeginTransaction();
         try
         {
-            await _regCodeRepo.AddAsync(regCode);
+            await _uow.RegistrationCodes.AddAsync(regCode);
+            transaction.SaveAndCommit();
             _logger.LogDebug("Inserted registration code for user {user.Id}", user.Id);
         }
         catch (Exception e)
         {
             _logger.LogError("Failed inserting registration code for user {user.Id}. {e}", user.Id, e);
+            transaction.Rollback();
             throw;
         }
+        
 
         // TODO: Send email
         _logger.LogWarning("Mailing backend is not yet implemented, registration code for user {user.Id} was not sent", user.Id);
@@ -171,7 +183,7 @@ public class AccountService(IRepository<User> userRepo, IRepository<Registration
         User user;
         try 
         {
-            user = await _userRepo.FindOneAsync(u => u.Id == userId);
+            user = await _uow.Users.FindOneAsync(u => u.Id == userId);
             _logger.LogDebug("Found user {user.Id} with email {user.Email}", user.Id, user.Email);
         }
         catch (NullReferenceException)
@@ -189,14 +201,17 @@ public class AccountService(IRepository<User> userRepo, IRepository<Registration
 
         // Update password
         user.Password = BcryptUtils.HashPassword(request.NewPassword);
+        using var transaction = _uow.BeginTransaction();
         try
         {
-            _userRepo.Update(user);
+            _uow.Users.Update(user);
+            transaction.SaveAndCommit();
             _logger.LogDebug("Updated password for user {user.Id}", user.Id);
         }
         catch (Exception e)
         {
             _logger.LogError("Failed updating password for user {user.Id}. {e}", user.Id, e);
+            transaction.Rollback();
             throw;
         }
 
@@ -219,8 +234,8 @@ public class AccountService(IRepository<User> userRepo, IRepository<Registration
         ResetCode resetCode;
         try 
         {
-            user = await _userRepo.FindOneAsync(u => u.Email == request.Email);
-            resetCode = await _resetCodeRepo.FindOneAsync(rc => rc.Code == request.Code);
+            user = await _uow.Users.FindOneAsync(u => u.Email == request.Email);
+            resetCode = await _uow.ResetCodes.FindOneAsync(rc => rc.Code == request.Code);
             _logger.LogDebug("Found user {user.Id} with email {request.Email} and respective resetCode {resetCode.Id}", user.Id, request.Email, resetCode.Id);
         }
         catch (NullReferenceException)
@@ -233,24 +248,22 @@ public class AccountService(IRepository<User> userRepo, IRepository<Registration
         user.Password = BcryptUtils.HashPassword(request.NewPassword);
         user.Salt = Guid.NewGuid().ToString();
 
-        using (var transaction = _unitOfWork.BeginTransaction())
+        using var transaction = _uow.BeginTransaction();
+        try
         {
-            try
-            {
-                _unitOfWork.Users.Update(user);
-                _unitOfWork.ResetCodes.Delete(resetCode);
-                _unitOfWork.Save();
-                transaction.Commit();
+            _uow.Users.Update(user);
+            _uow.ResetCodes.Delete(resetCode);
+            transaction.SaveAndCommit();
 
-                _logger.LogDebug("Updated password for user {user.Id}", user.Id);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError("Failed updating password for user {user.Id}. {e}", user.Id, e);
-                transaction.Rollback();
-                throw;
-            }
+            _logger.LogDebug("Updated password for user {user.Id}", user.Id);
         }
+        catch (Exception e)
+        {
+            _logger.LogError("Failed updating password for user {user.Id}. {e}", user.Id, e);
+            transaction.Rollback();
+            throw;
+        }
+
 
         // TODO: Ask AuthService and ApiGateway to recache information
         _logger.LogWarning("Warning! UserService MUST notify AuthService and ApiGateway to recache information for user {user.Id}, but this feature is not yet implemented!", user.Id);
@@ -272,9 +285,9 @@ public class AccountService(IRepository<User> userRepo, IRepository<Registration
 
         try 
         {
-            user = await _userRepo.FindOneAsync(u => u.Email == request.Email);
+            user = await _uow.Users.FindOneAsync(u => u.Email == request.Email);
 
-            regCode = await _regCodeRepo.FindOneAsync(rc => rc.Code == request.RegistrationCode && rc.UserId == user.Id);
+            regCode = await _uow.RegistrationCodes.FindOneAsync(rc => rc.Code == request.RegistrationCode && rc.UserId == user.Id);
             _logger.LogDebug("Found user {user.Id} with email {request.Email} and respective registrationCode {regCode.Id}", user.Id, request.Email, regCode.Id);
         }
         catch (NullReferenceException)
@@ -283,7 +296,7 @@ public class AccountService(IRepository<User> userRepo, IRepository<Registration
             throw new InvalidCodeException($"Invalid email or code");
         }
 
-        using (var transaction = _unitOfWork.BeginTransaction())
+        using (var transaction = _uow.BeginTransaction())
         {
             try
             {
@@ -299,7 +312,7 @@ public class AccountService(IRepository<User> userRepo, IRepository<Registration
                 };
                 try
                 {
-                    await _unitOfWork.Metas.AddAsync(meta);
+                    await _uow.Metas.AddAsync(meta);
                     _logger.LogDebug("Created meta for user {user.Id}", user.Id);
                 }
                 catch (Exception e)
@@ -315,7 +328,7 @@ public class AccountService(IRepository<User> userRepo, IRepository<Registration
                 };
                 try
                 {
-                    await _unitOfWork.PersonalDatas.AddAsync(personalData);
+                    await _uow.PersonalDatas.AddAsync(personalData);
                     _logger.LogDebug("Created personal data for user {user.Id}", user.Id);
                 }
                 catch (Exception e)
@@ -327,8 +340,8 @@ public class AccountService(IRepository<User> userRepo, IRepository<Registration
                 user.IsActivated = true;
                 try
                 {
-                    _unitOfWork.Users.Update(user);
-                    _unitOfWork.RegistrationCodes.Delete(regCode);
+                    _uow.Users.Update(user);
+                    _uow.RegistrationCodes.Delete(regCode);
                     _logger.LogDebug("Updated user {user.Id}", user.Id);
                 }
                 catch (Exception e)
@@ -337,8 +350,7 @@ public class AccountService(IRepository<User> userRepo, IRepository<Registration
                     throw;
                 }
 
-                _unitOfWork.Save();
-                transaction.Commit();
+                transaction.SaveAndCommit();
             }
             catch (Exception e)
             {
@@ -356,11 +368,12 @@ public class AccountService(IRepository<User> userRepo, IRepository<Registration
 
     public async Task<ResendPasswordResetCodeResponse> ResendPasswordResetCode(ResendPasswordResetCodeRequest request)
     {
-        // TODO: Email service needed
+        User user;
+        ResetCode resetCode;
         try 
         {
-            User user = await _userRepo.FindOneAsync(u => u.Email == request.Email);
-            ResetCode resetCode = await _resetCodeRepo.FindOneAsync(rc => rc.UserId == user.Id);
+            user = await _uow.Users.FindOneAsync(u => u.Email == request.Email);
+            resetCode = await _uow.ResetCodes.FindOneAsync(rc => rc.UserId == user.Id);
             _logger.LogDebug("Found reset code {resetCode.Id} for user {user.Id}", resetCode.Id, user.Id);
             
             if (resetCode.ExpirationDate > DateTime.Now)
@@ -369,54 +382,88 @@ public class AccountService(IRepository<User> userRepo, IRepository<Registration
                 _logger.LogDebug("Reset code for user {user.Id} is not yet expired", user.Id);
                 throw new CodeHasNotExpiredException("Please, wait at least 10 minutes.");
             }
+        }
+        catch (NullReferenceException)
+        {
+            _logger.LogDebug("No user with email {request.Email} found", request.Email);
+            throw new UserNotFoundException($"No user with email {request.Email} found");
+        }
 
+        using var transaction = _uow.BeginTransaction();
+        try
+        {
             // Regenerate code
             resetCode.Code = Guid.NewGuid().ToString();
             resetCode.ExpirationDate = DateTime.UtcNow.AddMinutes(10);
-            _resetCodeRepo.Update(resetCode);
+            _uow.ResetCodes.Update(resetCode);
+            transaction.SaveAndCommit();
+            _logger.LogDebug("Updated reset code {resetCode.Id} for user {user.Id}", resetCode.Id, user.Id);
+
+            // TODO: Send email
+            _logger.LogWarning("Mail service is not implemented, skipping sending password reset email with code {resetCode.Code} to user {user.Id}", resetCode.Code, user.Id);
 
             return new ResendPasswordResetCodeResponse
             {
                 IsSuccess = true
             };
         }
-        catch (NullReferenceException)
+        catch (Exception e)
         {
-            _logger.LogDebug("No reset code found for user {request.Email}", request.Email);
-            throw new InvalidCodeException();
+            transaction.Rollback();
+            _logger.LogError("Failed resending password reset code for user {user.Id}. {e}", user.Id, e);
+
+            throw;
         }
     }
 
     public async Task<ResendRegistrationCodeResponse> ResendRegistrationCode(ResendRegistrationCodeRequest request)
     {
-        // TODO: Email service needed
+        User user;
+        RegistrationCode regCode;
         try 
         {
-            User user = await _userRepo.FindOneAsync(u => u.Email == request.Email);
-            RegistrationCode regCode = await _regCodeRepo.FindOneAsync(rc => rc.UserId == user.Id);
+            user = await _uow.Users.FindOneAsync(u => u.Email == request.Email);
+            regCode = await _uow.RegistrationCodes.FindOneAsync(rc => rc.UserId == user.Id);
             _logger.LogDebug("Found registration code {regCode.Id} for user {user.Id}", regCode.Id, user.Id);
             
             if (regCode.ExpirationDate > DateTime.Now.AddMinutes(9))
             {
                 // Code is not yet expired
                 _logger.LogDebug("Registration code for user {user.Id} is not yet expired", user.Id);
-                throw new CodeHasNotExpiredException("Please, wait at least 1 minute before resending the code");
+                throw new CodeHasNotExpiredException("Please, wait at least 1 minute.");
             }
+        }
+        catch (NullReferenceException)
+        {
+            _logger.LogDebug("No user with email {request.Email} found", request.Email);
+            throw new UserNotFoundException($"No user with email {request.Email} found");
+        }
 
+        using var transaction = _uow.BeginTransaction();
+        try
+        {
             // Regenerate code
+            // FIXME: Match the six-character registration code template
             regCode.Code = Guid.NewGuid().ToString();
             regCode.ExpirationDate = DateTime.UtcNow.AddMinutes(10);
-            _regCodeRepo.Update(regCode);
+            _uow.RegistrationCodes.Update(regCode);
+            transaction.SaveAndCommit();
+            _logger.LogDebug("Updated registration code {regCode.Id} for user {user.Id}", regCode.Id, user.Id);
+
+            // TODO: Send email
+            _logger.LogWarning("Mail service is not implemented, skipping sending registration email with code {regCode.Code} to user {user.Id}", regCode.Code, user.Id);
 
             return new ResendRegistrationCodeResponse
             {
                 IsSuccess = true
             };
         }
-        catch (NullReferenceException)
+        catch (Exception e)
         {
-            _logger.LogDebug("No registration code found for user {request.Email}", request.Email);
-            throw new InvalidCodeException();
+            transaction.Rollback();
+            _logger.LogError("Failed resending registration code for user {user.Id}. {e}", user.Id, e);
+
+            throw;
         }
     }
 
@@ -424,8 +471,8 @@ public class AccountService(IRepository<User> userRepo, IRepository<Registration
     {
         try 
         {
-            User user = await _userRepo.FindOneAsync(u => u.Email == request.Email);
-            ResetCode resetCode = await _resetCodeRepo.FindOneAsync(rc => rc.Code == request.Code);
+            User user = await _uow.Users.FindOneAsync(u => u.Email == request.Email);
+            ResetCode resetCode = await _uow.ResetCodes.FindOneAsync(rc => rc.Code == request.Code);
             _logger.LogDebug("Found reset code {resetCode.Id} for user {user.Id}", resetCode.Id, user.Id);
             
             return new VerifyPasswordResetCodeResponse
@@ -444,8 +491,8 @@ public class AccountService(IRepository<User> userRepo, IRepository<Registration
     {
         try 
         {
-            User user = await _userRepo.FindOneAsync(u => u.Email == request.Email);
-            RegistrationCode regCode = await _regCodeRepo.FindOneAsync(rc => rc.Code == request.Code);
+            User user = await _uow.Users.FindOneAsync(u => u.Email == request.Email);
+            RegistrationCode regCode = await _uow.RegistrationCodes.FindOneAsync(rc => rc.Code == request.Code);
             _logger.LogDebug("Found reset code {regCode.Id} for user {user.Id}", regCode.Id, user.Id);
             
             return new VerifyRegistrationCodeResponse
