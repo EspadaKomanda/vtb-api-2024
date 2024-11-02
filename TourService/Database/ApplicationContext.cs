@@ -11,8 +11,6 @@ namespace TourService.Database
     {
         public DbSet<Benefit> Benefits { get; set; }
         public DbSet<Category> Categories { get; set; }
-        public DbSet<EntartainmentWish> EntartaimentWishes { get; set; }
-        public DbSet<Entertainment> Entertaiments { get; set; }
         public DbSet<Photo> Photos { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<ReviewBenefit> ReviewBenefits { get; set; }
@@ -20,9 +18,6 @@ namespace TourService.Database
         public DbSet<Tour> Tours { get; set; }
         public DbSet<TourCategory> TourCategories { get; set; }
         public DbSet<TourWish> TourWishes { get; set; }
-        public DbSet<TourPaymentMethod> TourPaymentMethods { get; set;}
-        public DbSet<PaymentMethod> PaymentMethods { get; set; }
-        public DbSet<PaymentVariant> PaymentVariants { get; set; }
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
         {
             Database.EnsureCreated();

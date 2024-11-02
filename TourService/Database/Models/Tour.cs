@@ -28,6 +28,10 @@ namespace TourService.Database.Models
         public bool IsActive { get; set; }
         [Text]
         public string Comment { get; set;} = null!;
+        [Required]
+        public DateTime BeginDate { get; set; }
+        [Required]
+        public DateTime EndDate { get; set; }
         public ICollection<Photo>? Photos { get; set; }
         public ICollection<Review>? Reviews { get; set; }
     }

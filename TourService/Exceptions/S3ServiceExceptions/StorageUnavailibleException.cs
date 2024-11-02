@@ -1,4 +1,4 @@
-namespace ImageAgregationService.Exceptions.S3ServiceExceptions
+namespace TourService.Exceptions.S3ServiceExceptions
 {
     [System.Serializable]
     public class StorageUnavailibleException : System.Exception
