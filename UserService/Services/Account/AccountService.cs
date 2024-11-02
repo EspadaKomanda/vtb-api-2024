@@ -335,21 +335,53 @@ public class AccountService(IRepository<User> userRepo, IRepository<Registration
 
     public Task<ResendPasswordResetCodeResponse> ResendPasswordResetCode(ResendPasswordResetCodeRequest request)
     {
+        // TODO: Email service needed
         throw new NotImplementedException();
     }
 
     public Task<ResendRegistrationCodeResponse> ResendRegistrationCode(ResendRegistrationCodeRequest request)
     {
+        // TODO: Email service needed
         throw new NotImplementedException();
     }
 
-    public Task<VerifyPasswordResetCodeResponse> VerifyPasswordResetCode(VerifyPasswordResetCodeRequest request)
+    public async Task<VerifyPasswordResetCodeResponse> VerifyPasswordResetCode(VerifyPasswordResetCodeRequest request)
     {
-        throw new NotImplementedException();
+        try 
+        {
+            User user = await _userRepo.FindOneAsync(u => u.Email == request.Email);
+            ResetCode resetCode = await _resetCodeRepo.FindOneAsync(rc => rc.Code == request.Code);
+            _logger.LogDebug("Found reset code {resetCode.Id} for user {user.Id}", resetCode.Id, user.Id);
+            
+            return new VerifyPasswordResetCodeResponse
+            {
+                IsSuccess = true
+            };
+        }
+        catch (NullReferenceException)
+        {
+            _logger.LogDebug("No reset code {request.Code} found for user {request.Email}", request.Code, request.Email);
+            throw new InvalidCodeException($"Invalid code");
+        }
     }
 
-    public Task<VerifyRegistrationCodeResponse> VerifyRegistrationCode(VerifyRegistrationCodeRequest request)
+    public async Task<VerifyRegistrationCodeResponse> VerifyRegistrationCode(VerifyRegistrationCodeRequest request)
     {
-        throw new NotImplementedException();
+        try 
+        {
+            User user = await _userRepo.FindOneAsync(u => u.Email == request.Email);
+            RegistrationCode regCode = await _regCodeRepo.FindOneAsync(rc => rc.Code == request.Code);
+            _logger.LogDebug("Found reset code {regCode.Id} for user {user.Id}", regCode.Id, user.Id);
+            
+            return new VerifyRegistrationCodeResponse
+            {
+                IsSuccess = true
+            };
+        }
+        catch (NullReferenceException)
+        {
+            _logger.LogDebug("No registration code {request.Code} found for user {request.Email}", request.Code, request.Email);
+            throw new InvalidCodeException($"Invalid code");
+        }
     }
 }
