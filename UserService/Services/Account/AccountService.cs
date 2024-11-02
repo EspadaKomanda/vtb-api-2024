@@ -2,7 +2,7 @@ using UserService.Database.Models;
 using UserService.Exceptions.Account;
 using UserService.Models.Account.Requests;
 using UserService.Models.Account.Responses;
-using UserService.Repository;
+using UserService.Repositories;
 using UserService.Utils;
 
 namespace UserService.Services.Account;

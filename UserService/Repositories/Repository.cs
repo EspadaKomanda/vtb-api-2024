@@ -1,35 +1,42 @@
 using System.Linq.Expressions;
 using UserService.Database;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage;
 
-namespace UserService.Repository;
+namespace UserService.Repositories;
 
-public class Repository<TEntity>(ApplicationContext empDBContext) : IRepository<TEntity> where TEntity : class
+public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
 {
-    private readonly ApplicationContext _empDBContext = empDBContext;
-    private IDbContextTransaction? _transaction;
+    private readonly ApplicationContext _empDBContext;
+
+    public Repository(ApplicationContext empDBContext)
+    {
+        _empDBContext = empDBContext;
+    }
 
     public async Task<bool> AddAsync(TEntity entity)
     {
         await _empDBContext.Set<TEntity>().AddAsync(entity);
-        return await _empDBContext.SaveChangesAsync()>= 0;
+        //return await _empDBContext.SaveChangesAsync()>= 0;
+        return true;
     }
     public async Task<bool> AddManyAsync(IEnumerable<TEntity> entities)
     {
         await _empDBContext.Set<TEntity>().AddRangeAsync(entities);
-        return await _empDBContext.SaveChangesAsync()>= 0;
+        //return await _empDBContext.SaveChangesAsync()>= 0;
+        return true;
     }
     public bool Delete(TEntity entity)
     {
         _empDBContext.Set<TEntity>().Remove(entity);
-        return _empDBContext.SaveChanges()>= 0;
+        //return _empDBContext.SaveChanges()>= 0;
+        return true;
     }
     public bool DeleteMany(Expression<Func<TEntity, bool>> predicate)
     {
         var entities = Find(predicate);
         _empDBContext.Set<TEntity>().RemoveRange(entities);
-        return _empDBContext.SaveChanges()>= 0;
+        //return _empDBContext.SaveChanges()>= 0;
+        return true;
     }
     public async Task<TEntity> FindOneAsync(Expression<Func<TEntity, bool>> predicate, FindOptions? findOptions = null)
     {
@@ -46,7 +53,8 @@ public class Repository<TEntity>(ApplicationContext empDBContext) : IRepository<
     public bool Update(TEntity entity)
     {
         _empDBContext.Set<TEntity>().Update(entity);
-        return _empDBContext.SaveChanges()>= 0;
+        //return _empDBContext.SaveChanges()>= 0;
+        return true;
     }
     public async Task<bool> AnyAsync(Expression<Func<TEntity, bool>> predicate)
     {
@@ -73,30 +81,5 @@ public class Repository<TEntity>(ApplicationContext empDBContext) : IRepository<
             entity.AsNoTracking();
         }
         return entity;
-    }
-
-    public async Task BeginTransactionAsync()
-    {
-        _transaction = await _empDBContext.Database.BeginTransactionAsync();
-    }
-
-    public async Task CommitTransactionAsync()
-    {
-        if (_transaction != null)
-        {
-            await _transaction.CommitAsync();
-            _transaction.Dispose();
-            _transaction = null;
-        }
-    }
-
-    public async Task RollbackTransactionAsync()
-    {
-        if (_transaction != null)
-        {
-            await _transaction.RollbackAsync();
-            _transaction.Dispose();
-            _transaction = null;
-        }
     }
 }

@@ -1,4 +1,4 @@
-namespace UserService.Repository;
+namespace UserService.Repositories;
 public class FindOptions
 {
     public bool IsIgnoreAutoIncludes { get; set; }

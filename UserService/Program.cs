@@ -1,9 +1,9 @@
 using Serilog;
 using Microsoft.EntityFrameworkCore;
-using UserService.Repository;
 using UserService.Database;
 using UserService.Database.Models;
 using UserService.Utils;
+using UserService.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +15,7 @@ builder.Services.AddDbContext<ApplicationContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
 );
 
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IRepository<User>, Repository<User>>();
 builder.Services.AddScoped<IRepository<Role>, Repository<Role>>();
 builder.Services.AddScoped<IRepository<Meta>, Repository<Meta>>();
