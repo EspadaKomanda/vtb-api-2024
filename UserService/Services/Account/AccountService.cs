@@ -26,15 +26,15 @@ public class AccountService(IRepository<User> userRepo, IRepository<Registration
         try 
         {
             user = await _userRepo.FindOneAsync(u => u.Email == request.Email || u.Username == request.Username);
-            _logger.LogDebug($"Found user {user.Id} with email {request.Email} or username {request.Username}");
+            _logger.LogDebug("Found user {user.Id} with email {request.Email} or username {request.Username}", user.Id, request.Email, request.Username);
         }
         catch (NullReferenceException)
         {
-            _logger.LogDebug($"No user with email {request.Email} or username {request.Username} found");
+            _logger.LogDebug("No user with email {request.Email} or username {request.Username} found", request.Email, request.Username);
             throw new UserNotFoundException($"No user with email {request.Email} or username {request.Username} found");
         }
 
-        _logger.LogDebug($"Returning account access data for user {user.Id}");
+        _logger.LogDebug("Returning account access data for user {user.Id}", user.Id);
         return new AccountAccessDataResponse
         {
             UserId = user.Id,
@@ -50,11 +50,11 @@ public class AccountService(IRepository<User> userRepo, IRepository<Registration
         try 
         {
             user = await _userRepo.FindOneAsync(u => u.Email == request.Email);
-            _logger.LogDebug($"Found user {user.Id} with email {request.Email}");
+            _logger.LogDebug("Found user {user.Id} with email {request.Email}", user.Id, request.Email);
         }
         catch (NullReferenceException)
         {
-            _logger.LogDebug($"No user with email {request.Email} found to start password reset procedure");
+            _logger.LogDebug("No user with email {request.Email} found to start password reset procedure", request.Email);
             throw new UserNotFoundException($"No user with email {request.Email} found");
         }
 
@@ -62,11 +62,11 @@ public class AccountService(IRepository<User> userRepo, IRepository<Registration
         try 
         {
             existingCode = await _resetCodeRepo.FindOneAsync(rc => rc.UserId == user.Id);
-            _logger.LogDebug($"Found existing reset code for user {user.Id}");
+            _logger.LogDebug("Found existing reset code for user {user.Id}", user.Id);
 
             if (existingCode.ExpirationDate < DateTime.UtcNow)
             {
-                _logger.LogDebug($"Reset code for user {user.Id} expired, updating");
+                _logger.LogDebug("Reset code for user {user.Id} expired, updating", user.Id);
                 
                 existingCode.ExpirationDate = DateTime.UtcNow.AddMinutes(10);
                 existingCode.Code = Guid.NewGuid().ToString();
@@ -74,7 +74,7 @@ public class AccountService(IRepository<User> userRepo, IRepository<Registration
             }
             else
             {
-                _logger.LogDebug($"Reset code for user {user.Id} not expired");
+                _logger.LogDebug("Reset code for user {user.Id} not expired", user.Id);
                 throw new CodeHasNotExpiredException($"Reset code for user {user.Id} already exists and is not expired");
             }
         }
@@ -85,9 +85,9 @@ public class AccountService(IRepository<User> userRepo, IRepository<Registration
         }
 
         // TODO: Send email
-        _logger.LogWarning($"Mailing backend is not yet implemented, reset code {existingCode.Code} for user {user.Id} was not sent");
+        _logger.LogWarning("Mailing backend is not yet implemented, reset code {existingCode.Code} for user {user.Id} was not sent", existingCode.Code, user.Id);
 
-        _logger.LogDebug($"Reset code for user {user.Id} sent");
+        _logger.LogDebug("Reset code for user {user.Id} sent", user.Id);
 
         _logger.LogDebug("Replying with success");
         return new BeginPasswordResetResponse
@@ -102,7 +102,7 @@ public class AccountService(IRepository<User> userRepo, IRepository<Registration
         try 
         {
             user = await _userRepo.FindOneAsync(u => u.Email == request.Email || u.Username == request.Username);
-            _logger.LogDebug($"Found user {user.Id} with email {request.Email} or username {request.Username}. Aborting registration");
+            _logger.LogDebug("Found user {user.Id} with email {request.Email} or username {request.Username}. Aborting registration", user.Id, request.Email, request.Username);
             
             if (user.Email == request.Email)
                 throw new UserExistsException($"User with email {request.Email} already exists");
@@ -112,7 +112,7 @@ public class AccountService(IRepository<User> userRepo, IRepository<Registration
         }
         catch (NullReferenceException)
         {
-            _logger.LogDebug($"Email {request.Email} and username {request.Username} are not taken, proceeding with registration");
+            _logger.LogDebug("Email {request.Email} and username {request.Username} are not taken, proceeding with registration", request.Email, request.Username);
         }
 
         // User creation
@@ -127,34 +127,34 @@ public class AccountService(IRepository<User> userRepo, IRepository<Registration
         try
         {
             await _userRepo.AddAsync(user);
-            _logger.LogDebug($"Inserted user {user.Id} with email {request.Email} and username {request.Username}");
+            _logger.LogDebug("Inserted user {user.Id} with email {request.Email} and username {request.Username}", user.Id, request.Email, request.Username);
         }
         catch (Exception e)
         {
-            _logger.LogError($"Failed inserting user {user.Id} with email {request.Email} and username {request.Username}. {e}");
+            _logger.LogError("Failed inserting user {user.Id} with email {request.Email} and username {request.Username}. {e}", user.Id, request.Email, request.Username, e);
             throw;
         }
 
         // Registration code creation
-        RegistrationCode regCode = new RegistrationCode
+        RegistrationCode regCode = new()
         {
             UserId = user.Id
         };
         try
         {
             await _regCodeRepo.AddAsync(regCode);
-            _logger.LogDebug($"Inserted registration code for user {user.Id}");
+            _logger.LogDebug("Inserted registration code for user {user.Id}", user.Id);
         }
         catch (Exception e)
         {
-            _logger.LogError($"Failed inserting registration code for user {user.Id}. {e}");
+            _logger.LogError("Failed inserting registration code for user {user.Id}. {e}", user.Id, e);
             throw;
         }
 
         // TODO: Send email
-        _logger.LogWarning($"Mailing backend is not yet implemented, registration code for user {user.Id} was not sent");
+        _logger.LogWarning("Mailing backend is not yet implemented, registration code for user {user.Id} was not sent", user.Id);
 
-        _logger.LogDebug($"Registration code for user {user.Id} sent");
+        _logger.LogDebug("Registration code for user {user.Id} sent", user.Id);
 
         _logger.LogDebug("Replying with success");
         return new BeginRegistrationResponse
@@ -169,11 +169,11 @@ public class AccountService(IRepository<User> userRepo, IRepository<Registration
         try 
         {
             user = await _userRepo.FindOneAsync(u => u.Id == userId);
-            _logger.LogDebug($"Found user {user.Id} with email {user.Email}");
+            _logger.LogDebug("Found user {user.Id} with email {user.Email}", user.Id, user.Email);
         }
         catch (NullReferenceException)
         {
-            _logger.LogDebug($"No user with id {userId} found to change password");
+            _logger.LogDebug("No user with id {userId} found to change password", userId);
             throw new UserNotFoundException($"No user with id {userId} found");
         }
 
@@ -181,7 +181,7 @@ public class AccountService(IRepository<User> userRepo, IRepository<Registration
         var inputOldPasswordHash = BcryptUtils.HashPassword(request.OldPassword);
         if (!BcryptUtils.VerifyPassword(request.OldPassword, user.Password))
         {
-            _logger.LogDebug($"Old password did not match for user {user.Id}");
+            _logger.LogDebug("Old password did not match for user {user.Id}", user.Id);
         }
 
         // Update password
@@ -189,19 +189,19 @@ public class AccountService(IRepository<User> userRepo, IRepository<Registration
         try
         {
             _userRepo.Update(user);
-            _logger.LogDebug($"Updated password for user {user.Id}");
+            _logger.LogDebug("Updated password for user {user.Id}", user.Id);
         }
         catch (Exception e)
         {
-            _logger.LogError($"Failed updating password for user {user.Id}. {e}");
+            _logger.LogError("Failed updating password for user {user.Id}. {e}", user.Id, e);
             throw;
         }
 
         // TODO: Ask AuthService and ApiGateway to recache information
-        _logger.LogWarning($"Warning! UserService MUST notify AuthService and ApiGateway to recache information for user {user.Id}, but this feature is not yet implemented!");
+        _logger.LogWarning("Warning! UserService MUST notify AuthService and ApiGateway to recache information for user {user.Id}, but this feature is not yet implemented!", user.Id);
 
         // TODO: Send notification email
-        _logger.LogWarning($"Mailing backend is not yet implemented, notification for user {user.Id} was not sent");
+        _logger.LogWarning("Mailing backend is not yet implemented, notification for user {user.Id} was not sent", user.Id);
 
         _logger.LogDebug("Replying with success");
         return new ChangePasswordResponse
@@ -218,11 +218,11 @@ public class AccountService(IRepository<User> userRepo, IRepository<Registration
         {
             user = await _userRepo.FindOneAsync(u => u.Email == request.Email);
             resetCode = await _resetCodeRepo.FindOneAsync(rc => rc.Code == request.Code);
-            _logger.LogDebug($"Found user {user.Id} with email {request.Email} and respective resetCode {resetCode.Id}");
+            _logger.LogDebug("Found user {user.Id} with email {request.Email} and respective resetCode {resetCode.Id}", user.Id, request.Email, resetCode.Id);
         }
         catch (NullReferenceException)
         {
-            _logger.LogDebug($"No user with email {request.Email} or reset code {request.Code} found");
+            _logger.LogDebug("No user with email {request.Email} or reset code {request.Code} found", request.Email, request.Code);
             throw new InvalidCodeException($"Invalid email or code");
         }
 
@@ -234,19 +234,19 @@ public class AccountService(IRepository<User> userRepo, IRepository<Registration
             // FIXME: Transaction must be implemented to prevent errors
             _userRepo.Update(user);
             _resetCodeRepo.Delete(resetCode);
-            _logger.LogDebug($"Updated password for user {user.Id}");
+            _logger.LogDebug("Updated password for user {user.Id}", user.Id);
         }
         catch (Exception e)
         {
-            _logger.LogError($"Failed updating password for user {user.Id}. {e}");
+            _logger.LogError("Failed updating password for user {user.Id}. {e}", user.Id, e);
             throw;
         }
 
         // TODO: Ask AuthService and ApiGateway to recache information
-        _logger.LogWarning($"Warning! UserService MUST notify AuthService and ApiGateway to recache information for user {user.Id}, but this feature is not yet implemented!");
+        _logger.LogWarning("Warning! UserService MUST notify AuthService and ApiGateway to recache information for user {user.Id}, but this feature is not yet implemented!", user.Id);
 
         // TODO: Send notification email
-        _logger.LogWarning($"Mailing backend is not yet implemented, notification for user {user.Id} was not sent");
+        _logger.LogWarning("Mailing backend is not yet implemented, notification for user {user.Id} was not sent", user.Id);
 
         _logger.LogDebug("Replying with success");
         return new CompletePasswordResetResponse
