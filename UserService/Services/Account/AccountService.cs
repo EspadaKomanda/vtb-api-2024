@@ -354,16 +354,70 @@ public class AccountService(IRepository<User> userRepo, IRepository<Registration
         };
     }
 
-    public Task<ResendPasswordResetCodeResponse> ResendPasswordResetCode(ResendPasswordResetCodeRequest request)
+    public async Task<ResendPasswordResetCodeResponse> ResendPasswordResetCode(ResendPasswordResetCodeRequest request)
     {
         // TODO: Email service needed
-        throw new NotImplementedException();
+        try 
+        {
+            User user = await _userRepo.FindOneAsync(u => u.Email == request.Email);
+            ResetCode resetCode = await _resetCodeRepo.FindOneAsync(rc => rc.UserId == user.Id);
+            _logger.LogDebug("Found reset code {resetCode.Id} for user {user.Id}", resetCode.Id, user.Id);
+            
+            if (resetCode.ExpirationDate > DateTime.Now)
+            {
+                // Code is not yet expired
+                _logger.LogDebug("Reset code for user {user.Id} is not yet expired", user.Id);
+                throw new CodeHasNotExpiredException("Please, wait at least 10 minutes.");
+            }
+
+            // Regenerate code
+            resetCode.Code = Guid.NewGuid().ToString();
+            resetCode.ExpirationDate = DateTime.UtcNow.AddMinutes(10);
+            _resetCodeRepo.Update(resetCode);
+
+            return new ResendPasswordResetCodeResponse
+            {
+                IsSuccess = true
+            };
+        }
+        catch (NullReferenceException)
+        {
+            _logger.LogDebug("No reset code found for user {request.Email}", request.Email);
+            throw new InvalidCodeException();
+        }
     }
 
-    public Task<ResendRegistrationCodeResponse> ResendRegistrationCode(ResendRegistrationCodeRequest request)
+    public async Task<ResendRegistrationCodeResponse> ResendRegistrationCode(ResendRegistrationCodeRequest request)
     {
         // TODO: Email service needed
-        throw new NotImplementedException();
+        try 
+        {
+            User user = await _userRepo.FindOneAsync(u => u.Email == request.Email);
+            RegistrationCode regCode = await _regCodeRepo.FindOneAsync(rc => rc.UserId == user.Id);
+            _logger.LogDebug("Found registration code {regCode.Id} for user {user.Id}", regCode.Id, user.Id);
+            
+            if (regCode.ExpirationDate > DateTime.Now.AddMinutes(9))
+            {
+                // Code is not yet expired
+                _logger.LogDebug("Registration code for user {user.Id} is not yet expired", user.Id);
+                throw new CodeHasNotExpiredException("Please, wait at least 1 minute before resending the code");
+            }
+
+            // Regenerate code
+            regCode.Code = Guid.NewGuid().ToString();
+            regCode.ExpirationDate = DateTime.UtcNow.AddMinutes(10);
+            _regCodeRepo.Update(regCode);
+
+            return new ResendRegistrationCodeResponse
+            {
+                IsSuccess = true
+            };
+        }
+        catch (NullReferenceException)
+        {
+            _logger.LogDebug("No registration code found for user {request.Email}", request.Email);
+            throw new InvalidCodeException();
+        }
     }
 
     public async Task<VerifyPasswordResetCodeResponse> VerifyPasswordResetCode(VerifyPasswordResetCodeRequest request)

@@ -8,6 +8,5 @@ namespace UserService.Models.Account.Responses;
 public class ResendPasswordResetCodeResponse
 {
     [Required]
-    [EmailAddress]
-    public string Email { get; set; } = null!;
+    public bool IsSuccess { get; set; }
 }
