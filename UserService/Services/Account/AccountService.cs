@@ -7,11 +7,13 @@ using UserService.Utils;
 
 namespace UserService.Services.Account;
 
-public class AccountService(IRepository<User> userRepo, IRepository<RegistrationCode> regCodeRepo, IRepository<ResetCode> resetCodeRepo, ILogger<AccountService> logger) : IAccountService
+public class AccountService(IRepository<User> userRepo, IRepository<RegistrationCode> regCodeRepo, IRepository<ResetCode> resetCodeRepo, IRepository<Meta> metaRepo, IRepository<PersonalData> personalDataRepo, ILogger<AccountService> logger) : IAccountService
 {
     private readonly IRepository<User> _userRepo = userRepo;
     private readonly IRepository<RegistrationCode> _regCodeRepo = regCodeRepo;
     private readonly IRepository<ResetCode> _resetCodeRepo = resetCodeRepo;
+    private readonly IRepository<Meta> _metaRepo = metaRepo;
+    private readonly IRepository<PersonalData> _personalDataRepo = personalDataRepo;
     private readonly ILogger<AccountService> _logger = logger;
 
     public async Task<AccountAccessDataResponse> AccountAccessData(AccountAccessDataRequest request)
@@ -255,9 +257,80 @@ public class AccountService(IRepository<User> userRepo, IRepository<Registration
         };
     }
 
-    public Task<CompleteRegistrationResponse> CompleteRegistration(CompleteRegistrationRequest request)
+    public async Task<CompleteRegistrationResponse> CompleteRegistration(CompleteRegistrationRequest request)
     {
-        throw new NotImplementedException();
+        User user;
+        RegistrationCode regCode;
+
+        // FIXME: use transaction
+        try 
+        {
+            user = await _userRepo.FindOneAsync(u => u.Email == request.Email);
+
+            // TODO: Use lazyloading
+            regCode = await _regCodeRepo.FindOneAsync(rc => rc.Code == request.RegistrationCode && rc.UserId == user.Id);
+            _logger.LogDebug("Found user {user.Id} with email {request.Email} and respective registrationCode {regCode.Id}", user.Id, request.Email, regCode.Id);
+        }
+        catch (NullReferenceException)
+        {
+            _logger.LogDebug("No user with email {request.Email} or registration code {equest.RegistrationCode} found", request.Email, request.RegistrationCode);
+            throw new InvalidCodeException($"Invalid email or code");
+        }
+
+        // Create meta
+        var meta = new Meta
+        {
+            UserId = user.Id,
+            Name = request.Name,
+            Surname = request.Surname,
+            Patronymic = request.Patronymic,
+            Birthday = request.Birthday,
+            Avatar = request.Avatar
+        };
+        try
+        {
+            await _metaRepo.AddAsync(meta);
+            _logger.LogDebug("Created meta for user {user.Id}", user.Id);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError("Failed creating meta for user {user.Id}. {e}", user.Id, e);
+            throw;
+        }
+
+        // Create personal data
+        var personalData = new PersonalData
+        {
+            UserId = user.Id
+        };
+        try
+        {
+            await _personalDataRepo.AddAsync(personalData);
+            _logger.LogDebug("Created personal data for user {user.Id}", user.Id);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError("Failed creating personal data for user {user.Id}. {e}", user.Id, e);
+            throw;
+        }
+
+        user.IsActivated = true;
+        try
+        {
+            _userRepo.Update(user);
+            _regCodeRepo.Delete(regCode);
+            _logger.LogDebug("Updated user {user.Id}", user.Id);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError("Failed activating user {user.Id}. {e}", user.Id, e);
+            throw;
+        }
+
+        return new CompleteRegistrationResponse
+        {
+            IsSuccess = true
+        };
     }
 
     public Task<ResendPasswordResetCodeResponse> ResendPasswordResetCode(ResendPasswordResetCodeRequest request)
