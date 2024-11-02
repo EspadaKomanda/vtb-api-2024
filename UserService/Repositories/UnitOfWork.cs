@@ -15,17 +15,18 @@ public class UnitOfWork : IUnitOfWork
     public IRepository<ResetCode> ResetCodes { get; }
     public IRepository<PersonalData> PersonalDatas { get; }
 
-    public UnitOfWork(ApplicationContext context)
+    public UnitOfWork(ApplicationContext context, IRepository<User> users, IRepository<Role> roles, IRepository<Meta> metas,
+        IRepository<VisitedTour> visitedTours, IRepository<RegistrationCode> registrationCodes, IRepository<ResetCode> resetCodes,
+        IRepository<PersonalData> personalDatas)
     {
         _context = context;
-
-        Users = new Repository<User>(_context);
-        Roles = new Repository<Role>(_context);
-        Metas = new Repository<Meta>(_context);
-        VisitedTours = new Repository<VisitedTour>(_context);
-        RegistrationCodes = new Repository<RegistrationCode>(_context);
-        ResetCodes = new Repository<ResetCode>(_context);
-        PersonalDatas = new Repository<PersonalData>(_context);
+        Users = users;
+        Roles = roles;
+        Metas = metas;
+        VisitedTours = visitedTours;
+        RegistrationCodes = registrationCodes;
+        ResetCodes = resetCodes;
+        PersonalDatas = personalDatas;
     }
 
     public int Save()

@@ -10,6 +10,7 @@ public class RegistrationCode
     [Key]
     public long Id { get; set; }
 
+    // FIXME: Match the six-character registration code template
     [Required]
     [Column(TypeName = "VARCHAR(6)")]
     public string Code { get; set; } = Guid.NewGuid().ToString();
