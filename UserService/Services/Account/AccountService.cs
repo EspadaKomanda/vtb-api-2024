@@ -7,13 +7,14 @@ using UserService.Utils;
 
 namespace UserService.Services.Account;
 
-public class AccountService(IRepository<User> userRepo, IRepository<RegistrationCode> regCodeRepo, IRepository<ResetCode> resetCodeRepo, IRepository<Meta> metaRepo, IRepository<PersonalData> personalDataRepo, ILogger<AccountService> logger) : IAccountService
+public class AccountService(IRepository<User> userRepo, IRepository<RegistrationCode> regCodeRepo, IRepository<ResetCode> resetCodeRepo, IRepository<Meta> metaRepo, IRepository<PersonalData> personalDataRepo, IUnitOfWork unitOfWork, ILogger<AccountService> logger) : IAccountService
 {
     private readonly IRepository<User> _userRepo = userRepo;
     private readonly IRepository<RegistrationCode> _regCodeRepo = regCodeRepo;
     private readonly IRepository<ResetCode> _resetCodeRepo = resetCodeRepo;
     private readonly IRepository<Meta> _metaRepo = metaRepo;
     private readonly IRepository<PersonalData> _personalDataRepo = personalDataRepo;
+    private readonly IUnitOfWork _unitOfWork = unitOfWork;
     private readonly ILogger<AccountService> _logger = logger;
 
     public async Task<AccountAccessDataResponse> AccountAccessData(AccountAccessDataRequest request)
@@ -231,17 +232,24 @@ public class AccountService(IRepository<User> userRepo, IRepository<Registration
         // Update password
         user.Password = BcryptUtils.HashPassword(request.NewPassword);
         user.Salt = Guid.NewGuid().ToString();
-        try
+
+        using (var transaction = _unitOfWork.BeginTransaction())
         {
-            // FIXME: Transaction must be implemented to prevent errors
-            _userRepo.Update(user);
-            _resetCodeRepo.Delete(resetCode);
-            _logger.LogDebug("Updated password for user {user.Id}", user.Id);
-        }
-        catch (Exception e)
-        {
-            _logger.LogError("Failed updating password for user {user.Id}. {e}", user.Id, e);
-            throw;
+            try
+            {
+                _unitOfWork.Users.Update(user);
+                _unitOfWork.ResetCodes.Delete(resetCode);
+                _unitOfWork.Save();
+                transaction.Commit();
+
+                _logger.LogDebug("Updated password for user {user.Id}", user.Id);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Failed updating password for user {user.Id}. {e}", user.Id, e);
+                transaction.Rollback();
+                throw;
+            }
         }
 
         // TODO: Ask AuthService and ApiGateway to recache information
@@ -262,12 +270,10 @@ public class AccountService(IRepository<User> userRepo, IRepository<Registration
         User user;
         RegistrationCode regCode;
 
-        // FIXME: use transaction
         try 
         {
             user = await _userRepo.FindOneAsync(u => u.Email == request.Email);
 
-            // TODO: Use lazyloading
             regCode = await _regCodeRepo.FindOneAsync(rc => rc.Code == request.RegistrationCode && rc.UserId == user.Id);
             _logger.LogDebug("Found user {user.Id} with email {request.Email} and respective registrationCode {regCode.Id}", user.Id, request.Email, regCode.Id);
         }
@@ -277,54 +283,69 @@ public class AccountService(IRepository<User> userRepo, IRepository<Registration
             throw new InvalidCodeException($"Invalid email or code");
         }
 
-        // Create meta
-        var meta = new Meta
+        using (var transaction = _unitOfWork.BeginTransaction())
         {
-            UserId = user.Id,
-            Name = request.Name,
-            Surname = request.Surname,
-            Patronymic = request.Patronymic,
-            Birthday = request.Birthday,
-            Avatar = request.Avatar
-        };
-        try
-        {
-            await _metaRepo.AddAsync(meta);
-            _logger.LogDebug("Created meta for user {user.Id}", user.Id);
-        }
-        catch (Exception e)
-        {
-            _logger.LogError("Failed creating meta for user {user.Id}. {e}", user.Id, e);
-            throw;
-        }
+            try
+            {
+                // Create meta
+                var meta = new Meta
+                {
+                    UserId = user.Id,
+                    Name = request.Name,
+                    Surname = request.Surname,
+                    Patronymic = request.Patronymic,
+                    Birthday = request.Birthday,
+                    Avatar = request.Avatar
+                };
+                try
+                {
+                    await _unitOfWork.Metas.AddAsync(meta);
+                    _logger.LogDebug("Created meta for user {user.Id}", user.Id);
+                }
+                catch (Exception e)
+                {
+                    _logger.LogError("Failed creating meta for user {user.Id}. {e}", user.Id, e);
+                    throw;
+                }
 
-        // Create personal data
-        var personalData = new PersonalData
-        {
-            UserId = user.Id
-        };
-        try
-        {
-            await _personalDataRepo.AddAsync(personalData);
-            _logger.LogDebug("Created personal data for user {user.Id}", user.Id);
-        }
-        catch (Exception e)
-        {
-            _logger.LogError("Failed creating personal data for user {user.Id}. {e}", user.Id, e);
-            throw;
-        }
+                // Create personal data
+                var personalData = new PersonalData
+                {
+                    UserId = user.Id
+                };
+                try
+                {
+                    await _unitOfWork.PersonalDatas.AddAsync(personalData);
+                    _logger.LogDebug("Created personal data for user {user.Id}", user.Id);
+                }
+                catch (Exception e)
+                {
+                    _logger.LogError("Failed creating personal data for user {user.Id}. {e}", user.Id, e);
+                    throw;
+                }
 
-        user.IsActivated = true;
-        try
-        {
-            _userRepo.Update(user);
-            _regCodeRepo.Delete(regCode);
-            _logger.LogDebug("Updated user {user.Id}", user.Id);
-        }
-        catch (Exception e)
-        {
-            _logger.LogError("Failed activating user {user.Id}. {e}", user.Id, e);
-            throw;
+                user.IsActivated = true;
+                try
+                {
+                    _unitOfWork.Users.Update(user);
+                    _unitOfWork.RegistrationCodes.Delete(regCode);
+                    _logger.LogDebug("Updated user {user.Id}", user.Id);
+                }
+                catch (Exception e)
+                {
+                    _logger.LogError("Failed activating user {user.Id}. {e}", user.Id, e);
+                    throw;
+                }
+
+                _unitOfWork.Save();
+                transaction.Commit();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError("Failed completing registration for user {user.Id}. {e}", user.Id, e);
+                transaction.Rollback();
+                throw;
+            }
         }
 
         return new CompleteRegistrationResponse

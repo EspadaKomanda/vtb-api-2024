@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using UserService.Database;
 using UserService.Database.Models;
 

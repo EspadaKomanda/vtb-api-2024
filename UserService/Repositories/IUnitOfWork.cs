@@ -13,4 +13,6 @@ public interface IUnitOfWork : IDisposable
     IRepository<ResetCode> ResetCodes { get; }
     IRepository<VisitedTour> VisitedTours { get; }
     IRepository<Role> Roles { get; }
+
+    public int Save();
 }
