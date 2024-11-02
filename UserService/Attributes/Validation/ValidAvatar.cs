@@ -4,10 +4,8 @@ using System.Text.RegularExpressions;
 namespace UserService.Attributes.Validation;
 
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
-sealed public partial class ValidAvatar(ILogger logger) : ValidationAttribute
+sealed public partial class ValidAvatar : ValidationAttribute
 {
-    private readonly ILogger _logger = logger;
-
     // FIXME: test regex
     private const string Pattern = @"^.{1,150}$";
 
@@ -16,7 +14,6 @@ sealed public partial class ValidAvatar(ILogger logger) : ValidationAttribute
         try
         {
             // FIXME: Implementation
-            _logger.LogWarning("Avatar validation is not implemented, skipping");
             return true;
         }
         catch

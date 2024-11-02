@@ -22,5 +22,6 @@ public class Meta
   [ValidAge]
   public DateTime Birthday { get; set; }
 
+  [ValidAvatar]
   public string? Avatar { get; set; }
 }
