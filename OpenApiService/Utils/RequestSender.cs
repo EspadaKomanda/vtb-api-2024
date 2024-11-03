@@ -78,9 +78,12 @@ public class RequestSender(ILogger<RequestSender> logger, HttpClient client)
                     Method = HttpMethod.Post,
                     RequestUri = new Uri(uri)
                 };
-                foreach(var header in headers)
+                if(headers != null)
                 {
-                    request.Headers.Add(header.Key,header.Value);
+                    foreach(var header in headers)
+                    {
+                        request.Headers.Add(header.Key,header.Value);
+                    }
                 }
                 var response = await _client.SendAsync(request);
                 _logger.LogDebug("Response aquired successfully");
@@ -89,18 +92,21 @@ public class RequestSender(ILogger<RequestSender> logger, HttpClient client)
             else
             {
                 using StringContent jsonContent = new(
-                                JsonConvert.SerializeObject(message),
-                                Encoding.UTF8,
-                                "application/json");
+                    JsonConvert.SerializeObject(message),
+                    Encoding.UTF8,
+                    "application/json");
                 var request = new HttpRequestMessage
                 {
                     Method = HttpMethod.Post,
                     RequestUri = new Uri(uri),
                     Content = jsonContent
                 };
-                foreach(var header in headers)
+                if(headers != null)
                 {
-                    request.Headers.Add(header.Key,header.Value);
+                    foreach(var header in headers)
+                    {
+                        request.Headers.Add(header.Key,header.Value);
+                    }
                 }
                 var response = await _client.SendAsync(request);
                 _logger.LogDebug("Response aquired successfully");
@@ -127,9 +133,12 @@ public class RequestSender(ILogger<RequestSender> logger, HttpClient client)
                     Method = HttpMethod.Put,
                     RequestUri = new Uri(uri)
                 };
-                foreach(var header in headers)
+                if(headers != null)
                 {
-                    request.Headers.Add(header.Key,header.Value);
+                    foreach(var header in headers)
+                    {
+                        request.Headers.Add(header.Key,header.Value);
+                    }
                 }
                 var response = await _client.SendAsync(request);
                 _logger.LogDebug("Response aquired successfully");
@@ -147,9 +156,12 @@ public class RequestSender(ILogger<RequestSender> logger, HttpClient client)
                     RequestUri = new Uri(uri),
                     Content = jsonContent
                 };
-                foreach(var header in headers)
+                if(headers != null)
                 {
-                    request.Headers.Add(header.Key,header.Value);
+                    foreach(var header in headers)
+                    {
+                        request.Headers.Add(header.Key,header.Value);
+                    }
                 }
                 var response = await _client.SendAsync(request);
                 _logger.LogDebug("Response aquired successfully");
@@ -176,9 +188,12 @@ public class RequestSender(ILogger<RequestSender> logger, HttpClient client)
                     Method = HttpMethod.Delete,
                     RequestUri = new Uri(uri)
                 };
-                foreach(var header in headers)
+                if(headers != null)
                 {
-                    request.Headers.Add(header.Key,header.Value);
+                    foreach(var header in headers)
+                    {
+                        request.Headers.Add(header.Key,header.Value);
+                    }
                 }
                 var response = await _client.SendAsync(request);
                 _logger.LogDebug("Response aquired successfully");
@@ -196,9 +211,12 @@ public class RequestSender(ILogger<RequestSender> logger, HttpClient client)
                     RequestUri = new Uri(uri),
                     Content = jsonContent
                 };
-                foreach(var header in headers)
+                if(headers != null)
                 {
-                    request.Headers.Add(header.Key,header.Value);
+                    foreach(var header in headers)
+                    {
+                        request.Headers.Add(header.Key,header.Value);
+                    }
                 }
                 var response = await _client.SendAsync(request);
                 _logger.LogDebug("Response aquired successfully");
@@ -225,9 +243,12 @@ public class RequestSender(ILogger<RequestSender> logger, HttpClient client)
                     Method = HttpMethod.Patch,
                     RequestUri = new Uri(uri)
                 };
-                foreach(var header in headers)
+                if(headers != null)
                 {
-                    request.Headers.Add(header.Key,header.Value);
+                    foreach(var header in headers)
+                    {
+                        request.Headers.Add(header.Key,header.Value);
+                    }
                 }
                 var response = await _client.SendAsync(request);
                 _logger.LogDebug("Response aquired successfully");
@@ -245,9 +266,12 @@ public class RequestSender(ILogger<RequestSender> logger, HttpClient client)
                     RequestUri = new Uri(uri),
                     Content = jsonContent
                 };
-                foreach(var header in headers)
+                if(headers != null)
                 {
-                    request.Headers.Add(header.Key,header.Value);
+                    foreach(var header in headers)
+                    {
+                        request.Headers.Add(header.Key,header.Value);
+                    }
                 }
                 var response = await _client.SendAsync(request);
                 _logger.LogDebug("Response aquired successfully");
