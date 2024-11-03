@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace TourService.Review.Requests;
+namespace TourService.TourReview.Requests;
 
 public class DeleteReviewRequest
 {

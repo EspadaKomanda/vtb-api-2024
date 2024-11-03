@@ -1,6 +1,6 @@
 namespace TourService.Models.Review.Responses;
 
-public class GetTourReviewsResponse
+public class GetReviewsResponse
 {
     public long Amount { get; set; }
     public int Page { get; set; }

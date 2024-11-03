@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TourService.Models.Review.Requests;
 
-public class GetTourReviewsRequest
+public class GetReviewsRequest
 {
     [Required]
     public long TourId { get; set; }

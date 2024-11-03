@@ -22,7 +22,7 @@ namespace TourService.Database.Models
         [Required]
         public bool IsActive { get; set; }
         [Text]
-        public string Comment { get; set;} = null!;
+        public string? Comment { get; set;} = null!;
         public ICollection<Photo>? Photos { get; set; }
         public ICollection<Review>? Reviews { get; set; }
     }
