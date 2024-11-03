@@ -15,7 +15,8 @@ module.exports = {
       },
       backgroundColor: {
         'custom-blur': '#0E162D',
-        'custom-bg-gray': '#4A5068'
+        'custom-bg-gray': '#4A5068',
+        'custom-bg-blue': '#0085FF',
       },
       backgroundImage: {
         'custom-gradient': 'linear-gradient(140deg , #9A82FF 35%, #0085FF 85%)',

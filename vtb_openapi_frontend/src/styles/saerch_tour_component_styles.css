@@ -1,0 +1,15 @@
+.custom-slider .rc-slider-handle {
+    background-color: #0085FF;
+    border: 0px;
+    width: 12px;
+    height: 12px;
+    opacity: 1;
+}
+
+.custom-slider .rc-slider-track {
+    background-color: #0085FF;
+}
+
+.custom-slider .rc-slider-rail {
+    background-color: #0E162D;
+}

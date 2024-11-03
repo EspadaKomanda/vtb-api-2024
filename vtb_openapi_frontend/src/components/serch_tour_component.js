@@ -2,6 +2,10 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import * as img from '../assets/images.js';
+import Slider from 'rc-slider';
+import 'rc-slider/assets/index.css';
+import '../styles/saerch_tour_component_styles.css';
+import StarRating from './star_rating.js';
 
 class FilterData {
     constructor() {
@@ -55,9 +59,17 @@ export default function SearchTourComponent() {
         console.log(filters);
     };
 
+    const handleDistanceChange = (value) => {
+        setFilters({ ...filters, distanceFrom: value[0], distanceTo: value[1] });
+    };
+
+    const handlePriceChange = (value) => {
+        setFilters({ ...filters, priceFrom: value[0], priceTo: value[1] });
+    };
+
     return (
         <div className="p-4">
-            <h2 className="text-white text-4xl font-bold ">Поиск по турам и развлечениям</h2>
+            <h2 className="text-white text-4xl font-bold">Поиск по турам и развлечениям</h2>
             <form onSubmit={handleSearch} className='relative'>
                 <input 
                     type="text" 
@@ -75,20 +87,21 @@ export default function SearchTourComponent() {
                 </button>
                 
                 {isFilterVisible && (
-                    <div className=" right-3 mt-4 px-8 py-2 bg-custom-bg-gray rounded lg:w-1/2 flex flex-col gap-y-2 absolute text-3xl">
+                    <div className="right-3 mt-4 px-8 py-2 bg-custom-bg-gray rounded lg:w-1/2 flex flex-col gap-y-2 absolute text-2xl">
                         <div className="flex justify-end items-center">
                             <Image 
                                 src={img.exit} 
                                 alt="close" 
-                                width={30} 
+                                width={30}
                                 height={30} 
                                 onClick={toggleFilters} 
                                 className='' 
                             />
                         </div>
+
                         <div className='grid grid-cols-2'>
                             <label className="text-white">Туры:</label>
-                            <div className="flex  items-center">
+                            <div className="flex items-center">
                                 <input 
                                     type="checkbox" 
                                     id="tours" 
@@ -104,14 +117,13 @@ export default function SearchTourComponent() {
                                         transition duration-200`}>
                                         {filters.tours && <span className="block w-full h-full bg-custom-gradient rounded-sm"></span>}
                                     </span>
-                                    
                                 </label>
                             </div>
                         </div>
 
                         <div className='grid grid-cols-2'>
                             <label className="text-white">Развлечения:</label>
-                            <div className="flex  items-center">
+                            <div className="flex items-center">
                                 <input 
                                     type="checkbox" 
                                     id="entertainment" 
@@ -127,7 +139,6 @@ export default function SearchTourComponent() {
                                         transition duration-200`}>
                                         {filters.entertainment && <span className="block w-full h-full bg-custom-gradient rounded-sm"></span>}
                                     </span>
-                                    
                                 </label>
                             </div>
                         </div>
@@ -136,7 +147,7 @@ export default function SearchTourComponent() {
                             <label className="text-white">Дата от:</label>
                             <input 
                                 type="date" 
-                                className="mt-1 p-2 rounded bg-custom-blur text-white"
+                                className="mt-1 px-2 py-1 rounded bg-custom-blur text-white"
                                 value={filters.dateFrom || ''}
                                 onChange={(e) => setFilters({ ...filters, dateFrom: e.target.value })}
                             />
@@ -145,61 +156,75 @@ export default function SearchTourComponent() {
                             <label className="text-white">Дата до:</label>
                             <input 
                                 type="date" 
-                                className="mt-1 p-2 rounded bg-custom-blur text-white"
+                                className="mt-1 px-2 py-1 rounded bg-custom-blur text-white"
                                 value={filters.dateTo || ''}
                                 onChange={(e) => setFilters({ ...filters, dateTo: e.target.value })}
                             />
                         </div>
+                        <div className='grid grid-cols-2 '>
+                            <label className="text-white">Стоимость:</label>
+                            <div className="flex flex-col">
+                                <Slider
+                                    range
+                                    min={0}
+                                    max={100000}
+                                    value={[filters.priceFrom || 10000, filters.priceTo || 50000]}
+                                    onChange={handlePriceChange}
+                                    className="my-2 custom-slider"
+                                />
+                                <div className="flex justify-between">
+                                    <input 
+                                        type="number" 
+                                        className="mt-1 mr-5 px-2 rounded bg-custom-blur text-white w-1/2"
+                                        value={filters.priceFrom || 10000}
+                                        onChange={(e) => setFilters({ ...filters, priceFrom: e.target.value })}
+                                    />
+                                    <input 
+                                        type="number" 
+                                        className="mt-1 px-2 rounded bg-custom-blur text-white w-1/2"
+                                        value={filters.priceTo || 50000}
+                                        onChange={(e) => setFilters({ ...filters, priceTo: e.target.value })}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div className='grid grid-cols-2 '>
+                            <label className="text-white">Расстояние:</label>
+                            <div className="flex flex-col">
+                                <Slider
+                                    range
+                                    min={0}
+                                    max={100000}
+                                    value={[filters.distanceFrom || 10000, filters.distanceTo || 50000]}
+                                    onChange={handleDistanceChange}
+                                    className="my-2 custom-slider"
+                                />
+                                <div className="flex justify-between">
+                                    <input 
+                                        type="number" 
+                                        className="mt-1 px-2 mr-5 rounded bg-custom-blur text-white w-1/2"
+                                        value={filters.distanceFrom || 10000}
+                                        onChange={(e) => setFilters({ ...filters, distanceFrom: e.target.value })}
+                                    />
+                                    <input 
+                                        type="number" 
+                                        className="mt-1 px-2  rounded bg-custom-blur text-white w-1/2"
+                                        value={filters.distanceTo || 50000}
+                                        onChange={(e) => setFilters({ ...filters, distanceTo: e.target.value })}
+                                    />
+                                </div>
+                            </div>
+                        </div>
                         <div className='grid grid-cols-2'>
-                            <label className="text-white">Цена от:</label>
-                            <input 
-                                type="number" 
-                                className="mt-1 p-2 rounded bg-custom-blur text-white"
-                                value={filters.priceFrom}
-                                onChange={(e) => setFilters({ ...filters, priceFrom: e.target.value })}
+                            <label className="text-white">Рейтинг от:</label>
+                            <StarRating 
+                                rating={filters.ratingFrom} 
+                                setRating={(value) => setFilters({ ...filters, ratingFrom: value })} 
                             />
                         </div>
                         <div className='grid grid-cols-2'>
-                            <label className="text-white">Цена до:</label>
-                            <input 
-                                type="number" 
-                                className="mt-1 p-2 rounded bg-custom-blur text-white"
-                                value={filters.priceTo}
-                                onChange={(e) => setFilters({ ...filters, priceTo: e.target.value })}
-                            />
-                        </div>
-                        <div className='grid grid-cols-2'>
-                            <label className="text-white">Расстояние от:</label>
-                            <input 
-                                type="number" 
-                                className="mt-1 p-2 rounded bg-custom-blur text-white"
-                                value={filters.distanceFrom}
-                                onChange={(e) => setFilters({ ...filters, distanceFrom: e.target.value })}
-                            />
-                        </div>
-                        <div className='grid grid-cols-2'>
-                            <label className="text-white">Расстояние до:</label>
-                            <input 
-                                type="number" 
-                                className="mt-1 p-2 rounded bg-custom-blur text-white"
-                                value={filters.distanceTo}
-                                onChange={(e) => setFilters({ ...filters, distanceTo: e.target.value })}
-                            />
-                        </div>
-                        <div className='grid grid-cols-2'>
-                            <label className=" text-white">Рейтинг от:</label>
-                            <input 
-                                type="number" 
-                                min="1" 
-                                max="5" 
-                                className="mt-1 p-2 rounded bg-custom-blur text-white"
-                                value={filters.ratingFrom}
-                                onChange={(e) => setFilters({ ...filters, ratingFrom: e.target.value })}
-                            />
-                        </div>
-                        <div className='grid grid-cols-2'>
-                            <label className="text-white">Туры:</label>
-                            <div className="flex  items-center">
+                            <label className="text-white">Кредит:</label>
+                            <div className="flex items-center">
                                 <input 
                                     type="checkbox" 
                                     id="credit" 
@@ -215,7 +240,6 @@ export default function SearchTourComponent() {
                                         transition duration-200`}>
                                         {filters.credit && <span className="block w-full h-full bg-custom-gradient rounded-sm"></span>}
                                     </span>
-                                    
                                 </label>
                             </div>
                         </div>
@@ -230,7 +254,6 @@ export default function SearchTourComponent() {
                                     setFilters({ ...filters, types: options });
                                 }}
                             >
-                                {/* TODO: добавить конкретные типы */}
                                 <option value="excursion">Экскурсии</option>
                                 <option value="adventure">Приключения</option>
                                 <option value="cultural">Культурные</option>
@@ -239,10 +262,11 @@ export default function SearchTourComponent() {
                                 <option value="romantic">Романтические</option>
                             </select>
                         </div>
+
                         <button 
                             type="button" 
                             onClick={handleReset} 
-                            className="mt-2 bg-custom-blur text-white px-4 py-2 rounded"
+                            className="mt-2 bg-custom-blur text-white px-4 py-2 rounded text-3xl"
                         >
                             Сбросить
                         </button>
@@ -251,7 +275,7 @@ export default function SearchTourComponent() {
 
                 <button 
                     type="submit" 
-                    className=" bg-custom-gradient text-white py-1 px-2 sm:px-5 rounded right-1 top-5 absolute"
+                    className="bg-custom-gradient text-white py-1 px-2 sm:px-5 rounded right-1 top-5 absolute"
                 >
                     Найти
                 </button>
@@ -261,7 +285,7 @@ export default function SearchTourComponent() {
                 <h3 className="text-white text-xl">Доступные туры и развлечения</h3>
                 <ul className="mt-2">
                     {tours.map((tour, index) => (
-                        <li key={index} className=" p-4 rounded mb-2">
+                        <li key={index} className="p-4 rounded mb-2">
                             <h4 className="text-white text-lg font-bold">{tour.name}</h4>
                             <p className="text-gray-300">Описание: {tour.description}</p>
                             <p className="text-gray-300">Цена: {tour.price} ₽</p>
@@ -273,3 +297,4 @@ export default function SearchTourComponent() {
         </div>
     );
 }
+
