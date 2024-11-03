@@ -51,9 +51,12 @@ public class RequestSender(ILogger<RequestSender> logger, HttpClient client)
                 Method = HttpMethod.Get,
                 RequestUri = new Uri(uri)
             };
-            foreach(var header in headers)
+            if(headers !=null)
             {
-                request.Headers.Add(header.Key,header.Value);
+                foreach(var header in headers)
+                {
+                    request.Headers.Add(header.Key,header.Value);
+                }
             }
             var response = await _client.SendAsync(request);
             _logger.LogDebug("Response aquired successfully");
