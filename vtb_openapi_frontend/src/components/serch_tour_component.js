@@ -87,26 +87,51 @@ export default function SearchTourComponent() {
                             />
                         </div>
                         <div className='grid grid-cols-2'>
-                            
-                            <label className=" text-white">Туры:</label>
-                            <div className="flex justify-start">
+                            <label className="text-white">Туры:</label>
+                            <div className="flex  items-center">
                                 <input 
                                     type="checkbox" 
+                                    id="tours" 
+                                    className="hidden" 
                                     checked={filters.tours} 
                                     onChange={(e) => setFilters({ ...filters, tours: e.target.checked })}
                                 />
+                                <label 
+                                    htmlFor="tours" 
+                                    className="flex items-center cursor-pointer text-white">
+                                    <span className={`w-5 h-5 inline-block mr-2 rounded-sm 
+                                        ${filters.tours ? 'bg-custom-gradient' : 'bg-custom-blur'} 
+                                        transition duration-200`}>
+                                        {filters.tours && <span className="block w-full h-full bg-custom-gradient rounded-sm"></span>}
+                                    </span>
+                                    
+                                </label>
                             </div>
                         </div>
+
                         <div className='grid grid-cols-2'>
                             <label className="text-white">Развлечения:</label>
-                            <div className="flex justify-start">
+                            <div className="flex  items-center">
                                 <input 
                                     type="checkbox" 
+                                    id="entertainment" 
+                                    className="hidden" 
                                     checked={filters.entertainment} 
                                     onChange={(e) => setFilters({ ...filters, entertainment: e.target.checked })}
                                 />
+                                <label 
+                                    htmlFor="entertainment" 
+                                    className="flex items-center cursor-pointer text-white">
+                                    <span className={`w-5 h-5 inline-block mr-2 rounded-sm 
+                                        ${filters.entertainment ? 'bg-custom-gradient' : 'bg-custom-blur'} 
+                                        transition duration-200`}>
+                                        {filters.entertainment && <span className="block w-full h-full bg-custom-gradient rounded-sm"></span>}
+                                    </span>
+                                    
+                                </label>
                             </div>
                         </div>
+
                         <div className='grid grid-cols-2'>
                             <label className="text-white">Дата от:</label>
                             <input 
@@ -173,13 +198,25 @@ export default function SearchTourComponent() {
                             />
                         </div>
                         <div className='grid grid-cols-2'>
-                            <label className="text-white">Кредит:</label>
-                            <div className="flex justify-start">
+                            <label className="text-white">Туры:</label>
+                            <div className="flex  items-center">
                                 <input 
                                     type="checkbox" 
+                                    id="credit" 
+                                    className="hidden" 
                                     checked={filters.credit} 
                                     onChange={(e) => setFilters({ ...filters, credit: e.target.checked })}
                                 />
+                                <label 
+                                    htmlFor="credit" 
+                                    className="flex items-center cursor-pointer text-white">
+                                    <span className={`w-5 h-5 inline-block mr-2 rounded-sm 
+                                        ${filters.credit ? 'bg-custom-gradient' : 'bg-custom-blur'} 
+                                        transition duration-200`}>
+                                        {filters.credit && <span className="block w-full h-full bg-custom-gradient rounded-sm"></span>}
+                                    </span>
+                                    
+                                </label>
                             </div>
                         </div>
                         <div className='grid grid-cols-2'>
