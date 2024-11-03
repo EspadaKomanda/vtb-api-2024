@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace WishListService.Models.Wishlist.Requests;
+namespace TourService.Models.Wishlist.Requests;
 
 public class UnwishlistTourRequest
 {
