@@ -64,7 +64,7 @@ namespace TourService.Services.S3
                     await _s3Client.PutBucketAsync(bucketName);
                     return true;
                 }   
-                _logger.LogInformation($"Bucket {bucketName} already exists!");
+                _logger.LogInformation("Bucket {bucketName} already exists!", bucketName);
                 throw new BucketAlreadyExistsException($"Bucket {bucketName} already exists!");
             }
             catch (Exception ex)
@@ -83,28 +83,28 @@ namespace TourService.Services.S3
             try
             {
                 DeleteBucketResponse response = await _s3Client.DeleteBucketAsync(bucketName);
-                _logger.LogInformation(response.HttpStatusCode.ToString()+ response.ResponseMetadata.ToString());
+                _logger.LogInformation("{httpStatusCode}, {ResponseMetadata}", response.HttpStatusCode.ToString(), response.ResponseMetadata.ToString());
                 if (response.HttpStatusCode == System.Net.HttpStatusCode.OK)
                 {
-                    _logger.LogInformation($"Bucket {bucketName} deleted!");
+                    _logger.LogInformation("Bucket {bucketName} deleted!", bucketName);
                     return true;
                 }
                 if (response.HttpStatusCode == System.Net.HttpStatusCode.NotFound)
                 {
-                    _logger.LogError($"Bucket {bucketName} not found!");
+                    _logger.LogError("Bucket {bucketName} not found!", bucketName);
                     throw new BucketNotFoundException($"Bucket {bucketName} not found!");
                 }
                 if (response.HttpStatusCode == System.Net.HttpStatusCode.InternalServerError)
                 {
-                    _logger.LogError($"Failed to delete bucket {bucketName}!");
+                    _logger.LogError("Failed to delete bucket {bucketName}!", bucketName);
                     throw new DeleteBucketException($"Failed to delete bucket {bucketName}!");
                 }
-                _logger.LogError($"Failed to delete bucket {bucketName}, unhandled exception!");
+                _logger.LogError("Failed to delete bucket {bucketName}, unhandled exception!", bucketName);
                 throw new DeleteBucketException($"Failed to delete bucket {bucketName}, unhandled exception!");
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Failed to delete bucket {bucketName}!");
+                _logger.LogError("{ex} Failed to delete bucket {bucketName}!", ex, bucketName);
                 throw new DeleteBucketException($"Failed to delete bucket {bucketName}!", ex);
             }
         }
@@ -115,20 +115,20 @@ namespace TourService.Services.S3
                 DeleteObjectResponse response = await _s3Client.DeleteObjectAsync(bucketName, fileName);
                 if (response.HttpStatusCode == System.Net.HttpStatusCode.OK)
                 {
-                    _logger.LogInformation($"Image {fileName} deleted from S3 bucket {bucketName}!");
+                    _logger.LogInformation("Image {fileName} deleted from S3 bucket {bucketName}!", fileName, bucketName);
                     return true;
                 }
                 if (response.HttpStatusCode == System.Net.HttpStatusCode.NotFound)
                 {
-                    _logger.LogError($"Image {fileName} not found in S3 bucket {bucketName}!");
+                    _logger.LogError("Image {fileName} not found in S3 bucket {bucketName}!", fileName, bucketName);
                     throw new ImageNotFoundException($"Image {fileName} not found in S3 bucket {bucketName}!");
                 }
                 if (response.HttpStatusCode == System.Net.HttpStatusCode.InternalServerError)
                 {
-                    _logger.LogError($"Failed to delete image {fileName} from S3 bucket {bucketName}, storage unavailible!");
+                    _logger.LogError("Failed to delete image {fileName} from S3 bucket {bucketName}, storage unavailible!", fileName, bucketName);
                     throw new DeleteImageException($"Failed to delete image {fileName} from S3 bucket {bucketName}, storage unavailible!");
                 }
-                _logger.LogError($"Failed to delete image {fileName} from S3 bucket {bucketName}, unhandled exception!" + response.ToString());
+                _logger.LogError("Failed to delete image {fileName} from S3 bucket {bucketName}, unhandled exception! {response}", fileName, bucketName, response.ToString());
                 throw new DeleteImageException($"Failed to delete image {fileName} from S3 bucket {bucketName}!, unhandled exception!" + response.ToString());
             }
             catch (Exception ex)
@@ -146,7 +146,7 @@ namespace TourService.Services.S3
                 if(metadataResponse.HttpStatusCode == System.Net.HttpStatusCode.OK)
                 {
                     var response =  _s3Client.GetPreSignedURL(new GetPreSignedUrlRequest(){ BucketName = bucketName, Key = fileName, Expires = DateTime.Now.AddYears(10), Protocol = Protocol.HTTP});
-                    _logger.LogInformation($"Uri for image {fileName} aquired from S3 bucket {bucketName}!");
+                    _logger.LogInformation("Uri for image {fileName} acquired from S3 bucket {bucketName}!", fileName, bucketName);
                     return new Photo()
                     {
                        FileLink = response
@@ -155,15 +155,15 @@ namespace TourService.Services.S3
                 }
                 if(metadataResponse.HttpStatusCode == System.Net.HttpStatusCode.NotFound)
                 {
-                    _logger.LogError($"Image {fileName} not found in S3 bucket {bucketName}!");
+                    _logger.LogError("Image {fileName} not found in S3 bucket {bucketName}!", fileName, bucketName);
                     throw new ImageNotFoundException($"Image {fileName} not found in S3 bucket {bucketName}!");
                 }
                 if(metadataResponse.HttpStatusCode == System.Net.HttpStatusCode.InternalServerError)
                 {
-                    _logger.LogError($"Failed to get image {fileName} from S3 bucket {bucketName}, storage unavailible!");
+                    _logger.LogError("Failed to get image {fileName} from S3 bucket {bucketName}, storage unavailible!", fileName, bucketName);
                     throw new GetImageException($"Failed to get image {fileName} from S3 bucket {bucketName}, storage unavailible!");
                 }
-                _logger.LogError($"Failed to get image {fileName} from S3 bucket {bucketName}, unhandled exception!" + metadataResponse.ToString());
+                _logger.LogError("Failed to get image {fileName} from S3 bucket {bucketName}, unhandled exception! {metadataResponse}", fileName, bucketName, metadataResponse.ToString());
                 throw new GetImageException($"Failed to get image {fileName} from S3 bucket {bucketName}!, unhandled exception!" + metadataResponse.ToString());
                                     
             }      
@@ -186,15 +186,15 @@ namespace TourService.Services.S3
                 });
                 if(response.HttpStatusCode == System.Net.HttpStatusCode.OK)
                 {
-                    _logger.LogInformation($"Image {imageName} uploaded to S3 bucket {template}!");
+                    _logger.LogInformation("Image {imageName} uploaded to S3 bucket {template}!", imageName, template);
                     return true;
                 }
                 if(response.HttpStatusCode == System.Net.HttpStatusCode.InternalServerError)
                 {
-                    _logger.LogError($"Failed to upload image {imageName} to S3 bucket {template}, storage unavailable!");
+                    _logger.LogError("Failed to upload image {imageName} to S3 bucket {template}, storage unavailable!", imageName, template);
                     throw new StorageUnavailibleException("Failed to upload image to S3 bucket, storage unavailable!");
                 }
-                _logger.LogError($"Failed to upload image {imageName} to S3 bucket {template}, unhandled exception!" + response.ToString());
+                _logger.LogError("Failed to upload image {imageName} to S3 bucket {template}, unhandled exception! {response}" , imageName, template, response.ToString());
                 throw new UploadImageException($"Failed to upload image {imageName} to S3 bucket {template}, unhandled exception!" + response.ToString());
             }
             catch (Exception ex)
