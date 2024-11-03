@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Amazon.S3;
 using Amazon.S3.Model;
 using Amazon.S3.Util;
+using ImageAgregationService.Exceptions.S3ServiceExceptions;
 using TourService.Database.Models;
 using TourService.Exceptions.S3ServiceExceptions;
 using TourService.Utils.Models;
