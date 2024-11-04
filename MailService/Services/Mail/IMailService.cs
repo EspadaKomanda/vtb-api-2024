@@ -1,0 +1,1 @@
+namespace MailService.Services.Mail;
