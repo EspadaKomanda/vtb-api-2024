@@ -6,7 +6,8 @@
         "price": 15000,
         "distance": 300,
         "rating": 4.5,
-        "credit": true
+        "credit": true,
+        "image": "/images/exemple_tour1.png"
     },
     {
         "id": 2,
@@ -15,7 +16,8 @@
         "price": 20000,
         "distance": 500,
         "rating": 4.8,
-        "credit": false
+        "credit": false,
+        "image": "/images/slider1.png"
     },
     {
         "id": 3,
@@ -24,7 +26,8 @@
         "price": 12000,
         "distance": 800,
         "rating": 4.7,
-        "credit": true
+        "credit": true,
+        "image": "/images/slider1.png"
     },
     {
         "id": 4,
@@ -33,7 +36,8 @@
         "price": 25000,
         "distance": 1000,
         "rating": 4.9,
-        "credit": false
+        "credit": false,
+        "image": "/images/slider1.png"
     },
     {
         "id": 5,
@@ -42,6 +46,7 @@
         "price": 30000,
         "distance": 1200,
         "rating": 4.6,
-        "credit": true
+        "credit": true,
+        "image": "/images/slider1.png"
     }
 ]

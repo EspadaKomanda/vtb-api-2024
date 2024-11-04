@@ -6,6 +6,7 @@ import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 import '../styles/saerch_tour_component_styles.css';
 import StarRating from './star_rating.js';
+import TourItem from './tour_entertainment_component.js'
 
 class FilterData {
     constructor() {
@@ -87,7 +88,7 @@ export default function SearchTourComponent() {
                 </button>
                 
                 {isFilterVisible && (
-                    <div className="right-3 mt-4 px-8 py-2 bg-custom-bg-gray rounded lg:w-1/2 flex flex-col gap-y-2 absolute text-2xl">
+                    <div className="right-3 mt-4 px-8 py-2 z-10 bg-custom-bg-gray rounded lg:w-1/2 flex flex-col gap-y-2 absolute text-2xl">
                         <div className="flex justify-end items-center">
                             <Image 
                                 src={img.exit} 
@@ -112,7 +113,7 @@ export default function SearchTourComponent() {
                                 <label 
                                     htmlFor="tours" 
                                     className="flex items-center cursor-pointer text-white">
-                                    <span className={`w-5 h-5 inline-block mr-2 rounded-sm 
+                                    <span className={`w-5 h-5 inline-block mr-2 rounded-sm border-4 border-custom-border
                                         ${filters.tours ? 'bg-custom-gradient' : 'bg-custom-blur'} 
                                         transition duration-200`}>
                                         {filters.tours && <span className="block w-full h-full bg-custom-gradient rounded-sm"></span>}
@@ -134,7 +135,7 @@ export default function SearchTourComponent() {
                                 <label 
                                     htmlFor="entertainment" 
                                     className="flex items-center cursor-pointer text-white">
-                                    <span className={`w-5 h-5 inline-block mr-2 rounded-sm 
+                                    <span className={`w-5 h-5 inline-block mr-2 rounded-sm border-4 border-custom-border
                                         ${filters.entertainment ? 'bg-custom-gradient' : 'bg-custom-blur'} 
                                         transition duration-200`}>
                                         {filters.entertainment && <span className="block w-full h-full bg-custom-gradient rounded-sm"></span>}
@@ -235,7 +236,7 @@ export default function SearchTourComponent() {
                                 <label 
                                     htmlFor="credit" 
                                     className="flex items-center cursor-pointer text-white">
-                                    <span className={`w-5 h-5 inline-block mr-2 rounded-sm 
+                                    <span className={`w-5 h-5 inline-block mr-2 rounded-sm border-4 border-custom-border
                                         ${filters.credit ? 'bg-custom-gradient' : 'bg-custom-blur'} 
                                         transition duration-200`}>
                                         {filters.credit && <span className="block w-full h-full bg-custom-gradient rounded-sm"></span>}
@@ -282,16 +283,10 @@ export default function SearchTourComponent() {
             </form>
 
             <div className="mt-4">
-                <h3 className="text-white text-xl">Доступные туры и развлечения</h3>
                 <ul className="mt-2">
                     {tours.map((tour, index) => (
-                        <li key={index} className="p-4 rounded mb-2">
-                            <h4 className="text-white text-lg font-bold">{tour.name}</h4>
-                            <p className="text-gray-300">Описание: {tour.description}</p>
-                            <p className="text-gray-300">Цена: {tour.price} ₽</p>
-                            <p className="text-gray-300">Рейтинг: {tour.rating}</p>
-                        </li>
-                    ))}
+                    <TourItem key={index} tour={tour} />
+                ))}
                 </ul>
             </div>
         </div>

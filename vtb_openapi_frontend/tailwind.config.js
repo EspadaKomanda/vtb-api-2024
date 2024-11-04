@@ -24,6 +24,9 @@ module.exports = {
       screens: {
         'very-small': '450px',
       },
+      borderColor: {
+        'custom-border': '#0E162D',
+      },
     },
   },
   plugins: [],

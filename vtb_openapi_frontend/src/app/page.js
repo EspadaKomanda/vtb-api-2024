@@ -7,8 +7,8 @@ import Carousel from "../components/carousel_offers_component";
 
 export default function Home() {
   return (
-    <body>
-      <header className="main-bg background-section pt-8 mb-40 very-small:mb-0">
+    <>
+      <header className="main-bg background-section mb-40 very-small:mb-0">
         <NavigationComponent/>
         <MainFeatures />
       </header>
@@ -16,6 +16,6 @@ export default function Home() {
         <AccumulationComponent />
         <Carousel />
       </main>
-    </body>
+    </>
   );
 }
