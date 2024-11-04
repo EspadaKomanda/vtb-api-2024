@@ -1,14 +1,10 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace TourService.Attributes.Validation
 {
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
-    sealed public class Description : ValidationAttribute
+    sealed public class TourDescription : ValidationAttribute
     {
         private static readonly string[] ProhibitedWords = 
         { 
