@@ -5,17 +5,15 @@ using TourService.Attributes.Validation;
 namespace TourService.Database.Models
 {
     [Index(nameof(TourId), nameof(UserId), IsUnique = true)]
-    [Index(nameof(EntertainmentId), nameof(UserId), IsUnique = true)]
     public class Review
     {
         [Key]
         public long Id { get; set; }
 
-        public long? TourId { get; set; }
-        public Tour? Tour { get; set; }
+        [Required]
+        public long TourId { get; set; }
+        public Tour Tour { get; set; } = null!;
 
-        public long? EntertainmentId { get; set; }
-        public Entertainment? Entertainment { get; set; }
 
         [Required]
         public long UserId { get; set; }

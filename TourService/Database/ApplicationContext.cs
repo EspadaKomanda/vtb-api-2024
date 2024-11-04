@@ -7,8 +7,6 @@ namespace TourService.Database
     {
         public DbSet<Benefit> Benefits { get; set; } = null!;
         public DbSet<Category> Categories { get; set; } = null!;
-        public DbSet<EntartainmentWish> EntartaimentWishes { get; set; } = null!;
-        public DbSet<Entertainment> Entertaiments { get; set; } = null!;
         public DbSet<Photo> Photos { get; set; } = null!;
         public DbSet<Review> Reviews { get; set; } = null!;
         public DbSet<ReviewBenefit> ReviewBenefits { get; set; } = null!;
