@@ -9,5 +9,6 @@ public class SendMailRequest
     public string? Subject { get; set; }
     public string Body { get; set; } = null!;
     public bool IsHtml { get; set; } = false;
+    public bool IsDummy { get; set; } = false;
 
 }
