@@ -4,7 +4,6 @@ export default function Search() {
     return (
         <div>
             <header className=" text-white">
-                {/* TODO: Скорректировать цвет навигационной панели на этой странице */}
                 <NavigationComponent/>
             </header>
             <main className="container p-5">

@@ -1,6 +1,3 @@
-// TourItem.jsx
-
-
 const TourItem = ({ tour }) => {
     return (
         <li className="relative h-96 flex flex-col justify-end rounded mb-10">
