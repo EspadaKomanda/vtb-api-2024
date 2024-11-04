@@ -11,7 +11,7 @@ namespace OpenApiService.Models.Responses.CreditOrganization
         [Required]
         public ProductData Data { get; set; } = null!;
         [Required]
-        public List<Link> Links{ get; set; } = null!;
+        public List<Link> Links { get; set; } = null!;
         [Required]
         public Meta Meta{ get; set; } = null!;
     }
