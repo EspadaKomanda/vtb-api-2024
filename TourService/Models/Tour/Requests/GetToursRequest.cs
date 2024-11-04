@@ -10,6 +10,8 @@ public class GetToursRequest
     public List<string>? TourTags { get; set; }
     [Rating]
     public int MinimalRating { get; set; } = 0;
+    [Rating]
+    public int MaximalRating { get; set; } = 5;
     public double MinimalPrice { get; set; } = 0;
     public double MaximalPrice { get; set; } = double.MaxValue;
 }

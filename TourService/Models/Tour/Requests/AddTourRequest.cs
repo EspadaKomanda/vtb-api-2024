@@ -23,9 +23,6 @@ public class AddTourRequest
 
     [Coordinates]
     public string? Coordinates { get; set; }
-
-    public double? SettlementDistance { get; set; }
-
     [Required]
     public bool IsActive { get; set; }
 }
