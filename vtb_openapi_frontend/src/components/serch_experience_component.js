@@ -8,14 +8,16 @@ import '../styles/serch_experience_component_styles.css';
 import StarRating from './star_rating.js';
 import ExperienceItem from './experience_component.js'
 import { motion, AnimatePresence } from 'framer-motion';
+import Pagination from './pagination.js';
 
 class FilterData {
     constructor() {
         this.search = '';
+        this.tours = false;
         this.experience = false;
         this.entertainment = false;
-        this.dateFrom = null;
-        this.dateTo = null;
+        this.dateFrom = '';
+        this.dateTo = '';
         this.priceFrom = 0;
         this.priceTo = 0;
         this.distanceFrom = 0;
@@ -27,27 +29,45 @@ class FilterData {
 }
 
 export default function SearchTourComponent() {
-
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
     const [isFilterVisible, setIsFilterVisible] = useState(false);
     const [filters, setFilters] = useState(new FilterData());
     const [experience, setExperience] = useState([]);
 
-    useEffect(() => {
-        const fetchExperience = async () => {
-            try {
-                const response = await fetch('/experience.json');
-                if (!response.ok) {
-                    throw new Error('Сеть не отвечает');
-                }
-                const data = await response.json();
-                setExperience(data);
-            } catch (error) {
-                console.error('Ошибка при загрузке данных:', error);
-            }
-        };
+    const fetchExperience = async (page) => {
+        try {
 
-        fetchExperience();
-    }, []);
+            const totalPagesResponse = await fetch('/serch_json_files/total_pages.json');
+            if (!totalPagesResponse.ok) {
+                throw new Error('Не удалось загрузить общее количество страниц');
+            }
+            const totalPagesData = await totalPagesResponse.json();
+            setTotalPages(totalPagesData.totalPages);
+
+            const experienceResponse = await fetch(`/serch_json_files/${page}_page.json`);
+            if (!experienceResponse.ok) {
+                throw new Error('Не удалось загрузить данные для страницы');
+            }
+            const experienceData = await experienceResponse.json();
+            setExperience(experienceData.tours);
+        } catch (error) {
+            console.error('Ошибка при загрузке данных:', error);
+        }
+    };
+    
+
+
+    useEffect(() => {
+        fetchExperience(currentPage);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, [currentPage]);
+    
+
+    const handlePageChange = (page) => {
+        setCurrentPage(page);
+    };
+    
 
     const toggleFilters = () => {
         setIsFilterVisible(!isFilterVisible);
@@ -97,7 +117,7 @@ export default function SearchTourComponent() {
                     animate={{ opacity: isFilterVisible ? 1 : 0, y: isFilterVisible ? 0 : -10 }}
                     exit={{ opacity: 0, y: -10 }}
                     transition={{ duration: 0.3 }}
-                    className={`right-3 mt-4 px-8 py-2 z-10 bg-custom-bg-gray rounded lg:w-1/2 flex flex-col gap-y-2 absolute text-2xl`}
+                    className={`right-3 mt-4 px-8 py-4 z-10 bg-custom-bg-gray rounded lg:w-1/2 flex flex-col gap-y-2 absolute text-2xl`}
                     >
                         <div className="flex justify-end items-center">
                             <Image 
@@ -301,6 +321,7 @@ export default function SearchTourComponent() {
                 ))}
                 </ul>
             </div>
+            <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
         </div>
     );
 }

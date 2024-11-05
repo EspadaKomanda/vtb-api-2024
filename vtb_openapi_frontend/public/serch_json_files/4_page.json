@@ -1,0 +1,55 @@
+{
+    "page": 4,
+    "tours": [
+        {
+            "id": 16,
+            "name": "Пасантинская крепость",
+            "date": "2023-10-01",
+            "price": 15000,
+            "distance": 300,
+            "rating": 4.5,
+            "credit": true,
+            "image": "/images/exemple_tour1.png"
+        },
+        {
+            "id": 17,
+            "name": "Черное море",
+            "date": "2023-10-15",
+            "price": 20000,
+            "distance": 500,
+            "rating": 4.8,
+            "credit": false,
+            "image": "/images/slider1.png"
+        },
+        {
+            "id": 18,
+            "name": "Ьапанский рейс",
+            "date": "2023-11-05",
+            "price": 12000,
+            "distance": 800,
+            "rating": 4.7,
+            "credit": true,
+            "image": "/images/slider1.png"
+        },
+        {
+            "id": 19,
+            "name": "Рейс в Санкт-Петербург",
+            "date": "2023-12-01",
+            "price": 25000,
+            "distance": 1000,
+            "rating": 4.9,
+            "credit": false,
+            "image": "/images/slider1.png"
+        },
+        {
+            "id": 20,
+            "name": "Хореоград в Нью-Йорке",
+            "date": "2023-11-20",
+            "price": 30000,
+            "distance": 1200,
+            "rating": 4.6,
+            "credit": true,
+            "image": "/images/slider1.png"
+        }
+    ]
+}

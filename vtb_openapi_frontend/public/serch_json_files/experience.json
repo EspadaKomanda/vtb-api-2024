@@ -1,0 +1,1103 @@
+[
+    {
+        "page": 1,
+        "tours": [
+            {
+                "id": 1,
+                "name": "Тур по Золотому кольцу",
+                "date": "2023-10-01",
+                "price": 15000,
+                "distance": 300,
+                "rating": 4.5,
+                "credit": true,
+                "image": "/images/exemple_tour1.png"
+            },
+            {
+                "id": 2,
+                "name": "Отдых на Черном море",
+                "date": "2023-10-15",
+                "price": 20000,
+                "distance": 500,
+                "rating": 4.8,
+                "credit": false,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 3,
+                "name": "Экскурсия в Санкт-Петербург",
+                "date": "2023-11-05",
+                "price": 12000,
+                "distance": 800,
+                "rating": 4.7,
+                "credit": true,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 4,
+                "name": "Горнолыжный курорт в Карпатах",
+                "date": "2023-12-01",
+                "price": 25000,
+                "distance": 1000,
+                "rating": 4.9,
+                "credit": false,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 5,
+                "name": "Круиз по Волге",
+                "date": "2023-11-20",
+                "price": 30000,
+                "distance": 1200,
+                "rating": 4.6,
+                "credit": true,
+                "image": "/images/slider1.png"
+            }
+        ]
+    },
+    {
+        "page": 2,
+        "tours": [
+            {
+                "id": 6,
+                "name": "Тур по Золотому кольцу",
+                "date": "2023-10-01",
+                "price": 15000,
+                "distance": 300,
+                "rating": 4.5,
+                "credit": true,
+                "image": "/images/exemple_tour1.png"
+            },
+            {
+                "id": 7,
+                "name": "Отдых на Черном море",
+                "date": "2023-10-15",
+                "price": 20000,
+                "distance": 500,
+                "rating": 4.8,
+                "credit": false,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 8,
+                "name": "Экскурсия в Санкт-Петербург",
+                "date": "2023-11-05",
+                "price": 12000,
+                "distance": 800,
+                "rating": 4.7,
+                "credit": true,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 9,
+                "name": "Горнолыжный курорт в Карпатах",
+                "date": "2023-12-01",
+                "price": 25000,
+                "distance": 1000,
+                "rating": 4.9,
+                "credit": false,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 10,
+                "name": "Круиз по Волге",
+                "date": "2023-11-20",
+                "price": 30000,
+                "distance": 1200,
+                "rating": 4.6,
+                "credit": true,
+                "image": "/images/slider1.png"
+            }
+        ]
+    },
+    {
+        "page": 3,
+        "tours": [
+            {
+                "id": 11,
+                "name": "Тур по Золотому кольцу",
+                "date": "2023-10-01",
+                "price": 15000,
+                "distance": 300,
+                "rating": 4.5,
+                "credit": true,
+                "image": "/images/exemple_tour1.png"
+            },
+            {
+                "id": 12,
+                "name": "Отдых на Черном море",
+                "date": "2023-10-15",
+                "price": 20000,
+                "distance": 500,
+                "rating": 4.8,
+                "credit": false,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 13,
+                "name": "Экскурсия в Санкт-Петербург",
+                "date": "2023-11-05",
+                "price": 12000,
+                "distance": 800,
+                "rating": 4.7,
+                "credit": true,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 14,
+                "name": "Горнолыжный курорт в Карпатах",
+                "date": "2023-12-01",
+                "price": 25000,
+                "distance": 1000,
+                "rating": 4.9,
+                "credit": false,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 15,
+                "name": "Круиз по Волге",
+                "date": "2023-11-20",
+                "price": 30000,
+                "distance": 1200,
+                "rating": 4.6,
+                "credit": true,
+                "image": "/images/slider1.png"
+            }
+        ]
+    },
+    {
+        "page": 4,
+        "tours": [
+            {
+                "id": 16,
+                "name": "Тур по Золотому кольцу",
+                "date": "2023-10-01",
+                "price": 15000,
+                "distance": 300,
+                "rating": 4.5,
+                "credit": true,
+                "image": "/images/exemple_tour1.png"
+            },
+            {
+                "id": 17,
+                "name": "Отдых на Черном море",
+                "date": "2023-10-15",
+                "price": 20000,
+                "distance": 500,
+                "rating": 4.8,
+                "credit": false,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 18,
+                "name": "Экскурсия в Санкт-Петербург",
+                "date": "2023-11-05",
+                "price": 12000,
+                "distance": 800,
+                "rating": 4.7,
+                "credit": true,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 19,
+                "name": "Горнолыжный курорт в Карпатах",
+                "date": "2023-12-01",
+                "price": 25000,
+                "distance": 1000,
+                "rating": 4.9,
+                "credit": false,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 20,
+                "name": "Круиз по Волге",
+                "date": "2023-11-20",
+                "price": 30000,
+                "distance": 1200,
+                "rating": 4.6,
+                "credit": true,
+                "image": "/images/slider1.png"
+            }
+        ]
+    },
+    {
+        "page": 5,
+        "tours": [
+            {
+                "id": 21,
+                "name": "Тур по Золотому кольцу",
+                "date": "2023-10-01",
+                "price": 15000,
+                "distance": 300,
+                "rating": 4.5,
+                "credit": true,
+                "image": "/images/exemple_tour1.png"
+            },
+            {
+                "id": 22,
+                "name": "Отдых на Черном море",
+                "date": "2023-10-15",
+                "price": 20000,
+                "distance": 500,
+                "rating": 4.8,
+                "credit": false,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 23,
+                "name": "Экскурсия в Санкт-Петербург",
+                "date": "2023-11-05",
+                "price": 12000,
+                "distance": 800,
+                "rating": 4.7,
+                "credit": true,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 24,
+                "name": "Горнолыжный курорт в Карпатах",
+                "date": "2023-12-01",
+                "price": 25000,
+                "distance": 1000,
+                "rating": 4.9,
+                "credit": false,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 25,
+                "name": "Круиз по Волге",
+                "date": "2023-11-20",
+                "price": 30000,
+                "distance": 1200,
+                "rating": 4.6,
+                "credit": true,
+                "image": "/images/slider1.png"
+            }
+        ]
+    },
+    {
+        "page": 6,
+        "tours": [
+            {
+                "id": 26,
+                "name": "Тур по Золотому кольцу",
+                "date": "2023-10-01",
+                "price": 15000,
+                "distance": 300,
+                "rating": 4.5,
+                "credit": true,
+                "image": "/images/exemple_tour1.png"
+            },
+            {
+                "id": 27,
+                "name": "Отдых на Черном море",
+                "date": "2023-10-15",
+                "price": 20000,
+                "distance": 500,
+                "rating": 4.8,
+                "credit": false,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 28,
+                "name": "Экскурсия в Санкт-Петербург",
+                "date": "2023-11-05",
+                "price": 12000,
+                "distance": 800,
+                "rating": 4.7,
+                "credit": true,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 29,
+                "name": "Горнолыжный курорт в Карпатах",
+                "date": "2023-12-01",
+                "price": 25000,
+                "distance": 1000,
+                "rating": 4.9,
+                "credit": false,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 30,
+                "name": "Круиз по Волге",
+                "date": "2023-11-20",
+                "price": 30000,
+                "distance": 1200,
+                "rating": 4.6,
+                "credit": true,
+                "image": "/images/slider1.png"
+            }
+        ]
+    },
+    {
+        "page": 7,
+        "tours": [
+            {
+                "id": 31,
+                "name": "Тур по Золотому кольцу",
+                "date": "2023-10-01",
+                "price": 15000,
+                "distance": 300,
+                "rating": 4.5,
+                "credit": true,
+                "image": "/images/exemple_tour1.png"
+            },
+            {
+                "id": 32,
+                "name": "Отдых на Черном море",
+                "date": "2023-10-15",
+                "price": 20000,
+                "distance": 500,
+                "rating": 4.8,
+                "credit": false,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 33,
+                "name": "Экскурсия в Санкт-Петербург",
+                "date": "2023-11-05",
+                "price": 12000,
+                "distance": 800,
+                "rating": 4.7,
+                "credit": true,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 34,
+                "name": "Горнолыжный курорт в Карпатах",
+                "date": "2023-12-01",
+                "price": 25000,
+                "distance": 1000,
+                "rating": 4.9,
+                "credit": false,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 35,
+                "name": "Круиз по Волге",
+                "date": "2023-11-20",
+                "price": 30000,
+                "distance": 1200,
+                "rating": 4.6,
+                "credit": true,
+                "image": "/images/slider1.png"
+            }
+        ]
+    },
+    {
+        "page": 8,
+        "tours": [
+            {
+                "id": 36,
+                "name": "Тур по Золотому кольцу",
+                "date": "2023-10-01",
+                "price": 15000,
+                "distance": 300,
+                "rating": 4.5,
+                "credit": true,
+                "image": "/images/exemple_tour1.png"
+            },
+            {
+                "id": 37,
+                "name": "Отдых на Черном море",
+                "date": "2023-10-15",
+                "price": 20000,
+                "distance": 500,
+                "rating": 4.8,
+                "credit": false,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 38,
+                "name": "Экскурсия в Санкт-Петербург",
+                "date": "2023-11-05",
+                "price": 12000,
+                "distance": 800,
+                "rating": 4.7,
+                "credit": true,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 39,
+                "name": "Горнолыжный курорт в Карпатах",
+                "date": "2023-12-01",
+                "price": 25000,
+                "distance": 1000,
+                "rating": 4.9,
+                "credit": false,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 40,
+                "name": "Круиз по Волге",
+                "date": "2023-11-20",
+                "price": 30000,
+                "distance": 1200,
+                "rating": 4.6,
+                "credit": true,
+                "image": "/images/slider1.png"
+            }
+        ]
+    },
+    {
+        "page": 9,
+        "tours": [
+            {
+                "id": 41,
+                "name": "Тур по Золотому кольцу",
+                "date": "2023-10-01",
+                "price": 15000,
+                "distance": 300,
+                "rating": 4.5,
+                "credit": true,
+                "image": "/images/exemple_tour1.png"
+            },
+            {
+                "id": 42,
+                "name": "Отдых на Черном море",
+                "date": "2023-10-15",
+                "price": 20000,
+                "distance": 500,
+                "rating": 4.8,
+                "credit": false,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 43,
+                "name": "Экскурсия в Санкт-Петербург",
+                "date": "2023-11-05",
+                "price": 12000,
+                "distance": 800,
+                "rating": 4.7,
+                "credit": true,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 44,
+                "name": "Горнолыжный курорт в Карпатах",
+                "date": "2023-12-01",
+                "price": 25000,
+                "distance": 1000,
+                "rating": 4.9,
+                "credit": false,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 45,
+                "name": "Круиз по Волге",
+                "date": "2023-11-20",
+                "price": 30000,
+                "distance": 1200,
+                "rating": 4.6,
+                "credit": true,
+                "image": "/images/slider1.png"
+            }
+        ]
+    },
+    {
+        "page": 10,
+        "tours": [
+            {
+                "id": 46,
+                "name": "Тур по Золотому кольцу",
+                "date": "2023-10-01",
+                "price": 15000,
+                "distance": 300,
+                "rating": 4.5,
+                "credit": true,
+                "image": "/images/exemple_tour1.png"
+            },
+            {
+                "id": 47,
+                "name": "Отдых на Черном море",
+                "date": "2023-10-15",
+                "price": 20000,
+                "distance": 500,
+                "rating": 4.8,
+                "credit": false,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 48,
+                "name": "Экскурсия в Санкт-Петербург",
+                "date": "2023-11-05",
+                "price": 12000,
+                "distance": 800,
+                "rating": 4.7,
+                "credit": true,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 49,
+                "name": "Горнолыжный курорт в Карпатах",
+                "date": "2023-12-01",
+                "price": 25000,
+                "distance": 1000,
+                "rating": 4.9,
+                "credit": false,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 50,
+                "name": "Круиз по Волге",
+                "date": "2023-11-20",
+                "price": 30000,
+                "distance": 1200,
+                "rating": 4.6,
+                "credit": true,
+                "image": "/images/slider1.png"
+            }
+        ]
+    },
+    {
+        "page": 11,
+        "tours": [
+            {
+                "id": 51,
+                "name": "Тур по Золотому кольцу",
+                "date": "2023-10-01",
+                "price": 15000,
+                "distance": 300,
+                "rating": 4.5,
+                "credit": true,
+                "image": "/images/exemple_tour1.png"
+            },
+            {
+                "id": 52,
+                "name": "Отдых на Черном море",
+                "date": "2023-10-15",
+                "price": 20000,
+                "distance": 500,
+                "rating": 4.8,
+                "credit": false,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 53,
+                "name": "Экскурсия в Санкт-Петербург",
+                "date": "2023-11-05",
+                "price": 12000,
+                "distance": 800,
+                "rating": 4.7,
+                "credit": true,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 54,
+                "name": "Горнолыжный курорт в Карпатах",
+                "date": "2023-12-01",
+                "price": 25000,
+                "distance": 1000,
+                "rating": 4.9,
+                "credit": false,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 55,
+                "name": "Круиз по Волге",
+                "date": "2023-11-20",
+                "price": 30000,
+                "distance": 1200,
+                "rating": 4.6,
+                "credit": true,
+                "image": "/images/slider1.png"
+            }
+        ]
+    },
+    {
+        "page": 12,
+        "tours": [
+            {
+                "id": 56,
+                "name": "Тур по Золотому кольцу",
+                "date": "2023-10-01",
+                "price": 15000,
+                "distance": 300,
+                "rating": 4.5,
+                "credit": true,
+                "image": "/images/exemple_tour1.png"
+            },
+            {
+                "id": 57,
+                "name": "Отдых на Черном море",
+                "date": "2023-10-15",
+                "price": 20000,
+                "distance": 500,
+                "rating": 4.8,
+                "credit": false,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 58,
+                "name": "Экскурсия в Санкт-Петербург",
+                "date": "2023-11-05",
+                "price": 12000,
+                "distance": 800,
+                "rating": 4.7,
+                "credit": true,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 59,
+                "name": "Горнолыжный курорт в Карпатах",
+                "date": "2023-12-01",
+                "price": 25000,
+                "distance": 1000,
+                "rating": 4.9,
+                "credit": false,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 60,
+                "name": "Круиз по Волге",
+                "date": "2023-11-20",
+                "price": 30000,
+                "distance": 1200,
+                "rating": 4.6,
+                "credit": true,
+                "image": "/images/slider1.png"
+            }
+        ]
+    },
+    {
+        "page": 13,
+        "tours": [
+            {
+                "id": 61,
+                "name": "Тур по Золотому кольцу",
+                "date": "2023-10-01",
+                "price": 15000,
+                "distance": 300,
+                "rating": 4.5,
+                "credit": true,
+                "image": "/images/exemple_tour1.png"
+            },
+            {
+                "id": 62,
+                "name": "Отдых на Черном море",
+                "date": "2023-10-15",
+                "price": 20000,
+                "distance": 500,
+                "rating": 4.8,
+                "credit": false,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 63,
+                "name": "Экскурсия в Санкт-Петербург",
+                "date": "2023-11-05",
+                "price": 12000,
+                "distance": 800,
+                "rating": 4.7,
+                "credit": true,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 64,
+                "name": "Горнолыжный курорт в Карпатах",
+                "date": "2023-12-01",
+                "price": 25000,
+                "distance": 1000,
+                "rating": 4.9,
+                "credit": false,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 65,
+                "name": "Круиз по Волге",
+                "date": "2023-11-20",
+                "price": 30000,
+                "distance": 1200,
+                "rating": 4.6,
+                "credit": true,
+                "image": "/images/slider1.png"
+            }
+        ]
+    },
+    {
+        "page": 14,
+        "tours": [
+            {
+                "id": 66,
+                "name": "Тур по Золотому кольцу",
+                "date": "2023-10-01",
+                "price": 15000,
+                "distance": 300,
+                "rating": 4.5,
+                "credit": true,
+                "image": "/images/exemple_tour1.png"
+            },
+            {
+                "id": 67,
+                "name": "Отдых на Черном море",
+                "date": "2023-10-15",
+                "price": 20000,
+                "distance": 500,
+                "rating": 4.8,
+                "credit": false,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 68,
+                "name": "Экскурсия в Санкт-Петербург",
+                "date": "2023-11-05",
+                "price": 12000,
+                "distance": 800,
+                "rating": 4.7,
+                "credit": true,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 69,
+                "name": "Горнолыжный курорт в Карпатах",
+                "date": "2023-12-01",
+                "price": 25000,
+                "distance": 1000,
+                "rating": 4.9,
+                "credit": false,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 70,
+                "name": "Круиз по Волге",
+                "date": "2023-11-20",
+                "price": 30000,
+                "distance": 1200,
+                "rating": 4.6,
+                "credit": true,
+                "image": "/images/slider1.png"
+            }
+        ]
+    },
+    {
+        "page": 15,
+        "tours": [
+            {
+                "id": 71,
+                "name": "Тур по Золотому кольцу",
+                "date": "2023-10-01",
+                "price": 15000,
+                "distance": 300,
+                "rating": 4.5,
+                "credit": true,
+                "image": "/images/exemple_tour1.png"
+            },
+            {
+                "id": 72,
+                "name": "Отдых на Черном море",
+                "date": "2023-10-15",
+                "price": 20000,
+                "distance": 500,
+                "rating": 4.8,
+                "credit": false,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 73,
+                "name": "Экскурсия в Санкт-Петербург",
+                "date": "2023-11-05",
+                "price": 12000,
+                "distance": 800,
+                "rating": 4.7,
+                "credit": true,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 74,
+                "name": "Горнолыжный курорт в Карпатах",
+                "date": "2023-12-01",
+                "price": 25000,
+                "distance": 1000,
+                "rating": 4.9,
+                "credit": false,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 75,
+                "name": "Круиз по Волге",
+                "date": "2023-11-20",
+                "price": 30000,
+                "distance": 1200,
+                "rating": 4.6,
+                "credit": true,
+                "image": "/images/slider1.png"
+            }
+        ]
+    },
+    {
+        "page": 16,
+        "tours": [
+            {
+                "id": 76,
+                "name": "Тур по Золотому кольцу",
+                "date": "2023-10-01",
+                "price": 15000,
+                "distance": 300,
+                "rating": 4.5,
+                "credit": true,
+                "image": "/images/exemple_tour1.png"
+            },
+            {
+                "id": 77,
+                "name": "Отдых на Черном море",
+                "date": "2023-10-15",
+                "price": 20000,
+                "distance": 500,
+                "rating": 4.8,
+                "credit": false,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 78,
+                "name": "Экскурсия в Санкт-Петербург",
+                "date": "2023-11-05",
+                "price": 12000,
+                "distance": 800,
+                "rating": 4.7,
+                "credit": true,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 79,
+                "name": "Горнолыжный курорт в Карпатах",
+                "date": "2023-12-01",
+                "price": 25000,
+                "distance": 1000,
+                "rating": 4.9,
+                "credit": false,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 80,
+                "name": "Круиз по Волге",
+                "date": "2023-11-20",
+                "price": 30000,
+                "distance": 1200,
+                "rating": 4.6,
+                "credit": true,
+                "image": "/images/slider1.png"
+            }
+        ]
+    },
+    {
+        "page": 17,
+        "tours": [
+            {
+                "id": 81,
+                "name": "Тур по Золотому кольцу",
+                "date": "2023-10-01",
+                "price": 15000,
+                "distance": 300,
+                "rating": 4.5,
+                "credit": true,
+                "image": "/images/exemple_tour1.png"
+            },
+            {
+                "id": 82,
+                "name": "Отдых на Черном море",
+                "date": "2023-10-15",
+                "price": 20000,
+                "distance": 500,
+                "rating": 4.8,
+                "credit": false,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 83,
+                "name": "Экскурсия в Санкт-Петербург",
+                "date": "2023-11-05",
+                "price": 12000,
+                "distance": 800,
+                "rating": 4.7,
+                "credit": true,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 84,
+                "name": "Горнолыжный курорт в Карпатах",
+                "date": "2023-12-01",
+                "price": 25000,
+                "distance": 1000,
+                "rating": 4.9,
+                "credit": false,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 85,
+                "name": "Круиз по Волге",
+                "date": "2023-11-20",
+                "price": 30000,
+                "distance": 1200,
+                "rating": 4.6,
+                "credit": true,
+                "image": "/images/slider1.png"
+            }
+        ]
+    },
+    {
+        "page": 18,
+        "tours": [
+            {
+                "id": 86,
+                "name": "Тур по Золотому кольцу",
+                "date": "2023-10-01",
+                "price": 15000,
+                "distance": 300,
+                "rating": 4.5,
+                "credit": true,
+                "image": "/images/exemple_tour1.png"
+            },
+            {
+                "id": 87,
+                "name": "Отдых на Черном море",
+                "date": "2023-10-15",
+                "price": 20000,
+                "distance": 500,
+                "rating": 4.8,
+                "credit": false,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 88,
+                "name": "Экскурсия в Санкт-Петербург",
+                "date": "2023-11-05",
+                "price": 12000,
+                "distance": 800,
+                "rating": 4.7,
+                "credit": true,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 89,
+                "name": "Горнолыжный курорт в Карпатах",
+                "date": "2023-12-01",
+                "price": 25000,
+                "distance": 1000,
+                "rating": 4.9,
+                "credit": false,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 90,
+                "name": "Круиз по Волге",
+                "date": "2023-11-20",
+                "price": 30000,
+                "distance": 1200,
+                "rating": 4.6,
+                "credit": true,
+                "image": "/images/slider1.png"
+            }
+        ]
+    },
+    {
+        "page": 19,
+        "tours": [
+            {
+                "id": 91,
+                "name": "Тур по Золотому кольцу",
+                "date": "2023-10-01",
+                "price": 15000,
+                "distance": 300,
+                "rating": 4.5,
+                "credit": true,
+                "image": "/images/exemple_tour1.png"
+            },
+            {
+                "id": 92,
+                "name": "Отдых на Черном море",
+                "date": "2023-10-15",
+                "price": 20000,
+                "distance": 500,
+                "rating": 4.8,
+                "credit": false,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 93,
+                "name": "Экскурсия в Санкт-Петербург",
+                "date": "2023-11-05",
+                "price": 12000,
+                "distance": 800,
+                "rating": 4.7,
+                "credit": true,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 94,
+                "name": "Горнолыжный курорт в Карпатах",
+                "date": "2023-12-01",
+                "price": 25000,
+                "distance": 1000,
+                "rating": 4.9,
+                "credit": false,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 95,
+                "name": "Круиз по Волге",
+                "date": "2023-11-20",
+                "price": 30000,
+                "distance": 1200,
+                "rating": 4.6,
+                "credit": true,
+                "image": "/images/slider1.png"
+            }
+        ]
+    },
+    {
+        "page": 20,
+        "tours": [
+            {
+                "id": 96,
+                "name": "Тур по Золотому кольцу",
+                "date": "2023-10-01",
+                "price": 15000,
+                "distance": 300,
+                "rating": 4.5,
+                "credit": true,
+                "image": "/images/exemple_tour1.png"
+            },
+            {
+                "id": 97,
+                "name": "Отдых на Черном море",
+                "date": "2023-10-15",
+                "price": 20000,
+                "distance": 500,
+                "rating": 4.8,
+                "credit": false,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 98,
+                "name": "Экскурсия в Санкт-Петербург",
+                "date": "2023-11-05",
+                "price": 12000,
+                "distance": 800,
+                "rating": 4.7,
+                "credit": true,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 99,
+                "name": "Горнолыжный курорт в Карпатах",
+                "date": "2023-12-01",
+                "price": 25000,
+                "distance": 1000,
+                "rating": 4.9,
+                "credit": false,
+                "image": "/images/slider1.png"
+            },
+            {
+                "id": 100,
+                "name": "Круиз по Волге",
+                "date": "2023-11-20",
+                "price": 30000,
+                "distance": 1200,
+                "rating": 4.6,
+                "credit": true,
+                "image": "/images/slider1.png"
+            }
+        ]
+    }
+]
+
