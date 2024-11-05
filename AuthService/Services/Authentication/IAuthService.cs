@@ -9,7 +9,7 @@ namespace AuthService.Services.Authentication;
 /// </summary>
 public interface IAuthenticationService
 {
-    public Task<ValidatedUser> ValidateAccessToken(ValidateAccessTokenRequest request);
-    public Task<ValidatedUser> ValidateRefreshToken(ValidateRefreshTokenRequest request);
+    public Task<ValidateAccessTokenResponse> ValidateAccessToken(ValidateAccessTokenRequest request);
+    public Task<ValidateRefreshTokenResponse> ValidateRefreshToken(ValidateRefreshTokenRequest request);
     public Task<RefreshResponse> Refresh(RefreshRequest request);
 }

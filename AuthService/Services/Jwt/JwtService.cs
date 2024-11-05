@@ -43,7 +43,7 @@ public class JwtService(IConfiguration configuration, IAccessDataCacheService ac
         return tokenHandler.WriteToken(token);
     }
 
-    private ValidatedUser? ValidateToken(string token, string wantedTokenType, bool checkSalt = true)
+    private async Task<ValidatedUser?> ValidateToken(string token, string wantedTokenType, bool checkSalt = true)
     {
         try {
             var tokenHandler = new JwtSecurityTokenHandler();
@@ -77,7 +77,7 @@ public class JwtService(IConfiguration configuration, IAccessDataCacheService ac
 
             if (checkSalt)
             {
-                var accessData = _adcs.Get(username) ?? throw new UserNotFoundException($"User not found: {username}");
+                var accessData = await _adcs.Get(username) ?? throw new UserNotFoundException($"User not found: {username}");
                 // TODO: If salt does not match the user, throw an exception
                 // throw new SessionTerminatedException("Invalid token");
             }
@@ -115,13 +115,13 @@ public class JwtService(IConfiguration configuration, IAccessDataCacheService ac
         );
     }
 
-    public ValidatedUser? ValidateAccessToken(string token)
+    public async Task<ValidatedUser?> ValidateAccessToken(string token)
     {
-        return ValidateToken(token, "access");
+        return await ValidateToken(token, "access");
     }
 
-    public ValidatedUser? ValidateRefreshToken(string token)
+    public async Task<ValidatedUser?> ValidateRefreshToken(string token)
     {
-        return ValidateToken(token, "refresh");
+        return await ValidateToken(token, "refresh");
     }
 }

@@ -20,7 +20,7 @@ public class AuthenticationService(IJwtService jwtService, IAccessDataCacheServi
         try
         {
             _logger.LogDebug("Validating refresh token via jwtService...");
-            var user = _jwtService.ValidateRefreshToken(token);
+            var user = await _jwtService.ValidateRefreshToken(token);
             
             if (user == null)
             {
@@ -48,13 +48,53 @@ public class AuthenticationService(IJwtService jwtService, IAccessDataCacheServi
         }
     }
 
-    public Task<ValidatedUser> ValidateAccessToken(ValidateAccessTokenRequest request)
+    public async Task<ValidateAccessTokenResponse> ValidateAccessToken(ValidateAccessTokenRequest request)
     {
-        throw new NotImplementedException();
+        string token = request.AccessToken;
+        try
+        {
+            _logger.LogDebug("Validating access token via jwtService...");
+            var user = await _jwtService.ValidateAccessToken(token);
+            
+            if (user == null)
+            {
+                _logger.LogDebug("Token validation was not successful");
+                throw new InvalidTokenException("Invalid access token");
+            }
+            
+            _logger.LogDebug("Token was successfully validated");
+
+            return new ValidateAccessTokenResponse { IsSuccess = true };
+        }
+        catch (Exception)
+        {
+            _logger.LogDebug("Refresh token was rejected due to an error");
+            throw new InvalidTokenException("Invalid access token");
+        }
     }
 
-    public Task<ValidatedUser> ValidateRefreshToken(ValidateRefreshTokenRequest request)
+    public async Task<ValidateRefreshTokenResponse> ValidateRefreshToken(ValidateRefreshTokenRequest request)
     {
-        throw new NotImplementedException();
+        string token = request.RefreshToken;
+        try
+        {
+            _logger.LogDebug("Validating access token via jwtService...");
+            var user = await _jwtService.ValidateRefreshToken(token);
+            
+            if (user == null)
+            {
+                _logger.LogDebug("Token validation was not successful");
+                throw new InvalidTokenException("Invalid refresh token");
+            }
+            
+            _logger.LogDebug("Token was successfully validated");
+
+            return new ValidateRefreshTokenResponse { IsSuccess = true };
+        }
+        catch (Exception)
+        {
+            _logger.LogDebug("Refresh token was rejected due to an error");
+            throw new InvalidTokenException("Invalid refresh token");
+        }
     }
 }

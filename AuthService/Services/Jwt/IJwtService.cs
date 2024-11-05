@@ -10,6 +10,6 @@ public interface IJwtService
 {
     string GenerateAccessToken(UserAccessData user);
     string GenerateRefreshToken(UserAccessData user);
-    ValidatedUser? ValidateAccessToken(string token);
-    ValidatedUser? ValidateRefreshToken(string token);
+    Task<ValidatedUser?> ValidateAccessToken(string token);
+    Task<ValidatedUser?> ValidateRefreshToken(string token);
 }
