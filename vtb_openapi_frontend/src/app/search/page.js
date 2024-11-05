@@ -1,5 +1,5 @@
 import NavigationComponent from "@/components/navigation_component";
-import SearchTourComponent from "@/components/serch_tour_component";
+import SearchTourComponent from "@/components/serch_experience_component";
 export default function Search() {
     return (
         <div>

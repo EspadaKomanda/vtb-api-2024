@@ -4,16 +4,15 @@ import Image from 'next/image';
 import * as img from '../assets/images.js';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
-import '../styles/saerch_tour_component_styles.css';
+import '../styles/serch_experience_component_styles.css';
 import StarRating from './star_rating.js';
-import TourItem from './tour_entertainment_component.js'
+import ExperienceItem from './experience_component.js'
 import { motion, AnimatePresence } from 'framer-motion';
-
 
 class FilterData {
     constructor() {
         this.search = '';
-        this.tours = false;
+        this.experience = false;
         this.entertainment = false;
         this.dateFrom = null;
         this.dateTo = null;
@@ -28,25 +27,26 @@ class FilterData {
 }
 
 export default function SearchTourComponent() {
+
     const [isFilterVisible, setIsFilterVisible] = useState(false);
     const [filters, setFilters] = useState(new FilterData());
-    const [tours, setTours] = useState([]);
+    const [experience, setExperience] = useState([]);
 
     useEffect(() => {
-        const fetchTours = async () => {
+        const fetchExperience = async () => {
             try {
-                const response = await fetch('/tours.json');
+                const response = await fetch('/experience.json');
                 if (!response.ok) {
                     throw new Error('Сеть не отвечает');
                 }
                 const data = await response.json();
-                setTours(data);
+                setExperience(data);
             } catch (error) {
                 console.error('Ошибка при загрузке данных:', error);
             }
         };
 
-        fetchTours();
+        fetchExperience();
     }, []);
 
     const toggleFilters = () => {
@@ -93,10 +93,10 @@ export default function SearchTourComponent() {
                 <AnimatePresence>
                 {isFilterVisible && (
                     <motion.div
-                    initial={{ opacity: 0, y: -10 }} // Начальное состояние
-                    animate={{ opacity: isFilterVisible ? 1 : 0, y: isFilterVisible ? 0 : -10 }} // Анимация появления
-                    exit={{ opacity: 0, y: -10 }} // Анимация ухода
-                    transition={{ duration: 0.3 }} // Длительность анимации
+                    initial={{ opacity: 0, y: -10 }}
+                    animate={{ opacity: isFilterVisible ? 1 : 0, y: isFilterVisible ? 0 : -10 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.3 }}
                     className={`right-3 mt-4 px-8 py-2 z-10 bg-custom-bg-gray rounded lg:w-1/2 flex flex-col gap-y-2 absolute text-2xl`}
                     >
                         <div className="flex justify-end items-center">
@@ -296,8 +296,8 @@ export default function SearchTourComponent() {
 
             <div className="mt-4">
                 <ul className="mt-2">
-                    {tours.map((tour, index) => (
-                    <TourItem key={index} tour={tour} />
+                    {experience.map((experience, index) => (
+                    <ExperienceItem key={index} experience={experience} />
                 ))}
                 </ul>
             </div>
