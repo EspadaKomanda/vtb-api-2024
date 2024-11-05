@@ -7,6 +7,8 @@ import 'rc-slider/assets/index.css';
 import '../styles/saerch_tour_component_styles.css';
 import StarRating from './star_rating.js';
 import TourItem from './tour_entertainment_component.js'
+import { motion, AnimatePresence } from 'framer-motion';
+
 
 class FilterData {
     constructor() {
@@ -75,20 +77,28 @@ export default function SearchTourComponent() {
                 <input 
                     type="text" 
                     placeholder="Введите название тура" 
-                    className="mt-4 p-2 w-full rounded bg-custom-bg-gray"
+                    className="mt-4 p-2 w-full rounded bg-custom-bg-gray text-white outline-none"
                     value={filters.search}
                     onChange={(e) => setFilters({ ...filters, search: e.target.value })}
                 />
                 <button 
                     type="button" 
                     onClick={toggleFilters} 
-                    className="sm:right-28 right-20 top-6 absolute"
+                    className="sm:right-28 right-20 top-6 absolute transition duration-300 hover:scale-105 active:scale-95"
                 >
                     <Image src={img.filter} alt="filter" width={25} height={25} className='ml-auto' />
                 </button>
-                
+
+
+                <AnimatePresence>
                 {isFilterVisible && (
-                    <div className="right-3 mt-4 px-8 py-2 z-10 bg-custom-bg-gray rounded lg:w-1/2 flex flex-col gap-y-2 absolute text-2xl">
+                    <motion.div
+                    initial={{ opacity: 0, y: -10 }} // Начальное состояние
+                    animate={{ opacity: isFilterVisible ? 1 : 0, y: isFilterVisible ? 0 : -10 }} // Анимация появления
+                    exit={{ opacity: 0, y: -10 }} // Анимация ухода
+                    transition={{ duration: 0.3 }} // Длительность анимации
+                    className={`right-3 mt-4 px-8 py-2 z-10 bg-custom-bg-gray rounded lg:w-1/2 flex flex-col gap-y-2 absolute text-2xl`}
+                    >
                         <div className="flex justify-end items-center">
                             <Image 
                                 src={img.exit} 
@@ -271,15 +281,17 @@ export default function SearchTourComponent() {
                         >
                             Сбросить
                         </button>
-                    </div>
+                    </motion.div>
                 )}
+                </AnimatePresence>
 
                 <button 
                     type="submit" 
-                    className="bg-custom-gradient text-white py-1 px-2 sm:px-5 rounded right-1 top-5 absolute"
+                    className="bg-custom-gradient text-white py-1 px-2 sm:px-5 rounded right-1 top-5 absolute transition duration-300 hover:scale-105 active:scale-95"
                 >
                     Найти
                 </button>
+
             </form>
 
             <div className="mt-4">
