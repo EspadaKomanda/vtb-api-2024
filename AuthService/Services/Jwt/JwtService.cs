@@ -4,13 +4,15 @@ using System.Text;
 using AuthService.Exceptions.Auth;
 using AuthService.Models;
 using AuthService.Security;
+using AuthService.Services.AccessDataCache;
 using AuthService.Services.Models;
 using Microsoft.IdentityModel.Tokens;
 
 namespace AuthService.Services.Jwt;
 
-public class JwtService(IConfiguration configuration, ILogger<JwtService> logger) : IJwtService
+public class JwtService(IConfiguration configuration, IAccessDataCacheService accessDataCacheService, ILogger<JwtService> logger) : IJwtService
 {
+    private readonly IAccessDataCacheService _adcs = accessDataCacheService;
     private readonly IConfiguration _configuration = configuration;
     private readonly ILogger<JwtService> _logger = logger;
 
@@ -69,10 +71,13 @@ public class JwtService(IConfiguration configuration, ILogger<JwtService> logger
                 throw new InvalidTokenTypeException("Invalid token type");
             }
 
-            // TODO: Get salt from token
+            string username = tokenHandler.ReadJwtToken(token).Claims.First(x => x.Type == ClaimTypes.Name).Value;
             string salt = tokenHandler.ReadJwtToken(token).Claims.First(x => x.Type == JwtClaims.Salt).Value;
-            if (checkSalt) 
+
+
+            if (checkSalt)
             {
+                var accessData = _adcs.Get(username) ?? throw new UserNotFoundException($"User not found: {username}");
                 // TODO: If salt does not match the user, throw an exception
                 // throw new SessionTerminatedException("Invalid token");
             }

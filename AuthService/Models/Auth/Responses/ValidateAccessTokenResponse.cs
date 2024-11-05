@@ -1,4 +1,4 @@
-namespace AuthService.Models.Auth.Responses;
+namespace AuthService.Models.Authentication.Responses;
 
 public class ValidateAccessTokenResponse
 {
