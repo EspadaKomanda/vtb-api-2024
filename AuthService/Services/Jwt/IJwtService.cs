@@ -1,14 +1,15 @@
+using AuthService.Models;
 using AuthService.Services.Models;
 
 namespace AuthService.Services.Jwt;
 
+/// <summary>
+/// IJwtService служит для работы с JWT токенами.
+/// </summary>
 public interface IJwtService
 {
-    /// <summary>
-    /// Генерирует access и refresh токены.
-    /// </summary>
-    string GenerateAccessToken(User user);
-    string GenerateRefreshToken(User user);
-    User ValidateAccessToken(string token);
-    User ValidateRefreshToken(string token);
+    string GenerateAccessToken(UserAccessData user);
+    string GenerateRefreshToken(UserAccessData user);
+    ValidatedUser? ValidateAccessToken(string token);
+    ValidatedUser? ValidateRefreshToken(string token);
 }

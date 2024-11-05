@@ -1,26 +1,122 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using AuthService.Exceptions.Auth;
+using AuthService.Models;
+using AuthService.Security;
 using AuthService.Services.Models;
+using Microsoft.IdentityModel.Tokens;
 
 namespace AuthService.Services.Jwt;
 
-public class JwtService : IJwtService
+public class JwtService(IConfiguration configuration, ILogger<JwtService> logger) : IJwtService
 {
-    public string GenerateAccessToken(User user)
+    private readonly IConfiguration _configuration = configuration;
+    private readonly ILogger<JwtService> _logger = logger;
+
+    private string GenerateToken(UserAccessData user, string tokenType, double expireMinutes)
     {
-        throw new NotImplementedException();
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var key = Encoding.ASCII.GetBytes(
+            _configuration["Jwt:Key"] ?? throw new MissingConfigurationException("Jwt:Key")
+        );
+
+        var tokenDescriptor = new SecurityTokenDescriptor
+        {
+            Subject = new ClaimsIdentity(new Claim[]
+            {
+                new(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new(ClaimTypes.Name, user.Username),
+                new(ClaimTypes.Role, user.Role),
+                new(JwtClaims.Salt, user.Salt), // Salt пользователя
+                new(JwtClaims.TokenType, tokenType), // Тип токена
+                new(JwtRegisteredClaimNames.Aud, _configuration["Jwt:Audience"] ?? throw new MissingConfigurationException("Jwt:Audience")),
+                new(JwtRegisteredClaimNames.Iss, _configuration["Jwt:Issuer"] ?? throw new MissingConfigurationException("Jwt:Issuer"))
+            }),
+            Expires = DateTime.UtcNow.AddMinutes(expireMinutes),
+            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+        };
+
+        var token = tokenHandler.CreateToken(tokenDescriptor);
+        return tokenHandler.WriteToken(token);
     }
 
-    public string GenerateRefreshToken(User user)
+    private ValidatedUser? ValidateToken(string token, string wantedTokenType, bool checkSalt = true)
     {
-        throw new NotImplementedException();
+        try {
+            var tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.UTF8.GetBytes(_configuration["Jwt:Key"] ?? throw new MissingConfigurationException("Jwt:Key"));
+
+            tokenHandler.ValidateToken(token, new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+                IssuerSigningKey = new SymmetricSecurityKey(key),
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidIssuer = _configuration["Jwt:Issuer"],
+                ValidAudience = _configuration["Jwt:Audience"],
+                ValidateLifetime = true,
+            }, out SecurityToken validatedToken);
+
+            if (validatedToken == null)
+            {
+                throw new InvalidTokenException("Invalid token");
+            }
+
+            // Validate token type
+            string type = tokenHandler.ReadJwtToken(token).Claims.First(x => x.Type == JwtClaims.TokenType).Value;
+            if ( type != wantedTokenType) {
+                throw new InvalidTokenTypeException("Invalid token type");
+            }
+
+            // TODO: Get salt from token
+            string salt = tokenHandler.ReadJwtToken(token).Claims.First(x => x.Type == JwtClaims.Salt).Value;
+            if (checkSalt) 
+            {
+                // TODO: If salt does not match the user, throw an exception
+                // throw new SessionTerminatedException("Invalid token");
+            }
+
+            ValidatedUser user = new() {
+                Id = int.Parse(tokenHandler.ReadJwtToken(token).Claims.First(x => x.Type == ClaimTypes.NameIdentifier).Value),
+                Username = tokenHandler.ReadJwtToken(token).Claims.First(x => x.Type == ClaimTypes.Name).Value,
+                Role = tokenHandler.ReadJwtToken(token).Claims.First(x => x.Type == ClaimTypes.Role).Value
+            };
+
+            return user;
+        }
+        catch (Exception e) {
+            _logger.LogDebug("Invalidated an {wantedTokenType} token: {e}", wantedTokenType, e.Message);
+            return null;
+        }
     }
 
-    public User ValidateAccessToken(string token)
+
+    public string GenerateAccessToken(UserAccessData user)
     {
-        throw new NotImplementedException();
+        return GenerateToken(
+            user, 
+            "access", 
+            int.Parse(_configuration["Jwt:AccessExpires"] ?? throw new MissingConfigurationException("Jwt:AccessExpires"))
+        );
     }
 
-    public User ValidateRefreshToken(string token)
+    public string GenerateRefreshToken(UserAccessData user)
     {
-        throw new NotImplementedException();
+        return GenerateToken(
+            user, 
+            "refresh", 
+            int.Parse(_configuration["Jwt:RefreshExpires"] ?? throw new MissingConfigurationException("Jwt:RefreshExpires"))
+        );
+    }
+
+    public ValidatedUser? ValidateAccessToken(string token)
+    {
+        return ValidateToken(token, "access");
+    }
+
+    public ValidatedUser? ValidateRefreshToken(string token)
+    {
+        return ValidateToken(token, "refresh");
     }
 }

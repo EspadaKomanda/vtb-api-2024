@@ -1,6 +1,3 @@
-using AuthService.Models.Auth.Requests;
-using AuthService.Models.Auth.Responses;
-
 namespace AuthService.Services.Auth;
 
 /// <summary>
@@ -8,5 +5,4 @@ namespace AuthService.Services.Auth;
 /// </summary>
 public interface IAuthService
 {
-    Task<RefreshResponse> Refresh(RefreshRequest request);
 }
