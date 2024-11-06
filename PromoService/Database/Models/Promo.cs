@@ -8,6 +8,11 @@ public class Promo
     public long Id { get; set; }
 
     [Required]
+    public string Code { get; set; } = null!;
+
+    public string? Description { get; set; }
+
+    [Required]
     public bool IsActive { get; set; }
 
     [Required]
