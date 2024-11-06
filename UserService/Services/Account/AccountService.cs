@@ -178,18 +178,18 @@ public class AccountService(IUnitOfWork unitOfWork, ILogger<AccountService> logg
         };
     }
 
-    public async Task<ChangePasswordResponse> ChangePassword(ChangePasswordRequest request, long userId)
+    public async Task<ChangePasswordResponse> ChangePassword(ChangePasswordRequest request)
     {
         User user;
         try 
         {
-            user = await _uow.Users.FindOneAsync(u => u.Id == userId);
+            user = await _uow.Users.FindOneAsync(u => u.Id == request.UserId);
             _logger.LogDebug("Found user {user.Id} with email {user.Email}", user.Id, user.Email);
         }
         catch (NullReferenceException)
         {
-            _logger.LogDebug("No user with id {userId} found to change password", userId);
-            throw new UserNotFoundException($"No user with id {userId} found");
+            _logger.LogDebug("No user with id {userId} found to change password", request.UserId);
+            throw new UserNotFoundException($"No user with id {request.UserId} found");
         }
 
         // Verify old password
