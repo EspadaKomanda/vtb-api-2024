@@ -24,6 +24,7 @@ nav a:hover {
         color: #ffffff;
         background-color: #4A5068;
         border-radius: 41px;
+        margin: 0 20px;
     }
 
     .active {

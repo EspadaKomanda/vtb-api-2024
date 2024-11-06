@@ -1,5 +1,5 @@
-"use client"
 import Link from 'next/link';
+import StarRating from './star_rating.js';
 
 const ExperienceItem = ({ experience }) => {
     return (
@@ -15,7 +15,11 @@ const ExperienceItem = ({ experience }) => {
                     <h4 className="text-white text-lg font-bold">{experience.name}</h4>
                     <p className="text-gray-300">Описание: {experience.description}</p>
                     <p className="text-gray-300">Цена: {experience.price} ₽</p>
-                    <p className="text-gray-300">Рейтинг: {experience.rating}</p>
+                    <div className='flex'>
+                        <p className="text-gray-300 mr-2">Рейтинг:</p> 
+                        <StarRating rating={experience.rating} editable={false}/>
+                    </div>
+                    
                 </div>
             </Link>
         </li>

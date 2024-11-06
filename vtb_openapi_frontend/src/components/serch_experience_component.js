@@ -39,6 +39,7 @@ export default function SearchTourComponent() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const experiences = experienceStore((state) => state.experiences);
+    const [categories, setCategories] = useState([]);
 
     const fetchExperiences = async (page) => {
         try {
@@ -50,6 +51,11 @@ export default function SearchTourComponent() {
             const experiencesResponse = await fetch(`/serch_json_files/${page}_page.json`);
             const experiencesData = await experiencesResponse.json();
             setExperiences(experiencesData.experiences);
+            
+            const response = await fetch('/serch_json_files/categories.json');
+            const data = await response.json();
+            setCategories(data);
+            
         } catch (error) {
             setError('Ошибка при загрузке данных');
         } finally {
@@ -90,6 +96,21 @@ export default function SearchTourComponent() {
         setFilters({ ...filters, priceFrom: value[0], priceTo: value[1] });
     };
 
+    const handleCategoryChange = (e) => {
+        const { value, checked } = e.target;
+        if (checked) {
+            setFilters((prev) => ({
+                ...prev,
+                types: [...prev.types, value],
+            }));
+        } else {
+            setFilters((prev) => ({
+                ...prev,
+                types: prev.types.filter((type) => type !== value),
+            }));
+        }
+    };
+
     if (loading) {
         return <div className='text-3xl text-white'>Загрузка...</div>;
     }
@@ -105,7 +126,7 @@ export default function SearchTourComponent() {
                 <input 
                     type="text" 
                     placeholder="Введите название тура" 
-                    className="mt-4 p-2 w-full rounded bg-custom-bg-gray text-white outline-none"
+                    className="mt-4 mb-5 p-2 w-full rounded bg-custom-bg-gray text-white outline-none"
                     value={filters.search}
                     onChange={(e) => setFilters({ ...filters, search: e.target.value })}
                 />
@@ -134,7 +155,7 @@ export default function SearchTourComponent() {
                                 width={30}
                                 height={30} 
                                 onClick={toggleFilters} 
-                                className='' 
+                                className='transition duration-300 hover:scale-110 active:scale-95' 
                             />
                         </div>
 
@@ -256,10 +277,7 @@ export default function SearchTourComponent() {
                         </div>
                         <div className='grid grid-cols-2'>
                             <label className="text-white">Рейтинг от:</label>
-                            <StarRating 
-                                rating={filters.ratingFrom} 
-                                setRating={(value) => setFilters({ ...filters, ratingFrom: value })} 
-                            />
+                            <StarRating rating={filters.ratingFrom}  setRating={(value) => setFilters({ ...filters, ratingFrom: value })} />
                         </div>
                         <div className='grid grid-cols-2'>
                             <label className="text-white">Кредит:</label>
@@ -283,24 +301,33 @@ export default function SearchTourComponent() {
                             </div>
                         </div>
                         <div className='grid grid-cols-2'>
-                            <label className="text-white">Типы:</label>
-                            <select 
-                                multiple 
-                                className="mt-1 p-2 rounded bg-custom-blur text-white"
-                                value={filters.types}
-                                onChange={(e) => {
-                                    const options = Array.from(e.target.selectedOptions, option => option.value);
-                                    setFilters({ ...filters, types: options });
-                                }}
-                            >
-                                <option value="excursion">Экскурсии</option>
-                                <option value="adventure">Приключения</option>
-                                <option value="cultural">Культурные</option>
-                                <option value="relaxation">Релаксация</option>
-                                <option value="family">Семейные</option>
-                                <option value="romantic">Романтические</option>
-                            </select>
+                            <label className="text-white">Категории:</label>
+                            <div className="mt-1">
+                                {categories.map((category, index) => (
+                                    <div key={index} className="flex items-center">
+                                        <input
+                                            type="checkbox"
+                                            id={`category-${index}`}
+                                            value={category}
+                                            checked={filters.types.includes(category)}
+                                            onChange={handleCategoryChange}
+                                            className="hidden"
+                                        />
+                                        <label 
+                                            htmlFor={`category-${index}`} 
+                                            className="flex items-center cursor-pointer text-white">
+                                            <span className={`w-5 h-5 inline-block mr-2 rounded-sm border-4 border-custom-border
+                                                ${filters.types.includes(category) ? 'bg-custom-gradient' : 'bg-custom-blur'} 
+                                                transition duration-200`}>
+                                                {filters.types.includes(category) && <span className="block w-full h-full bg-custom-gradient rounded-sm"></span>}
+                                            </span>
+                                            {category}
+                                        </label>
+                                    </div>
+                                ))}
+                            </div>
                         </div>
+
 
                         <button 
                             type="button" 
@@ -323,15 +350,21 @@ export default function SearchTourComponent() {
             </form>
 
             <div className="mt-4">
-                <ul className="mt-2">
-                    {Array.isArray(experiences) && experiences.length > 0 ? (
-                        experiences.map((experience) => (
-                            <ExperienceItem key={experience.id} experience={experience} />
-                        ))
-                    ) : (
-                        <li className='text-3xl text-white'>Ничего не найдено...</li> // Fallback UI
-                    )}
-                </ul>
+                <motion.div
+                initial={{ opacity: 0, y: -5  }}
+                animate={{ opacity:  1,  y: 0 }}
+                transition={{ duration: 0.3, ease: 'easeInOut' }}
+                >
+                    <ul className="mt-2">
+                        {Array.isArray(experiences) && experiences.length > 0 ? (
+                            experiences.map((experience) => (
+                                <ExperienceItem key={experience.id} experience={experience} />
+                            ))
+                        ) : (
+                            <li className='text-3xl text-white'>Ничего не найдено...</li>
+                        )}
+                    </ul>
+                </motion.div>
             </div>
             <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
         </div>

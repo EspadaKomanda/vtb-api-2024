@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { use } from 'react';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
+import StarRating from '@/components/star_rating.js';
 
 const ExperienceDetailPage = ({ params }) => {
     const { id } = use(params);
@@ -49,13 +50,18 @@ const ExperienceDetailPage = ({ params }) => {
                 className="relative p-4 backdrop-blur-md rounded container "
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
+                transition={{ duration: 0.3, ease: 'easeInOut' }}
             >
                 <h1 className="text-white text-3xl font-bold mb-5">{experience.name}</h1>
                 <Image src={experience.image} alt={experience.name} width={1000} height={1000} className='w-full h-auto' />
                 <p className="text-gray-300 mt-2 text-3xl">Описание: {experience.description}</p>
                 <p className="text-gray-300 mt-2 text-3xl">Цена: {experience.price} ₽</p>
-                <p className="text-gray-300 mt-2 text-3xl">Рейтинг: {experience.rating}</p>
+                <div className='flex'>
+                    <p className="text-gray-300 mt-2 mr-5 text-3xl">Рейтинг: </p>
+                    <div className="flex items-center">
+                        <StarRating rating={experience.rating} editable={false}/>
+                    </div>
+                </div>
             </motion.div>
         </div>
     );

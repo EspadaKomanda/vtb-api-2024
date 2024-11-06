@@ -7,7 +7,7 @@
             "date": "2023-10-01",
             "price": 15000,
             "distance": 300,
-            "rating": 4.5,
+            "rating": 1.5,
             "credit": true,
             "image": "/images/exemple_tour1.png"
         },
@@ -17,7 +17,7 @@
             "date": "2023-10-15",
             "price": 20000,
             "distance": 500,
-            "rating": 4.8,
+            "rating": 1.8,
             "credit": false,
             "image": "/images/slider1.png"
         },
@@ -37,7 +37,7 @@
             "date": "2023-12-01",
             "price": 25000,
             "distance": 1000,
-            "rating": 4.9,
+            "rating": 2.9,
             "credit": false,
             "image": "/images/slider1.png"
         },
