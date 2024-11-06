@@ -1,0 +1,10 @@
+{
+    "id": 1,
+    "name": "Тур по Золотому кольцу",
+    "date": "2023-10-01",
+    "price": 15000,
+    "distance": 300,
+    "rating": 4.5,
+    "credit": true,
+    "image": "/images/exemple_tour1.png"
+}

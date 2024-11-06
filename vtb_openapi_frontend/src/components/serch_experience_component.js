@@ -9,6 +9,7 @@ import StarRating from './star_rating.js';
 import ExperienceItem from './experience_component.js'
 import { motion, AnimatePresence } from 'framer-motion';
 import Pagination from './pagination.js';
+import experienceStore from '@/stores/experience_store.js';
 
 class FilterData {
     constructor() {
@@ -33,41 +34,40 @@ export default function SearchTourComponent() {
     const [totalPages, setTotalPages] = useState(1);
     const [isFilterVisible, setIsFilterVisible] = useState(false);
     const [filters, setFilters] = useState(new FilterData());
-    const [experience, setExperience] = useState([]);
+    const setExperiences = experienceStore((state) => state.setExperiences);
+    const clearExperiences = experienceStore((state) => state.clearExperiences);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+    const experiences = experienceStore((state) => state.experiences);
 
-    const fetchExperience = async (page) => {
+    const fetchExperiences = async (page) => {
         try {
-
+            setLoading(true);
             const totalPagesResponse = await fetch('/serch_json_files/total_pages.json');
-            if (!totalPagesResponse.ok) {
-                throw new Error('Не удалось загрузить общее количество страниц');
-            }
             const totalPagesData = await totalPagesResponse.json();
             setTotalPages(totalPagesData.totalPages);
 
-            const experienceResponse = await fetch(`/serch_json_files/${page}_page.json`);
-            if (!experienceResponse.ok) {
-                throw new Error('Не удалось загрузить данные для страницы');
-            }
-            const experienceData = await experienceResponse.json();
-            setExperience(experienceData.tours);
+            const experiencesResponse = await fetch(`/serch_json_files/${page}_page.json`);
+            const experiencesData = await experiencesResponse.json();
+            setExperiences(experiencesData.experiences);
         } catch (error) {
-            console.error('Ошибка при загрузке данных:', error);
+            setError('Ошибка при загрузке данных');
+        } finally {
+            setLoading(false);
         }
     };
     
 
-
     useEffect(() => {
-        fetchExperience(currentPage);
+        fetchExperiences(currentPage);
         window.scrollTo({ top: 0, behavior: 'smooth' });
+        return () => clearExperiences(); 
     }, [currentPage]);
     
 
     const handlePageChange = (page) => {
         setCurrentPage(page);
     };
-    
 
     const toggleFilters = () => {
         setIsFilterVisible(!isFilterVisible);
@@ -90,9 +90,17 @@ export default function SearchTourComponent() {
         setFilters({ ...filters, priceFrom: value[0], priceTo: value[1] });
     };
 
+    if (loading) {
+        return <div className='text-3xl text-white'>Загрузка...</div>;
+    }
+
+    if (error) {
+        return <div className='text-3xl text-white'>Ошибка: {error}</div>;
+    }
+
     return (
         <div className="p-4">
-            <h2 className="text-white text-4xl font-bold">Поиск по турам и развлечениям</h2>
+            <h2 className="text-white text-5xl font-bold">Поиск по турам и развлечениям</h2>
             <form onSubmit={handleSearch} className='relative'>
                 <input 
                     type="text" 
@@ -316,9 +324,13 @@ export default function SearchTourComponent() {
 
             <div className="mt-4">
                 <ul className="mt-2">
-                    {experience.map((experience, index) => (
-                    <ExperienceItem key={index} experience={experience} />
-                ))}
+                    {Array.isArray(experiences) && experiences.length > 0 ? (
+                        experiences.map((experience) => (
+                            <ExperienceItem key={experience.id} experience={experience} />
+                        ))
+                    ) : (
+                        <li className='text-3xl text-white'>Ничего не найдено...</li> // Fallback UI
+                    )}
                 </ul>
             </div>
             <Pagination totalPages={totalPages} currentPage={currentPage} onPageChange={handlePageChange} />
