@@ -14,9 +14,13 @@ var app = builder.Build();
 
 builder.Services.AddSingleton<IConfiguration>(builder.Configuration);
 
+builder.Services.AddStackExchangeRedisCache(options => {
+    options.Configuration = builder.Configuration["RedisCacheOptions:Configuration"];
+    options.InstanceName  = builder.Configuration["RedisCacheOptions:InstanceName"];
+});
+
+builder.Services.AddScoped<IAccessDataCacheService, AccessDataCacheService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
-// TODO: implementation :D
-//builder.Services.AddScoped<IAccessDataCacheService, AccessDataCacheService>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
 app.Run();
