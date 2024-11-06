@@ -1,15 +1,25 @@
 using Microsoft.EntityFrameworkCore;
 using PromoService.Database;
+using PromoService.Database.Models;
 
 namespace PromoService.Repositories;
 
 public class UnitOfWork : IUnitOfWork
 {
+    private readonly IRepository<Promo> _promoRepository;
+    private readonly IRepository<PromoCategory> _promoCategoryRepository;
+    private readonly IRepository<UserPromo> _userPromoRepository;
+    private readonly IRepository<PromoAppliedProduct> _promoAppliedProductRepository;
     private readonly ILogger<UnitOfWork> _logger;
     private readonly ApplicationContext _context;
 
-    public UnitOfWork(ILogger<UnitOfWork> logger, ApplicationContext context)
+    public UnitOfWork(IRepository<Promo> promoRepository, IRepository<PromoCategory> promoCategoryRepository, IRepository<UserPromo> userPromoRepository, IRepository<PromoAppliedProduct> promoAppliedProductRepository, ILogger<UnitOfWork> logger, ApplicationContext context)
     {
+        _promoRepository = promoRepository;
+        _promoCategoryRepository = promoCategoryRepository;
+        _userPromoRepository = userPromoRepository;
+        _promoAppliedProductRepository = promoAppliedProductRepository;
+        
         _logger = logger;
         _context = context;
     }
