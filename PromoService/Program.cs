@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using PromoService.Database;
 using PromoService.Utils;
 using PromoService.Repositories;
+using PromoService.Services.PromoApplication;
+using PromoService.Services.Promocode;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +17,8 @@ builder.Services.AddDbContext<ApplicationContext>(options =>
 );
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IPromocodeService, PromocodeService>();
+builder.Services.AddScoped<IPromoApplicationService, PromoApplicationService>();
 
 var app = builder.Build();
 

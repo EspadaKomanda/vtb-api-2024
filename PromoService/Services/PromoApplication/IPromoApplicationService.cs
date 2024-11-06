@@ -1,3 +1,7 @@
+using PromoService.Models.PromoApplication.Requests;
+using PromoService.Models.PromoApplication.Responses;
+using PromoService.Models.Promocode.Requests;
+
 namespace PromoService.Services.PromoApplication;
 
 public interface IPromoApplicationService
@@ -5,15 +9,15 @@ public interface IPromoApplicationService
     /// <summary>
     /// Фиксирует факт использования пользователем промокода для определенного набора товаров
     /// </summary>
-    Task RegisterPromoUse();
+    Task<RegisterPromoUseResponse> RegisterPromoUse(RegisterPromoUseRequest request);
 
     /// <summary>
     /// Позволяет удостовериться, что пользователь может применить промокод для данного набора товаров
     /// </summary>
-    Task ValidatePromocodeApplication();
+    Task<ValidatePromocodeApplicationResponse> ValidatePromocodeApplication(ValidatePromocodeApplicationRequest request);
 
     /// <summary>
     /// Позволяет получить промокоды, использованные пользователем, и информацию о них
     /// </summary>
-    Task GetMyPromoApplications();
+    Task<GetMyPromoApplicationsResponse> GetMyPromoApplications(GetMyPromoApplicationsRequest request);
 }
