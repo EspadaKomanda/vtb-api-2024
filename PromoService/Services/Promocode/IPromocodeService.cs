@@ -24,4 +24,8 @@ public interface IPromocodeService
     /// Устанавливает ограничения промокода.
     /// </summary>
     Task<SetPromocodeRestrictionsResponse> SetPromocodeRestrictions(SetPromocodeRestrictionsRequest request);
+
+    Task<GetPromocodesResponse> GetPromocodes(GetPromocodesRequest request);
+
+    Task<GetActivePromocodesResponse> GetActivePromocodes(GetActivePromocodesRequest request);
 }

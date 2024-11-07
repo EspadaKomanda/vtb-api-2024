@@ -15,6 +15,16 @@ public class PromocodeService : IPromocodeService
         throw new NotImplementedException();
     }
 
+    public Task<GetActivePromocodesResponse> GetActivePromocodes(GetActivePromocodesResponse request)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<GetPromocodesResponse> GetPromocodes(GetPromocodesRequest request)
+    {
+        throw new NotImplementedException();
+    }
+
     public Task<SetPromocodeMetaResponse> SetPromocodeMeta(SetPromocodeMetaRequest request)
     {
         throw new NotImplementedException();

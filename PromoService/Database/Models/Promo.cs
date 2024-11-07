@@ -10,7 +10,7 @@ public class Promo
     [Required]
     public string Code { get; set; } = null!;
 
-    public string? Description { get; set; }
+    public string Description { get; set; } = null!;
 
     [Required]
     public bool IsActive { get; set; }
@@ -29,10 +29,15 @@ public class Promo
 
     public double? MinAccountAge { get; set; }
 
+    /// <summary>
+    /// Возраст аккаунта в часах
+    /// </summary>
     public double? MaxAccountAge { get; set; }
 
     [Required]
     public DateTime CreationDate { get; set; } = DateTime.UtcNow;
+
+    public DateTime StartDate { get; set; } = DateTime.UtcNow;
 
     [Required]
     public DateTime? EndDate { get; set; }
