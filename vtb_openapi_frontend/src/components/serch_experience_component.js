@@ -137,8 +137,6 @@ export default function SearchTourComponent() {
                 >
                     <Image src={img.filter} alt="filter" width={25} height={25} className='ml-auto' />
                 </button>
-
-
                 <AnimatePresence>
                 {isFilterVisible && (
                     <motion.div
@@ -339,7 +337,6 @@ export default function SearchTourComponent() {
                     </motion.div>
                 )}
                 </AnimatePresence>
-
                 <button 
                     type="submit" 
                     className="bg-custom-gradient text-white py-1 px-2 sm:px-5 rounded right-1 top-5 absolute transition duration-300 hover:scale-105 active:scale-95"

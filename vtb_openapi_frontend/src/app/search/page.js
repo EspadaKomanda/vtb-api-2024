@@ -3,7 +3,7 @@ import SearchTourComponent from "@/components/serch_experience_component";
 export default function Search() {
     return (
         <div>
-            <header className=" text-white">
+            <header>
                 <NavigationComponent/>
             </header>
             <main className="container p-5">
