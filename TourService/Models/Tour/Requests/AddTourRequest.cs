@@ -23,6 +23,9 @@ public class AddTourRequest
 
     [Coordinates]
     public string? Coordinates { get; set; }
+
     [Required]
     public bool IsActive { get; set; }
+
+    public List<byte[]>? PhotoBytes { get; set; }
 }

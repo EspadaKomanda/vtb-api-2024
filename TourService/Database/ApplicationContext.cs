@@ -15,6 +15,7 @@ namespace TourService.Database
         public DbSet<TourCategory> TourCategories { get; set; } = null!;
         public DbSet<TourWish> TourWishes { get; set; } = null!;
         public DbSet<TourPaymentMethod> TourPaymentMethods { get; set;} = null!;
+        public DbSet<TourTag> TourTags { get; set; } = null!;
         public DbSet<PaymentMethod> PaymentMethods { get; set; } = null!;
         public DbSet<PaymentVariant> PaymentVariants { get; set; } = null!;
         public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options)
@@ -24,6 +25,7 @@ namespace TourService.Database
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
+            
         }
     }
 }

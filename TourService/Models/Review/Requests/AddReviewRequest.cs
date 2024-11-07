@@ -1,9 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 using TourService.Attributes.Validation;
+using TourService.Models.Benefits;
 
 namespace TourService.Models.Review.Requests;
 
-public class PostReviewRequest
+public class AddReviewRequest
 {
     [Required]
     public long TourId { get; set; }
@@ -12,7 +13,7 @@ public class PostReviewRequest
     // TODO: [Comment] validation attribute
     public string Text { get; set; } = null!;
 
-    public List<string>? Benefits { get; set; }
+    public List<long>? Benefits { get; set; }
 
     [Required]
     [Rating]
