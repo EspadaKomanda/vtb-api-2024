@@ -2,12 +2,18 @@
 import Image from "next/image";
 import { useState, useRef } from "react";
 import NavigationComponent from "@/components/navigation_component";
+import AuntificationPopup from "@/components/auntification_popup";
+import auntificationStore from '@/stores/auntification_store.js';
 
 export default function Profile() {
     const [avatar, setAvatar] = useState('/images/default_avatar.png');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isDragging, setIsDragging] = useState(false);
     const fileInputRef = useRef(null);
+    const isLoginOpen = auntificationStore((state) => state.isLoginOpen);
+    const isRegisterOpen = auntificationStore((state) => state.isRegisterOpen);
+    const openLogin = auntificationStore((state) => state.openLogin);
+    const openRegister = auntificationStore((state) => state.openRegister);
 
     const handleAvatarChange = (file) => {
         const reader = new FileReader();
@@ -56,6 +62,8 @@ export default function Profile() {
                             className="w-60 h-60 rounded-full bg-custom-gradient cursor-pointer border-4" 
                             onClick={() => setIsModalOpen(true)}
                         />
+                        <button onClick={openLogin} className="bg-blue-500 text-white p-2 rounded">Войти</button>
+                        <button onClick={openRegister} className="bg-green-500 text-white p-2 rounded ml-2">Регистрация</button>
                     </div>
                 </div>
             </main>
@@ -89,6 +97,8 @@ export default function Profile() {
                     </div>
                 </div>
             )}
+            {isLoginOpen && <AuntificationPopup type="login" />}
+            {isRegisterOpen && <AuntificationPopup type="register" />}
         </>
     );
 }

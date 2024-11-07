@@ -120,7 +120,7 @@ export default function SearchTourComponent() {
     }
 
     return (
-        <div className="p-4">
+        <div className="p-4 pt-20">
             <h2 className="text-white text-5xl font-bold">Поиск по турам и развлечениям</h2>
             <form onSubmit={handleSearch} className='relative'>
                 <input 
