@@ -14,12 +14,12 @@ using UserService.Repositories;
 
 namespace TourService.Services.PhotoService
 {
-    public class PhotoService(IUnitOfWork unitOfWork, ILogger<PhotoService> logger, IMapper mapper, IS3Service s3Service, IConfiguration configuration) : IPhotoService
+    public class PhotoService(IUnitOfWork unitOfWork, ILogger<PhotoService> logger, IMapper mapper, IS3Service S3Service, IConfiguration configuration) : IPhotoService
     {
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         private readonly ILogger<PhotoService> _logger = logger;
         private readonly IMapper _mapper = mapper;
-        private readonly IS3Service _s3Service = s3Service;
+        private readonly IS3Service _s3Service = S3Service;
         private readonly IConfiguration _configuration = configuration;
         public async Task<long> AddPhoto(AddPhotoRequest addPhoto)
         {
@@ -27,9 +27,9 @@ namespace TourService.Services.PhotoService
             {
                 List<Bucket> buckets = _configuration.GetSection("Buckets").Get<List<Bucket>>() ?? throw new NullReferenceException();
                
-                if(await s3Service.UploadImageToS3Bucket(addPhoto.PhotoBytes,buckets.FirstOrDefault(x=>x.BucketName=="TourImages").BucketId.ToString(),addPhoto.PhotoName))
+                if(await _s3Service.UploadImageToS3Bucket(addPhoto.PhotoBytes,buckets.FirstOrDefault(x=>x.BucketName=="TourImages")!.BucketId.ToString(),addPhoto.PhotoName))
                 {
-                    var photo =  await _s3Service.GetImageFromS3Bucket(addPhoto.PhotoName,buckets.FirstOrDefault(x=>x.BucketName=="TourImages").BucketId.ToString());
+                    var photo =  await _s3Service.GetImageFromS3Bucket(addPhoto.PhotoName,buckets.FirstOrDefault(x=>x.BucketName=="TourImages")!.BucketId.ToString());
                     var result = await _unitOfWork.Photos.AddAsync(photo);
                     if(_unitOfWork.Save()>=0)
                     {
@@ -54,7 +54,6 @@ namespace TourService.Services.PhotoService
 
         public async Task<PhotoDto> GetPhoto(GetPhotoRequest getPhoto)
         {
-            //TODO: setup autommapper for PaymentVariant
             try
             {
                 Photo currentPhoto = await _unitOfWork.Photos.FindOneAsync(x=>x.Id == getPhoto.PhotoId);
@@ -68,7 +67,6 @@ namespace TourService.Services.PhotoService
         }
         public IQueryable<PhotoDto> GetPhotos(GetPhotosRequest getPhotos)
         {
-            //TODO: setup autommapper for PaymentVariant
             try
             {
                return _mapper.ProjectTo<PhotoDto>(_unitOfWork.Photos.GetAll().Where(x=>x.TourId == getPhotos.TourId));
@@ -86,7 +84,7 @@ namespace TourService.Services.PhotoService
                 Photo currentPhoto = _unitOfWork.Photos.FindOneAsync(x=>x.Id == removePhoto.PhotoId).Result;
                 List<Bucket> buckets = _configuration.GetSection("Buckets").Get<List<Bucket>>() ?? throw new NullReferenceException();
                
-                if(_s3Service.DeleteImageFromS3Bucket(currentPhoto.Title, buckets.FirstOrDefault(x=>x.BucketName=="TourImages").BucketId.ToString()).Result)
+                if(_s3Service.DeleteImageFromS3Bucket(currentPhoto.Title, buckets.FirstOrDefault(x=>x.BucketName=="TourImages")!.BucketId.ToString()).Result)
                 {
                     _unitOfWork.Photos.Delete(currentPhoto);
                      if(_unitOfWork.Save()>=0)
@@ -120,11 +118,11 @@ namespace TourService.Services.PhotoService
                 
                 if(updatePhoto.PhotoBytes != null)
                 {
-                    if(_s3Service.DeleteImageFromS3Bucket(currentPhoto.Title,buckets.FirstOrDefault(x=>x.BucketName=="TourImages").BucketId.ToString()).Result)
+                    if(_s3Service.DeleteImageFromS3Bucket(currentPhoto.Title,buckets.FirstOrDefault(x=>x.BucketName=="TourImages")!.BucketId.ToString()).Result)
                     {
-                        if(_s3Service.UploadImageToS3Bucket(updatePhoto.PhotoBytes,currentPhoto.Title,buckets.FirstOrDefault(x=>x.BucketName=="TourImages").BucketId.ToString()).Result)
+                        if(_s3Service.UploadImageToS3Bucket(updatePhoto.PhotoBytes,currentPhoto.Title,buckets.FirstOrDefault(x=>x.BucketName=="TourImages")!.BucketId.ToString()).Result)
                         {
-                            var newPhoto = _s3Service.GetImageFromS3Bucket(currentPhoto.Title,buckets.FirstOrDefault(x=>x.BucketName=="TourImages").BucketId.ToString()).Result;
+                            var newPhoto = _s3Service.GetImageFromS3Bucket(currentPhoto.Title,buckets.FirstOrDefault(x=>x.BucketName=="TourImages")!.BucketId.ToString()).Result;
                             currentPhoto.FileLink = newPhoto.FileLink;
                         }
                         _logger.LogError("Error uploading new image version");

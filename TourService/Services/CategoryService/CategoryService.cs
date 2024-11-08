@@ -69,10 +69,12 @@ namespace TourService.Services.CategoryService
 
         public bool RemoveCategory(RemoveCategoryRequest removeCategory)
         {
+            using var transaction = _unitOfWork.BeginTransaction();
             try
             {
-                _unitOfWork.Categories.Delete( _unitOfWork.Categories.FindOneAsync(x=>x.Id == removeCategory.CategoryId).Result);
-                if(_unitOfWork.Save()>=0)
+                 _unitOfWork.Categories.Delete( _unitOfWork.Categories.FindOneAsync(x=>x.Id == removeCategory.CategoryId).Result);
+                _unitOfWork.TourCategories.DeleteMany(x=>x.CategoryId==removeCategory.CategoryId);
+                if(transaction.SaveAndCommit())
                 {
                     _logger.LogDebug("Successefully removed category!");
                     return true;
@@ -81,6 +83,7 @@ namespace TourService.Services.CategoryService
             }
             catch(Exception ex)
             {
+                transaction.Rollback();
                 if(ex is DatabaseException)
                 {
                     throw;

@@ -68,12 +68,12 @@ namespace TourService.Services.BenefitService
 
         public bool RemoveBenefit(RemoveBenefitRequest removeBenefit)
         {
+            using var transaction = _unitOfWork.BeginTransaction();
             try
             {
-                
                 _unitOfWork.ReviewBenefits.DeleteMany(x=>x.Id==removeBenefit.BenefitId);
                 _unitOfWork.Benefits.Delete( _unitOfWork.Benefits.FindOneAsync(x=>x.Id == removeBenefit.BenefitId).Result);
-                if(_unitOfWork.Save()>=0)
+                if(transaction.SaveAndCommit())
                 {
                     _logger.LogDebug("Successefully removed benefit!");
                     return true;
@@ -82,6 +82,7 @@ namespace TourService.Services.BenefitService
             }
             catch(Exception ex)
             {
+                transaction.Rollback();
                 if(ex is DatabaseException)
                 {
                     throw;
