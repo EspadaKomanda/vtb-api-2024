@@ -4,6 +4,8 @@ import EmailConfirmation from '@/components/email_confirmation_component.js';
 import Image from 'next/image';
 import * as img from '../assets/images.js';
 import { motion } from 'framer-motion';
+import Cookies from 'js-cookie';
+
 
 const AuntificationPopup = ({ type }) => {
   const closeLogin = auntificationStore((state) => state.closeLogin);
@@ -54,27 +56,50 @@ const AuntificationPopup = ({ type }) => {
   );
 };
 
+
 const LoginForm = ({ onClose }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!username || !password) {
       setError('Пожалуйста, заполните все поля.');
       return;
     }
     setError('');
-    console.log('Вход выполнен');
-    onClose();
+    setIsLoading(true);
+
+    try {
+      const response = await fetch('', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Ошибка входа');
+      }
+
+      const data = await response.json();
+      console.log('Вход выполнен', data);
+      onClose();
+    } catch (error) {
+      setError('Ошибка входа. Пожалуйста, проверьте свои данные.');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <motion.div
-    initial={{ opacity: 0, y: -5  }}
-    animate={{ opacity:  1,  y: 0 }}
-    transition={{ duration: 0.3, ease: 'easeInOut' }}
+      initial={{ opacity: 0, y: -5 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, ease: 'easeInOut' }}
     >
       <form onSubmit={handleSubmit}>
         <input
@@ -92,20 +117,29 @@ const LoginForm = ({ onClose }) => {
           className="border p-2 w-full bg-customColor1 rounded-md focus:outline-none border-none"
         />
         {error && <p className="text-red-500 mb-2">{error}</p>}
-        <button type="submit" className="bg-custom-bg-blue px-5 font-semibold text-white p-2 rounded mt-8">Войти</button>
+        <button type="submit" className="bg-custom-bg-blue px-5 font-semibold text-white p-2 rounded mt-8" disabled={isLoading}>
+          {isLoading ? 'Секунду..' : 'Войти'}
+        </button>
       </form>
     </motion.div>
   );
 };
+
 
 const RegisterForm = ({ onSubmit }) => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [checkLogin, setCheckLogin] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    const loginRegex = /^[a-zA-Z0-9_]{3,18}$/;
+    if (!loginRegex.test(username)) {
+      setError('Логин должен быть от 3 до 18 символов, использовать можно только латинские буквы, нижнее подчеркивание и цифры.');
+      return;
+    }
     if (!username || !email || !password) {
       setError('Пожалуйста, заполните все поля.');
       return;
@@ -115,8 +149,36 @@ const RegisterForm = ({ onSubmit }) => {
       setError('Пожалуйста, введите корректную почту.');
       return;
     }
+    if (password.length < 8) {
+      setError('Пароль должен быть не короче 8 символов.');
+      return;
+    }
     setError('');
-    onSubmit(e);
+    setCheckLogin(true);
+
+    try {
+      const response = await fetch('', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, email, password }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Ошибка регистрации, попробуйте другой логин.');
+      }
+
+      const data = await response.json();
+      console.log('Логин свободен', data);
+      onSubmit(e);
+    } catch (error) {
+      setError(`Не удалось зарегистрироваться, попробуй другой логин (${error.message})`);
+    } finally {
+      setCheckLogin(false);
+    }
+    onSubmit(e); //TODO remove this function on release, temporary for checking
   };
 
   return (
@@ -149,7 +211,7 @@ const RegisterForm = ({ onSubmit }) => {
           className="border p-2 w-full bg-customColor1 rounded-md focus:outline-none border-none"
         />
         {error && <p className="text-red-500 mb-2">{error}</p>}
-        <button type="submit" className="bg-custom-bg-blue px-5 font-semibold text-white p-2 rounded mt-8">Далее</button>
+        <button type="submit" className="bg-custom-bg-blue px-5 font-semibold text-white p-2 rounded mt-8" disabled={checkLogin}>{checkLogin ? 'Секунду..' : 'Продолжить'}</button>
       </form>
   </motion.div>
   );
@@ -174,6 +236,12 @@ const RegisterStepTwo = ({ onSubmit }) => {
       return;
     }
     setError('');
+
+    Cookies.set('firstName', firstName, { sameSite: 'None', secure: true });
+    Cookies.set('lastName', lastName, { sameSite: 'None', secure: true });
+    Cookies.set('middleName', middleName, { sameSite: 'None', secure: true });
+    Cookies.set('birthDate', birthDate, { sameSite: 'None', secure: true });
+    
     onSubmit(e);
   };
 
