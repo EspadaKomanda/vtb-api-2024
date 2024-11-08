@@ -17,5 +17,6 @@ namespace TourService.Database.Models
         public Tour Tour { get; set; } = null!;
         [FileLink]
         public string FileLink {get;set;} = null!;
+        public string Title { get; set; } = null!;
     }
 }

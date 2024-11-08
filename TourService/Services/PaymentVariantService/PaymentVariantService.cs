@@ -90,19 +90,21 @@ namespace TourService.Services.PaymentVariantService
             }
         }
 
-        public bool UpdatePaymentMethod(UpdatePaymentMethodRequest updatePaymentMethod)
+        public bool UpdatePaymentVariant(UpdatePaymentVariantRequest updatePaymentVariant)
         {
             try
             {
-                var currentPaymentMethod = _unitOfWork.PaymentMethods.FindOneAsync(x=>x.Id == updatePaymentMethod.PaymentMethodId).Result;
-                currentPaymentMethod.Name = updatePaymentMethod.PaymentMethodName;
-                _unitOfWork.PaymentMethods.Update(currentPaymentMethod);
+                var currentPaymentVariant = _unitOfWork.PaymentVariants.FindOneAsync(x=>x.Id == updatePaymentVariant.PaymentVariantId).Result;
+                currentPaymentVariant.Name = updatePaymentVariant.PaymentVariantName;
+                currentPaymentVariant.Price = updatePaymentVariant.Price;
+                currentPaymentVariant.PaymentMethodId = updatePaymentVariant.PaymentMethodId;
+                _unitOfWork.PaymentVariants.Update(currentPaymentVariant);
                 if(_unitOfWork.Save()>=0)
                 {
-                    _logger.LogDebug("Successefully updated payment method!");
+                    _logger.LogDebug("Successefully updated payment variant!");
                     return true;
                 }
-                throw new DatabaseException("Updating payment method went wrong!");
+                throw new DatabaseException("Updating payment variant went wrong!");
             }
             catch(Exception ex)
             {
@@ -110,8 +112,8 @@ namespace TourService.Services.PaymentVariantService
                 {
                     throw;
                 }
-                _logger.LogError("Error updating payment method: {errorMessage}", ex.Message);
-                throw new DatabaseException("Error updating payment method", ex);
+                _logger.LogError("Error updating payment variant: {errorMessage}", ex.Message);
+                throw new DatabaseException("Error updating payment variant", ex);
             }
         }
     }

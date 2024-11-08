@@ -9,6 +9,7 @@ using TourService.KafkaException;
 using TourService.KafkaException.ConsumerException;
 using TourService.Kafka.Utils;
 using TourService.KafkaException.ConfigurationException;
+using Newtonsoft.Json;
 
 namespace TourService.Kafka
 {
@@ -207,6 +208,18 @@ namespace TourService.Kafka
                 throw;
             }
         }
+        
+        public T GetMessage<T>(string MessageKey, string topicName)
+        {
+            if(IsMessageRecieved(MessageKey))
+            {
+                var message = _recievedMessagesBus.FirstOrDefault(x=>x.TopicName == topicName)!.Messages.FirstOrDefault(x=>x.Key==MessageKey);
+                _recievedMessagesBus.FirstOrDefault(x=>x.TopicName == topicName)!.Messages.Remove(message);
+                return JsonConvert.DeserializeObject<T>(message.Value);
+            }
+            throw new ConsumerException("Message not recieved");
+        }
+
         private bool IsTopicPendingMessageBusExist(string responseTopic)
         {
             return _pendingMessagesBus.Any(x => x.TopicName == responseTopic);

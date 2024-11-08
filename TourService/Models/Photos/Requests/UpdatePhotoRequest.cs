@@ -11,6 +11,7 @@ namespace TourService.Models.Photos.Requests
         [Required]
         public long PhotoId { get; set; } 
         [Required]
-        public byte[] PhotoBytes {get;set;} = null!;
+        public string PhotoName { get; set; } = null!;
+        public byte[]? PhotoBytes {get;set;} 
     }
 }
