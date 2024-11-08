@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import NavigationComponent from "@/components/navigation_component";
 import AuntificationPopup from "@/components/auntification_popup";
 import auntificationStore from '@/stores/auntification_store.js';
@@ -14,6 +14,17 @@ export default function Profile() {
     const isRegisterOpen = auntificationStore((state) => state.isRegisterOpen);
     const openLogin = auntificationStore((state) => state.openLogin);
     const openRegister = auntificationStore((state) => state.openRegister);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+
+    useEffect(() => {
+        const token = document.cookie.split('; ').find(row => row.startsWith('authToken='));
+        if (token) {
+            setIsAuthenticated(true);
+        } else {
+            setIsAuthenticated(false);
+        }
+    }, []);
 
     const handleAvatarChange = (file) => {
         const reader = new FileReader();
@@ -54,16 +65,23 @@ export default function Profile() {
             <main className="container p-5 relative">
                 <div className="flex items-center justify-center">
                     <div className="absolute -top-30 left-1/2 transform -translate-x-1/2">
-                        <Image 
-                            src={avatar} 
-                            alt="" 
-                            width={240} 
-                            height={240} 
-                            className="w-60 h-60 rounded-full bg-custom-gradient cursor-pointer border-4" 
-                            onClick={() => setIsModalOpen(true)}
-                        />
-                        <button onClick={openLogin} className="bg-blue-500 text-white p-2 rounded">Войти</button>
-                        <button onClick={openRegister} className="bg-green-500 text-white p-2 rounded ml-2">Регистрация</button>
+                        {isAuthenticated ? (
+                            <>
+                                <Image 
+                                    src={avatar} 
+                                    alt="" 
+                                    width={240} 
+                                    height={240} 
+                                    className="w-60 h-60 rounded-full bg-custom-gradient cursor-pointer border-4" 
+                                    onClick={() => setIsModalOpen(true)}
+                                />
+                            </>
+                            ) : (
+                            <div className="absolute text-3xl font-semibold flex left-1/2 transform -translate-x-1/2">
+                                <button onClick={openLogin} className="bg-custom-bg-blue text-white px-4 p-2 rounded">Вход</button>
+                                <button onClick={openRegister} className="bg-custom-bg-blue text-white px-4 p-2 rounded ml-2">Регистрация</button>
+                            </div>
+                        )}
                     </div>
                 </div>
             </main>
