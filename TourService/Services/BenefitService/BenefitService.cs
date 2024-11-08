@@ -70,6 +70,8 @@ namespace TourService.Services.BenefitService
         {
             try
             {
+                
+                _unitOfWork.ReviewBenefits.DeleteMany(x=>x.Id==removeBenefit.BenefitId);
                 _unitOfWork.Benefits.Delete( _unitOfWork.Benefits.FindOneAsync(x=>x.Id == removeBenefit.BenefitId).Result);
                 if(_unitOfWork.Save()>=0)
                 {
