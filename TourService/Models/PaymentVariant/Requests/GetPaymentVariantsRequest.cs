@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TourService.Models.PaymentVariant.Requests
 {
-    public class GetPaymentMethodsRequest
+    public class GetPaymentVariantsRequest
     {
         [Required]
         public long PaymentMethodId { get; set; }

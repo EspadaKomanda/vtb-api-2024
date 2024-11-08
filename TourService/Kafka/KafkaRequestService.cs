@@ -119,6 +119,10 @@ namespace TourService.Kafka
         {
             try
             {
+                if(_kafkaTopicManager.CheckTopicExists(topicName))
+                {
+                    return true;
+                }
                 _logger.LogError("Unable to subscribe to topic");
                 throw new ConsumerTopicUnavailableException("Topic unavailable");
             
