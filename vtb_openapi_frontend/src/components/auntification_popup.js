@@ -3,6 +3,7 @@ import auntificationStore from '@/stores/auntification_store.js';
 import EmailConfirmation from '@/components/email_confirmation_component.js';
 import Image from 'next/image';
 import * as img from '../assets/images.js';
+import { motion } from 'framer-motion';
 
 const AuntificationPopup = ({ type }) => {
   const closeLogin = auntificationStore((state) => state.closeLogin);
@@ -65,30 +66,35 @@ const LoginForm = ({ onClose }) => {
       return;
     }
     setError('');
-    // Здесь можно добавить логику для входа
-    console.log('Вход выполнен'); // Замените на вашу логику
-    onClose(); // Закрыть форму при успешном входе
+    console.log('Вход выполнен');
+    onClose();
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="Логин"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        className="border p-2 mb-4 w-full bg-customColor1 rounded-md focus:outline-none border-none"
-      />
-      <input
-        type="password"
-        placeholder="Пароль"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        className="border p-2 w-full bg-customColor1 rounded-md focus:outline-none border-none"
-      />
-      {error && <p className="text-red-500 mb-2">{error}</p>}
-      <button type="submit" className="bg-custom-bg-blue px-5 font-semibold text-white p-2 rounded mt-8">Войти</button>
-    </form>
+    <motion.div
+    initial={{ opacity: 0, y: -5  }}
+    animate={{ opacity:  1,  y: 0 }}
+    transition={{ duration: 0.3, ease: 'easeInOut' }}
+    >
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="Логин"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          className="border p-2 mb-4 w-full bg-customColor1 rounded-md focus:outline-none border-none"
+        />
+        <input
+          type="password"
+          placeholder="Пароль"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="border p-2 w-full bg-customColor1 rounded-md focus:outline-none border-none"
+        />
+        {error && <p className="text-red-500 mb-2">{error}</p>}
+        <button type="submit" className="bg-custom-bg-blue px-5 font-semibold text-white p-2 rounded mt-8">Войти</button>
+      </form>
+    </motion.div>
   );
 };
 
@@ -114,32 +120,38 @@ const RegisterForm = ({ onSubmit }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="Логин"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-        className="border p-2 mb-4 w-full bg-customColor1 rounded-md focus:outline-none border-none"
-      />
-      <input
-        type="email"
-        placeholder="Почта"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-       
-        className="border p-2 mb-4 w-full bg-customColor1 rounded-md focus:outline-none border-none"
-      />
-      <input
-        type="password"
-        placeholder="Пароль"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        className="border p-2 w-full bg-customColor1 rounded-md focus:outline-none border-none"
-      />
-      {error && <p className="text-red-500 mb-2">{error}</p>}
-      <button type="submit" className="bg-custom-bg-blue px-5 font-semibold text-white p-2 rounded mt-8">Далее</button>
-    </form>
+    <motion.div
+    initial={{ opacity: 0, y: -5  }}
+    animate={{ opacity:  1,  y: 0 }}
+    transition={{ duration: 0.3, ease: 'easeInOut' }}
+    >
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="Логин"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+          className="border p-2 mb-4 w-full bg-customColor1 rounded-md focus:outline-none border-none"
+        />
+        <input
+          type="email"
+          placeholder="Почта"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        
+          className="border p-2 mb-4 w-full bg-customColor1 rounded-md focus:outline-none border-none"
+        />
+        <input
+          type="password"
+          placeholder="Пароль"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="border p-2 w-full bg-customColor1 rounded-md focus:outline-none border-none"
+        />
+        {error && <p className="text-red-500 mb-2">{error}</p>}
+        <button type="submit" className="bg-custom-bg-blue px-5 font-semibold text-white p-2 rounded mt-8">Далее</button>
+      </form>
+  </motion.div>
   );
 };
 
@@ -177,39 +189,45 @@ const RegisterStepTwo = ({ onSubmit }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
-        placeholder="Имя"
-        value={firstName}
-        onChange={(e) => setFirstName(e.target.value)}
-        className="border p-2 mb-2 w-full bg-customColor1 rounded-md focus:outline-none border-none"
-      />
-      <input
-        type="text"
-        placeholder="Фамилия"
-        value={lastName}
-        onChange={(e) => setLastName(e.target.value)}
-        className="border p-2 mb-2 w-full bg-customColor1 rounded-md focus:outline-none border-none"
-      />
-      <input
-        type="text"
-        placeholder="Отчество"
-        value={middleName}
-        onChange={(e) => setMiddleName(e.target.value)}
-        className="border p-2 mb-2 w-full bg-customColor1 rounded-md focus:outline-none border-none"
-      />
-      <label className="block mb-2">Дата рождения:</label>
-      <input
-        type="date"
-        value={birthDate}
-        onChange={(e) => setBirthDate(e.target.value)}
-        className="border p-2 mb-2 w-full bg-customColor1 rounded-md focus:outline-none border-none"
-        max={new Date().toISOString().split("T")[0]}
-      />
-      {error && <p className="text-red-500 mb-2">{error}</p>}
-      <button type="submit" className="bg-custom-bg-blue px-5 font-semibold text-white p-2 rounded">Завершить регистрацию</button>
-    </form>
+    <motion.div
+    initial={{ opacity: 0, y: -5  }}
+    animate={{ opacity:  1,  y: 0 }}
+    transition={{ duration: 0.3, ease: 'easeInOut' }}
+    >
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          placeholder="Имя"
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+          className="border p-2 mb-2 w-full bg-customColor1 rounded-md focus:outline-none border-none"
+        />
+        <input
+          type="text"
+          placeholder="Фамилия"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+          className="border p-2 mb-2 w-full bg-customColor1 rounded-md focus:outline-none border-none"
+        />
+        <input
+          type="text"
+          placeholder="Отчество"
+          value={middleName}
+          onChange={(e) => setMiddleName(e.target.value)}
+          className="border p-2 mb-2 w-full bg-customColor1 rounded-md focus:outline-none border-none"
+        />
+        <label className="block mb-2">Дата рождения:</label>
+        <input
+          type="date"
+          value={birthDate}
+          onChange={(e) => setBirthDate(e.target.value)}
+          className="border p-2 mb-2 w-full bg-customColor1 rounded-md focus:outline-none border-none"
+          max={new Date().toISOString().split("T")[0]}
+        />
+        {error && <p className="text-red-500 mb-2">{error}</p>}
+        <button type="submit" className="bg-custom-bg-blue px-5 font-semibold text-white p-2 rounded">Завершить регистрацию</button>
+      </form>
+    </motion.div>
   );
 };
 

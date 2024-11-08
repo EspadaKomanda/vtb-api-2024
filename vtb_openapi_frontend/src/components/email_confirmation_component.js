@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import auntificationStore from '@/stores/auntification_store.js';
 import Image from 'next/image';
 import * as img from '../assets/images.js';
+import { motion } from 'framer-motion';
+
 
 const EmailConfirmation = () => {
   const [code, setCode] = useState('');
@@ -22,6 +24,11 @@ const EmailConfirmation = () => {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
       <div className="relative lg:w-1/4 sm:w-1/2 w-11/12 bg-custom-bg-gray rounded-lg p-6 shadow-lg">
+      <motion.div
+      initial={{ opacity: 0, y: -5  }}
+      animate={{ opacity:  1,  y: 0 }}
+      transition={{ duration: 0.3, ease: 'easeInOut' }}
+    >
         <h2 className="text-lg font-bold mb-4">Подтверждение почты</h2>
         <form onSubmit={handleSubmit}>
           <p className="mb-4">Мы отправили код подтверждения на вашу почту.</p>
@@ -44,7 +51,9 @@ const EmailConfirmation = () => {
             className='transition duration-300 hover:scale-110 active:scale-95' 
           />
         </button>
+        </motion.div>
       </div>
+      
     </div>
   );
 };
