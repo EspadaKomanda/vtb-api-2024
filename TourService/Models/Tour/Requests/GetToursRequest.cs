@@ -6,8 +6,8 @@ namespace TourService.Models.Tour.Requests;
 public class GetToursRequest
 {
     public int Page { get; set; } = 0;
-    public List<string>? Categories { get; set; }
-    public List<string>? TourTags { get; set; }
+    public List<long>? Categories { get; set; }
+    public List<long>? TourTags { get; set; }
     [Rating]
     public int MinimalRating { get; set; } = 0;
     [Rating]

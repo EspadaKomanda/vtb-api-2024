@@ -13,8 +13,8 @@ namespace TourService.Database.Models
         [Required]
         public long TourId { get; set; }
         public Tour Tour { get; set; } = null!;
-        [Required]
-        public long UserId { get; set; }
+        
+        public long? UserId { get; set; }
 
         [Required]
         public DateTime Date { get; set; }

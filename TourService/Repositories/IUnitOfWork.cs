@@ -11,6 +11,7 @@ public interface IUnitOfWork : IDisposable
     IRepository<Photo> Photos { get; }
     IRepository<Review> Reviews { get; }
     IRepository<ReviewBenefit> ReviewBenefits { get; }
+    IRepository<ReviewFeedback> ReviewFeedbacks { get; }
     IRepository<Tag> Tags { get; }
     IRepository<Tour> Tours { get; }
     IRepository<TourCategory> TourCategories { get; }

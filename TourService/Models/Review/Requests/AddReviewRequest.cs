@@ -8,7 +8,7 @@ public class AddReviewRequest
 {
     [Required]
     public long TourId { get; set; }
-
+    public long? UserId { get; set; }
     [Required]
     // TODO: [Comment] validation attribute
     public string Text { get; set; } = null!;

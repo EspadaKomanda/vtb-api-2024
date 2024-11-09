@@ -17,6 +17,8 @@ public class UnitOfWork : IUnitOfWork
 
     public IRepository<Review> Reviews { get; }
 
+    public IRepository<ReviewFeedback> ReviewFeedbacks { get; }
+    
     public IRepository<ReviewBenefit> ReviewBenefits { get; }
 
     public IRepository<Tag> Tags { get; }
@@ -42,6 +44,7 @@ public class UnitOfWork : IUnitOfWork
         IRepository<Category> categories,
         IRepository<Photo> photos,
         IRepository<Review> reviews,
+        IRepository<ReviewFeedback> reviewFeedbacks,
         IRepository<ReviewBenefit> reviewBenefits,
         IRepository<Tag> tags,
         IRepository<Tour> tours,
@@ -58,6 +61,7 @@ public class UnitOfWork : IUnitOfWork
         Categories = categories;
         Photos = photos;
         Reviews = reviews;
+        ReviewFeedbacks = reviewFeedbacks;
         ReviewBenefits = reviewBenefits;
         Tags = tags;
         Tours = tours;

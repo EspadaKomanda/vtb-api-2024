@@ -11,6 +11,6 @@ namespace TourService.Models.Tour.Requests
         [Required]
         public long TourId { get; set; }
         [Required]
-        public List<long>? Tags { get; set; }
+        public List<long> Tags { get; set; } = null!;
     }
 }

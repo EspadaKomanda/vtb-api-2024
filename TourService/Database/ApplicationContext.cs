@@ -10,6 +10,7 @@ namespace TourService.Database
         public DbSet<Photo> Photos { get; set; } = null!;
         public DbSet<Review> Reviews { get; set; } = null!;
         public DbSet<ReviewBenefit> ReviewBenefits { get; set; } = null!;
+        public DbSet<ReviewFeedback> ReviewFeedbacks { get; set; } = null!;
         public DbSet<Tag> Tags { get; set; } = null!;
         public DbSet<Tour> Tours { get; set; } = null!;
         public DbSet<TourCategory> TourCategories { get; set; } = null!;

@@ -21,6 +21,7 @@ namespace TourService.Database.Models
         public double SettlementDistance {get; set; }
         [Required]
         public bool IsActive { get; set; }
+        public double Rating { get; set; }
         [Text]
         public string? Comment { get; set;} = null!;
         public ICollection<Photo>? Photos { get; set; }
