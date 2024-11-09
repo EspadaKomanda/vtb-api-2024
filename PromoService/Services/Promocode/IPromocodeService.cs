@@ -23,10 +23,9 @@ public interface IPromocodeService
     /// <summary>
     /// Получить все существующие промокоды или определенный промокод.
     /// </summary>
-    Task<GetPromocodesResponse> GetPromocodes(GetPromocodesRequest request);
-
+    GetPromocodesResponse GetPromocodes(GetPromocodesRequest request);
     /// <summary>
     /// Получить активные промокоды.
     /// </summary>
-    Task<GetActivePromocodesResponse> GetActivePromocodes(GetActivePromocodesResponse request);
+    GetActivePromocodesResponse GetActivePromocodes(GetActivePromocodesResponse request);
 }

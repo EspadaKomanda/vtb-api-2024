@@ -5,7 +5,7 @@ namespace PromoService.Database.Models;
 public class PromoAppliedProduct
 {
     [Key]
-    public int Id { get; set; }
+    public long Id { get; set; }
 
     [Required]
     public UserPromo UserPromo { get; set; } = null!;

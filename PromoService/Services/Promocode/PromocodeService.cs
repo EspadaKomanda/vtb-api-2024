@@ -71,7 +71,7 @@ public class PromocodeService(IUnitOfWork unitOfWork, ILogger<PromocodeService> 
         }
     }
 
-    public async Task<GetActivePromocodesResponse> GetActivePromocodes(GetActivePromocodesResponse request)
+    public GetActivePromocodesResponse GetActivePromocodes(GetActivePromocodesResponse request)
     {
         try
         {
@@ -88,7 +88,7 @@ public class PromocodeService(IUnitOfWork unitOfWork, ILogger<PromocodeService> 
         }
     }
 
-    public async Task<GetPromocodesResponse> GetPromocodes(GetPromocodesRequest request)
+    public GetPromocodesResponse GetPromocodes(GetPromocodesRequest request)
     {
         try
         {
