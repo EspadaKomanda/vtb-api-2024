@@ -1,21 +1,82 @@
+using UserService.Database.Models;
+using UserService.Exceptions.Account;
 using UserService.Models.Profile.Requests;
 using UserService.Models.Profile.Responses;
+using UserService.Repositories;
 
 namespace UserService.Services.Profile;
 
-public class ProfileService : IProfileService
+public class ProfileService(UnitOfWork unitOfWork, ILogger<ProfileService> logger) : IProfileService
 {
-    public Task<GetProfileResponse> GetMyProfile(long userId)
+    private readonly UnitOfWork _uow = unitOfWork;
+    private readonly ILogger<ProfileService> _logger = logger;
+
+    public async Task<GetProfileResponse> GetMyProfile(long userId)
     {
-        throw new NotImplementedException();
+        Meta profile;
+        try 
+        {
+            profile = await _uow.Metas.FindOneAsync(p => p.UserId == userId);
+            _logger.LogDebug("Found profile for user {userId}", userId);
+        }
+        catch (Exception e)
+        {
+            _logger.LogDebug("Failed to acquire profile for user {userId}", userId);
+
+            try 
+            {
+                User user = await _uow.Users.FindOneAsync(u => u.Id == userId);
+            }
+            catch (NullReferenceException)
+            {
+                _logger.LogDebug("No user with id {userId} found", userId);
+                throw new UserNotFoundException($"No profile for user {userId} found");
+            }
+            throw;
+        }
+        return (GetProfileResponse)profile;
     }
 
-    public UpdateProfileResponse UpdateProfile(UpdateProfileRequest request)
+    public async Task<UpdateProfileResponse> UpdateProfile(long userId, UpdateProfileRequest request)
     {
-        throw new NotImplementedException();
+        Meta profile;
+        using var transaction = _uow.BeginTransaction();
+        try 
+        {
+            profile = await _uow.Metas.FindOneAsync(p => p.UserId == userId);
+            _logger.LogDebug("Found profile for user {userId}", userId);
+
+            profile.Name = request.Name ?? profile.Name;
+            profile.Surname = request.Surname ?? profile.Surname;
+            profile.Patronymic = request.Patronymic ?? profile.Patronymic;
+            profile.Birthday = request.Birthday ?? profile.Birthday;
+            profile.Avatar = request.Avatar ?? profile.Avatar;
+
+            transaction.SaveAndCommit();
+
+            _logger.LogDebug("Updated profile for user {userId}", userId);
+        }
+        catch (Exception e)
+        {
+            _logger.LogDebug("Failed to acquire profile for user {userId}", userId);
+            transaction.Rollback();
+
+            try 
+            {
+                User user = await _uow.Users.FindOneAsync(u => u.Id == userId);
+            }
+            catch (NullReferenceException)
+            {
+                _logger.LogDebug("No user with id {userId} found", userId);
+                throw new UserNotFoundException($"No profile for user {userId} found");
+            }
+            throw;
+        }
+        return (UpdateProfileResponse)profile;
     }
 
-    public Task<UploadAvatarResponse> UploadAvatar(UploadAvatarRequest request)
+    // TODO: Ereshkigal wants to implement this
+    public async Task<UploadAvatarResponse> UploadAvatar(long userId, UploadAvatarRequest request)
     {
         throw new NotImplementedException();
     }

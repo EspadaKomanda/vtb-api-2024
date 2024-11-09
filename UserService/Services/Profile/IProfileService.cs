@@ -6,6 +6,6 @@ namespace UserService.Services.Profile;
 public interface IProfileService
 {
     Task<GetProfileResponse> GetMyProfile(long userId);
-    UpdateProfileResponse UpdateProfile(UpdateProfileRequest request);
-    Task<UploadAvatarResponse> UploadAvatar(UploadAvatarRequest request);
+    Task<UpdateProfileResponse> UpdateProfile(long  userId, UpdateProfileRequest request);
+    Task<UploadAvatarResponse> UploadAvatar(long userId, UploadAvatarRequest request);
 }

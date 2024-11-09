@@ -1,4 +1,4 @@
-namespace ProfileService.Models.Profile.Requests;
+namespace UserService.Models.Profile.Requests;
 
 public class GetProfileRequest
 {

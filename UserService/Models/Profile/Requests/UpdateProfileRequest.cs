@@ -10,6 +10,8 @@ public class UpdateProfileRequest
     public string? Surname { get; set; }
     [ValidName]
     public string? Patronymic { get; set; }
+    [ValidAge]
+    public DateTime? Birthday { get; set; }
     [ValidAvatar]
     public string? Avatar { get; set; }
 }
