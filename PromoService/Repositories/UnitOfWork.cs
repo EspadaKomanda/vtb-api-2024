@@ -6,19 +6,19 @@ namespace PromoService.Repositories;
 
 public class UnitOfWork : IUnitOfWork
 {
-    private readonly IRepository<Promo> _promoRepository;
-    private readonly IRepository<PromoCategory> _promoCategoryRepository;
-    private readonly IRepository<UserPromo> _userPromoRepository;
-    private readonly IRepository<PromoAppliedProduct> _promoAppliedProductRepository;
+    public IRepository<Promo> PromoRepo { get; }
+    public IRepository<PromoCategory> PromoCategoryRepo { get; }
+    public IRepository<UserPromo> UserPromoRepo { get; }
+    public IRepository<PromoAppliedProduct> PromoAppliedProductRepo { get; }
     private readonly ILogger<UnitOfWork> _logger;
     private readonly ApplicationContext _context;
 
     public UnitOfWork(IRepository<Promo> promoRepository, IRepository<PromoCategory> promoCategoryRepository, IRepository<UserPromo> userPromoRepository, IRepository<PromoAppliedProduct> promoAppliedProductRepository, ILogger<UnitOfWork> logger, ApplicationContext context)
     {
-        _promoRepository = promoRepository;
-        _promoCategoryRepository = promoCategoryRepository;
-        _userPromoRepository = userPromoRepository;
-        _promoAppliedProductRepository = promoAppliedProductRepository;
+        PromoRepo = promoRepository;
+        PromoCategoryRepo = promoCategoryRepository;
+        UserPromoRepo = userPromoRepository;
+        PromoAppliedProductRepo = promoAppliedProductRepository;
         
         _logger = logger;
         _context = context;
