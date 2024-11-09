@@ -37,6 +37,38 @@ public class ProfileService(UnitOfWork unitOfWork, ILogger<ProfileService> logge
         return (GetProfileResponse)profile;
     }
 
+    public async Task<GetUsernameAndAvatarResponse> GetUsernameAndAvatar(long userId)
+    {
+        User user;
+        Meta profile;
+        try
+        {
+            user = await _uow.Users.FindOneAsync(u => u.Id == userId);
+            profile = await _uow.Metas.FindOneAsync(p => p.UserId == userId);
+            _logger.LogDebug("Found profile for user {userId}", userId);
+
+            return new GetUsernameAndAvatarResponse
+            {
+                Username = user.Username,
+                Avatar = profile.Avatar
+            };
+        }
+        catch (Exception e)
+        {
+            _logger.LogDebug("Failed to acquire profile for user {userId}", userId);
+            try 
+            {
+                user = await _uow.Users.FindOneAsync(u => u.Id == userId);
+            }
+            catch (NullReferenceException)
+            {
+                _logger.LogDebug("No user with id {userId} found", userId);
+                throw new UserNotFoundException($"No profile for user {userId} found");
+            }
+            throw;
+        }
+    }
+
     public async Task<UpdateProfileResponse> UpdateProfile(long userId, UpdateProfileRequest request)
     {
         Meta profile;
