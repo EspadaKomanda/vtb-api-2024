@@ -21,11 +21,6 @@ public interface IPromocodeService
     Task<SetPromocodeMetaResponse> SetPromocodeMeta(SetPromocodeMetaRequest request);
 
     /// <summary>
-    /// Устанавливает ограничения промокода.
-    /// </summary>
-    Task<SetPromocodeRestrictionsResponse> SetPromocodeRestrictions(SetPromocodeRestrictionsRequest request);
-
-    /// <summary>
     /// Получить все существующие промокоды или определенный промокод.
     /// </summary>
     Task<GetPromocodesResponse> GetPromocodes(GetPromocodesRequest request);
