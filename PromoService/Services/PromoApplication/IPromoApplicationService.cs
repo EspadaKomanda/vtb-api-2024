@@ -14,7 +14,7 @@ public interface IPromoApplicationService
     /// <summary>
     /// Позволяет удостовериться, что пользователь может применить промокод для данного набора товаров
     /// </summary>
-    ValidatePromocodeApplicationResponse ValidatePromocodeApplication(long userId, ValidatePromocodeApplicationRequest request);
+    Task<ValidatePromocodeApplicationResponse> ValidatePromocodeApplication(long userId, ValidatePromocodeApplicationRequest request);
 
     /// <summary>
     /// Позволяет получить промокоды, использованные пользователем, и информацию о них

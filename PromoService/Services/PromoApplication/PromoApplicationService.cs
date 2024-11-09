@@ -2,14 +2,17 @@ using PromoService.Database.Models;
 using PromoService.Models.PromoApplication;
 using PromoService.Models.PromoApplication.Requests;
 using PromoService.Models.PromoApplication.Responses;
+using PromoService.Models.Users;
 using PromoService.Repositories;
 using PromoService.Services.Promocode;
+using PromoService.Services.Users;
 
 namespace PromoService.Services.PromoApplication;
 
-public class PromoApplicationService(IUnitOfWork unitOfWork, ILogger<PromocodeService> logger) : IPromoApplicationService
+public class PromoApplicationService(IUnitOfWork unitOfWork, IUsersService usersService, ILogger<PromocodeService> logger) : IPromoApplicationService
 {
     private readonly IUnitOfWork _uow = unitOfWork;
+    private readonly IUsersService _usersService = usersService;
     private readonly ILogger<PromocodeService> _logger = logger;
 
     public GetMyPromoApplicationsResponse GetMyPromoApplications(long userId, GetMyPromoApplicationsRequest request)
@@ -24,7 +27,7 @@ public class PromoApplicationService(IUnitOfWork unitOfWork, ILogger<PromocodeSe
             appliedProducts = [.. _uow.PromoAppliedProductRepo.Find(p => applications.Any(a => a.Id == p.UserPromoId))];
             promos = [.. _uow.PromoRepo.Find(p => applications.Any(a => a.PromoId == p.Id))];
 
-            List<PromocodeApplication> promocodeApplications = new();
+            List<PromocodeApplication> promocodeApplications = [];
             foreach (var promo in promos)
             {
                 // FIXME: testing
@@ -52,8 +55,25 @@ public class PromoApplicationService(IUnitOfWork unitOfWork, ILogger<PromocodeSe
         throw new NotImplementedException();
     }
 
-    public ValidatePromocodeApplicationResponse ValidatePromocodeApplication(long userId, ValidatePromocodeApplicationRequest request)
+    public async Task<ValidatePromocodeApplicationResponse> ValidatePromocodeApplication(long userId, ValidatePromocodeApplicationRequest request)
     {
-        throw new NotImplementedException();
+        User user;
+
+        try
+        {
+            _logger.LogDebug("Finding user with id {UserId}", userId);
+            user = await _usersService.GetUser(userId);
+
+            // TODO: make checks
+            return new ValidatePromocodeApplicationResponse
+            {
+                IsSuccess = true
+            };
+        }
+        catch
+        {
+            _logger.LogError("Failed to find user with id {UserId}", userId);
+            throw;
+        }
     }
 }
