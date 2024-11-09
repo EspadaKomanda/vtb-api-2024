@@ -1,7 +1,7 @@
 export default function MainFeatures() {
     return (
         <div className="relative mt-20 min-h-80">
-            <div className="absolute inset-0 bg-custom-blur bg-opacity-50 backdrop-blur-sm rounded-md conteiner"></div>
+            <div className="absolute inset-0 bg-custom-blur bg-opacity-70 backdrop-blur-sm rounded-md conteiner"></div>
             <ul className="relative z-10 grid grid-cols-1 lg:grid-cols-3 container py-8 text-center text-white text-2xl lg:text-3xl font-medium gap-y-5">
                 <li className="grid grid-rows-2 gap-y-6 lg:gap-y-24">
                     <span className="font-black bg-clip-text bg-custom-gradient text-4xl lg:text-6xl relative">

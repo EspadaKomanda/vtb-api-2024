@@ -6,7 +6,7 @@ import AuntificationPopup from "@/components/auntification_popup";
 import auntificationStore from '@/stores/auntification_store.js';
 
 export default function Profile() {
-    const [avatar, setAvatar] = useState('/images/default_avatar.png');
+    const [avatar, setAvatar] = useState('/default.png');
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isDragging, setIsDragging] = useState(false);
     const fileInputRef = useRef(null);
@@ -14,16 +14,45 @@ export default function Profile() {
     const isRegisterOpen = auntificationStore((state) => state.isRegisterOpen);
     const openLogin = auntificationStore((state) => state.openLogin);
     const openRegister = auntificationStore((state) => state.openRegister);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [isAuthenticated, setIsAuthenticated] = useState(true);
+    const [firstName, setFirstName] = useState("Имя")
+    const [lastName, setLastName] = useState("Фамилия")
+    const [promocode, setPromocode] = useState("Промокод")
+    const [bonuses, setBonuses] = useState("0")
 
+
+    // useEffect(() => {
+    //     const token = document.cookie.split('; ').find(row => row.startsWith('authToken='));
+    //     if (token) {
+    //         setIsAuthenticated(true);
+    //     } else {
+    //         setIsAuthenticated(false);
+    //     }
+    // }, []);
+
+    const fetchProfile = async () => {
+        try {
+
+            const fullNameResponse = await fetch('/profile_json_files/fullname.json');
+            const fullNameData = await (fullNameResponse).json();
+            setFirstName(fullNameData.firstName);
+            setLastName(fullNameData.lastName);
+
+            const promocodeResponse = await fetch('/profile_json_files/promocode.json');
+            const promocodeData = await (promocodeResponse).json();
+            setPromocode(promocodeData.promocode);
+
+            const bonusesResponse = await fetch('/profile_json_files/bonuses.json');
+            const bonusesData = await (bonusesResponse).json();
+            setBonuses(bonusesData.bonuses);
+            
+        } catch (error) {
+            console.error('Ошибка при получении данных:', error);
+          }
+    };
 
     useEffect(() => {
-        const token = document.cookie.split('; ').find(row => row.startsWith('authToken='));
-        if (token) {
-            setIsAuthenticated(true);
-        } else {
-            setIsAuthenticated(false);
-        }
+        fetchProfile();
     }, []);
 
     const handleAvatarChange = (file) => {
@@ -62,29 +91,32 @@ export default function Profile() {
             <header className="pb-40 bg-cover bg-center" style={{ backgroundImage: "url('/images/bg_profile.png')" }}>
                 <NavigationComponent />
             </header>
-            <main className="container p-5 relative">
-                <div className="flex items-center justify-center">
-                    <div className="absolute -top-30 left-1/2 transform -translate-x-1/2">
-                        {isAuthenticated ? (
-                            <>
-                                <Image 
-                                    src={avatar} 
-                                    alt="" 
-                                    width={240} 
-                                    height={240} 
-                                    className="w-60 h-60 rounded-full bg-custom-gradient cursor-pointer border-4" 
-                                    onClick={() => setIsModalOpen(true)}
-                                />
-                            </>
-                            ) : (
-                            <div className="absolute text-3xl font-semibold flex left-1/2 transform -translate-x-1/2">
-                                <button onClick={openLogin} className="bg-custom-bg-blue text-white px-4 p-2 rounded">Вход</button>
-                                <button onClick={openRegister} className="bg-custom-bg-blue text-white px-4 p-2 rounded ml-2">Регистрация</button>
-                            </div>
-                        )}
+            {isAuthenticated ? (
+                <main className="container p-5 text-white">
+                    <div className="flex items-center justify-center">
+                        <div className="relative w-60 h-60">
+                            <Image 
+                                src={avatar} 
+                                alt="" 
+                                width={240} 
+                                height={240} 
+                                className="rounded-full bg-custom-gradient cursor-pointer border-4 absolute left-1/2 -top-32 transform" 
+                                onClick={() => setIsModalOpen(true)}
+                            />
+                        </div>
+                        <h2 className=" text-5xl font-bold flex mt-32 -translate-x-1/2">    
+                            {lastName} {firstName}
+                        </h2>
                     </div>
+                    <p className="text-3xl mt-20">Ваш промокод на скидку <span className="font-bold text-4xl pl-5 text-customColor4">{promocode}</span></p>
+                    <p className="text-3xl mt-10">Бонусы <span className="font-bold text-4xl pl-16 text-customColor4">{bonuses} Б</span></p> 
+                </main>
+            ) : (
+                <div className="absolute text-3xl font-semibold flex left-1/2 transform -translate-x-1/2">
+                    <button onClick={openLogin} className="bg-custom-bg-blue text-white px-4 p-2 rounded">Вход</button>
+                    <button onClick={openRegister} className="bg-custom-bg-blue text-white px-4 p-2 rounded ml-2">Регистрация</button>
                 </div>
-            </main>
+            )}
 
             {isModalOpen && (
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
