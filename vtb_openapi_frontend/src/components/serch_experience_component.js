@@ -16,6 +16,7 @@ class FilterData {
         this.search = '';
         this.tours = false;
         this.experience = false;
+        this.description = '';
         this.entertainment = false;
         this.dateFrom = '';
         this.dateTo = '';
