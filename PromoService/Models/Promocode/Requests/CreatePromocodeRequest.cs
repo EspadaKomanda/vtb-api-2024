@@ -23,7 +23,11 @@ public class CreatePromocodeRequest
 
   public long? MaxPerEveryone { get; set; }
 
+  public long? MinAccountAge { get; set; }
+
   public long? MaxAccountAge { get; set; }
+
+  public DateTime StartDate { get; set; } = DateTime.UtcNow;
 
   [Required]
   public DateTime EndDate { get; set; }

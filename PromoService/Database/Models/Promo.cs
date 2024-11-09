@@ -41,4 +41,6 @@ public class Promo
 
     [Required]
     public DateTime? EndDate { get; set; }
+
+    public bool Deleted { get; set; } = false;
 }
