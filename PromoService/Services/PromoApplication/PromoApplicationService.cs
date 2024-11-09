@@ -53,19 +53,81 @@ public class PromoApplicationService(IUnitOfWork unitOfWork, IUsersService users
 
     public async Task<RegisterPromoUseResponse> RegisterPromoUse(long userId, RegisterPromoUseRequest request)
     {
-        try {
-                
+        using var transaction = _uow.BeginTransaction();
+        try
+        {  
             if ((await ValidatePromocodeApplication(userId, (ValidatePromocodeApplicationRequest)request)).IsSuccess)
             {
-                // TODO: Register promo use
-                throw new NotImplementedException();
+                Promo promo = await _uow.PromoRepo.FindOneAsync(p => p.Code == request.PromoCode);
+
+                _logger.LogDebug("Adding application to database");
+
+                UserPromo userPromo;
+                try 
+                {
+                    userPromo = await _uow.UserPromoRepo.FindOneAsync(p => p.UserId == userId && p.PromoId == promo.Id);
+                    _logger.LogDebug("Application already exists in database, acquired it");
+                }
+                catch
+                {
+                    _logger.LogDebug("Application not found in database, creating it");
+                    try
+                    {
+                        userPromo = new()
+                        {
+                            UserId = userId,
+                            PromoId = promo.Id
+                        };
+                        await _uow.UserPromoRepo.AddAsync(userPromo);
+                    }
+                    catch
+                    {
+                        _logger.LogError("Failed to add application to database");
+                        throw;
+                    }
+                }
+
+                _logger.LogInformation("Added application to database. Application id: {ApplicationId}", userPromo.Id);
+                _logger.LogDebug("Adding applied products to database");
+                foreach (var tourId in request.TourIds)
+                {
+                    var appliedProduct = new PromoAppliedProduct()
+                    {
+                        UserPromoId = userPromo.Id,
+                        TourId = tourId
+                    };
+                    await _uow.PromoAppliedProductRepo.AddAsync(appliedProduct);
+                }
+                foreach (var entertainmentId in request.EntertainmentIds)
+                {
+                    var appliedProduct = new PromoAppliedProduct()
+                    {
+                        UserPromoId = userPromo.Id,
+                        EntertainmentId = entertainmentId
+                    };
+                    await _uow.PromoAppliedProductRepo.AddAsync(appliedProduct);
+                }
+
+                _logger.LogInformation("Added applied products to database, saving");
+                transaction.SaveAndCommit();
+
+                return new()
+                {
+                    PromoApplicationId = userPromo.Id
+                };
+            }
+            else
+            {
+                _logger.LogDebug("Application is invalid");
+                throw new PromocodeInapplicapleException("Application is invalid");
             }
         }
         catch
         {
+            _logger.LogError("Failed to add application to database, rolling back transaction");
+            transaction.Rollback();
             throw;
         }
-        return new();
     }
 
     public async Task<ValidatePromocodeApplicationResponse> ValidatePromocodeApplication(long userId, ValidatePromocodeApplicationRequest request)
