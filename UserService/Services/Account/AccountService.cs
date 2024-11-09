@@ -366,6 +366,29 @@ public class AccountService(IUnitOfWork unitOfWork, ILogger<AccountService> logg
         };
     }
 
+    public async Task<GetUserResponse> GetUser(long userId, GetUserRequest request)
+    {
+        User user;
+        Meta profile;
+        try 
+        {
+            user = await _uow.Users.FindOneAsync(u => u.Id == userId);
+            profile = await _uow.Metas.FindOneAsync(p => p.UserId == userId);
+            _logger.LogDebug("Found user {user.Id} with profile {profile.Id}", user.Id, profile.Id);
+        }
+        catch (NullReferenceException)
+        {
+            _logger.LogDebug("No user with id {userId} found", userId);
+            throw new UserNotFoundException($"No user with id {userId} found");
+        }
+        return new GetUserResponse
+        {
+            Id = user.Id,
+            Username = user.Username,
+            Avatar = profile.Avatar,
+        };
+    }
+
     public async Task<ResendPasswordResetCodeResponse> ResendPasswordResetCode(ResendPasswordResetCodeRequest request)
     {
         User user;

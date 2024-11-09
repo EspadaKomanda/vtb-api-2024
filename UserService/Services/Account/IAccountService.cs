@@ -67,4 +67,9 @@ public interface IAccountService
     /// только для использования в микросервисе AuthService.
     /// </summary>
     Task<AccountAccessDataResponse> AccountAccessData(AccountAccessDataRequest request);
+
+    /// <summary>
+    /// Позволяет получить данные о пользователе.
+    /// </summary>
+    Task<GetUserResponse> GetUser(long userId, GetUserRequest request);
 }
