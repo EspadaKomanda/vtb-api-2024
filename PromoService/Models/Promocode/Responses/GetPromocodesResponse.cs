@@ -1,6 +1,5 @@
+using PromoService.Database.Models;
+
 namespace PromoService.Models.Promocode.Responses;
 
-public class GetPromocodesResponse
-{
-    public long? PromocodeId { get; set; }
-}
+public class GetPromocodesResponse : List<Promo>;
