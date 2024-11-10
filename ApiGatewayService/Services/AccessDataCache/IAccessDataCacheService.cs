@@ -21,6 +21,6 @@ public interface IAccessDataCacheService
     /// <summary>
     /// Открытый эндпоинт для микросервисов, который позволяет кешировать данные доступа пользователя (в том числе повторно, если они были обновлены).
     /// </summary>
-    Task<RecacheUserResponse> RecacheUser(RecacheUserRequest user);
+    Task RecacheUser();
     
 }

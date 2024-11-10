@@ -4,7 +4,7 @@ using ApiGatewayService.Models.AuthService.Models;
 using AuthService.Services.AccessDataCache;
 using TourService.Kafka;
 
-namespace ApiGatewayService.Services.AuthService.AccessDataCache;
+namespace ApiGatewayService.sServices.AuthService.AccessDataCache;
 
 public class AccessDataCacheService(ILogger<AccessDataCacheService> logger, KafkaRequestService kafkaRequestService) : IAccessDataCacheService
 {
@@ -21,7 +21,22 @@ public class AccessDataCacheService(ILogger<AccessDataCacheService> logger, Kafk
         throw new NotImplementedException();
     }
 
+    public Task RecacheUser()
+    {
+        throw new NotImplementedException();
+    }
+
     public Task<UserAccessData?> RequestAndCacheUser(string username)
+    {
+        throw new NotImplementedException();
+    }
+
+    Task<Models.AccessDataCache.UserAccessData?> IAccessDataCacheService.Get(string username)
+    {
+        throw new NotImplementedException();
+    }
+
+    Task<Models.AccessDataCache.UserAccessData?> IAccessDataCacheService.RequestAndCacheUser(string username)
     {
         throw new NotImplementedException();
     }
