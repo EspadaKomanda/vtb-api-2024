@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace ApiGatewayService.Controllers.TourService;
+namespace ApiGatewayService.Controllers.EntertainmentService;
 
 [ApiController]
 [Route("api/[controller]")]
