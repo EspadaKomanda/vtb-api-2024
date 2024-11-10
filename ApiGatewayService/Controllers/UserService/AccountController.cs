@@ -72,6 +72,7 @@ namespace ApiGatewayService.Controllers.UserService
 
         [HttpPatch]
         [Route("changePassword")]
+        // FIXME: authorize
         public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordRequest changePasswordRequest)
         {
             try
@@ -205,10 +206,22 @@ namespace ApiGatewayService.Controllers.UserService
 
         [HttpGet]
         [Route("getUser")]
+        // FIXME: authorize
         public async Task<IActionResult> GetUser([FromQuery] GetUserRequest getUserRequest)
         {
-            // TODO: implement method
-            throw new NotImplementedException();
+            try
+            {
+                var result = await _accountService.GetUser(getUserRequest);
+                return Ok(result);
+            }
+            catch(Exception ex)
+            {
+                if(ex is MyKafkaException)
+                {
+                    return StatusCode(500, ex.Message);
+                }
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

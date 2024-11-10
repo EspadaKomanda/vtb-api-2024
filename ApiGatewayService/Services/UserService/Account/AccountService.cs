@@ -215,6 +215,12 @@ namespace ApiGatewayService.Services.UserService.Account
             }
         }
 
+        public Task<GetUserResponse> GetUser(GetUserRequest request)
+        {
+            // TODO: implement method
+            throw new NotImplementedException();
+        }
+
         public async Task<ResendPasswordResetCodeResponse> ResendPasswordResetCode(ResendPasswordResetCodeRequest request)
         {
             try

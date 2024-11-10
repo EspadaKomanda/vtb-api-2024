@@ -1,6 +1,7 @@
 using ApiGatewayService.Models.UserService.Profile.Requests;
 using ApiGatewayService.Services.UserService.Profile;
 using Microsoft.AspNetCore.Mvc;
+using TourService.KafkaException;
 
 namespace ApiGatewayService.Controllers.UserService
 {
@@ -15,24 +16,57 @@ namespace ApiGatewayService.Controllers.UserService
         [Route("getProfile")]
         public async Task<IActionResult> GetProfile([FromQuery] GetProfileRequest getProfileRequest)
         {
-            // TODO: implement method
-            throw new NotImplementedException();
+            try
+            {
+                var result = await _profileService.GetProfile(getProfileRequest);
+                return Ok(result);
+            }
+            catch(Exception ex)
+            {
+                if(ex is MyKafkaException)
+                {
+                    return StatusCode(500, ex.Message);
+                }
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPatch]
         [Route("updateProfile")]
         public async Task<IActionResult> UpdateProfile([FromBody] UpdateProfileRequest updateProfileRequest)
         {
-            // TODO: implement method
-            throw new NotImplementedException();
+            try
+            {
+                var result = await _profileService.UpdateProfile(updateProfileRequest);
+                return Ok(result);
+            }
+            catch(Exception ex)
+            {
+                if(ex is MyKafkaException)
+                {
+                    return StatusCode(500, ex.Message);
+                }
+                return BadRequest(ex.Message);
+            }
         }
 
         [HttpPost]
         [Route("uploadAvatar")]
         public async Task<IActionResult> UploadAvatar([FromBody] UploadAvatarRequest updateAvatarRequest)
         {
-            // TODO: implement method
-            throw new NotImplementedException();
+            try
+            {
+                var result = await _profileService.UploadAvatar(updateAvatarRequest);
+                return Ok(result);
+            }
+            catch(Exception ex)
+            {
+                if(ex is MyKafkaException)
+                {
+                    return StatusCode(500, ex.Message);
+                }
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

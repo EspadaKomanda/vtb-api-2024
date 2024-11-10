@@ -2,6 +2,7 @@ using ApiGatewayService.Models.AuthService.Authentication.Requests;
 using ApiGatewayService.Models.AuthService.Authentication.Responses;
 using ApiGatewayService.Services.AuthService.Auth;
 using Microsoft.AspNetCore.Mvc;
+using TourService.KafkaException;
 
 namespace ApiGatewayService.Controllers.AuthService;
 
@@ -13,20 +14,56 @@ public class AuthController(ILogger<AuthController> logger, IAuthService authSer
     private readonly IAuthService _authService = authService;
 
     [HttpPost("validateAccessToken")]
-    public async Task<ValidateAccessTokenResponse> ValidateAccessToken([FromBody] ValidateAccessTokenRequest request)
+    public async Task<IActionResult> ValidateAccessToken([FromBody] ValidateAccessTokenRequest request)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var result = await _authService.ValidateAccessToken(request);
+            return Ok(result);
+        }
+        catch(Exception ex)
+        {
+            if(ex is MyKafkaException)
+            {
+                return StatusCode(500, ex.Message);
+            }
+            return BadRequest(ex.Message);
+        }
     }
 
     [HttpPost("validateRefreshToken")]
-    public async Task<ValidateRefreshTokenResponse> ValidateRefreshToken([FromBody] ValidateRefreshTokenRequest request)
+    public async Task<IActionResult> ValidateRefreshToken([FromBody] ValidateRefreshTokenRequest request)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var result = await _authService.ValidateRefreshToken(request);
+            return Ok(result);
+        }
+        catch(Exception ex)
+        {
+            if(ex is MyKafkaException)
+            {
+                return StatusCode(500, ex.Message);
+            }
+            return BadRequest(ex.Message);
+        }
     }
 
     [HttpPost("refresh")]
-    public async Task<RefreshResponse> Refresh([FromBody] RefreshRequest request)
+    public async Task<IActionResult> Refresh([FromBody] RefreshRequest request)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var result = await _authService.Refresh(request);
+            return Ok(result);
+        }
+        catch(Exception ex)
+        {
+            if(ex is MyKafkaException)
+            {
+                return StatusCode(500, ex.Message);
+            }
+            return BadRequest(ex.Message);
+        }
     }
 }

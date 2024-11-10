@@ -71,5 +71,7 @@ namespace ApiGatewayService.Services.UserService.Account
         /// только для использования в микросервисе AuthService.
         /// </summary>
         Task<AccountAccessDataResponse> AccountAccessData(AccountAccessDataRequest request);
+
+        Task<GetUserResponse> GetUser(GetUserRequest request);
     }
 }
