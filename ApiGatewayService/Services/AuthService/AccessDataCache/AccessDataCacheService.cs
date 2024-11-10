@@ -21,7 +21,22 @@ public class AccessDataCacheService(ILogger<AccessDataCacheService> logger, Kafk
         throw new NotImplementedException();
     }
 
+    public Task RecacheUser()
+    {
+        throw new NotImplementedException();
+    }
+
     public Task<UserAccessData?> RequestAndCacheUser(string username)
+    {
+        throw new NotImplementedException();
+    }
+
+    Task<Models.AccessDataCache.UserAccessData?> IAccessDataCacheService.Get(string username)
+    {
+        throw new NotImplementedException();
+    }
+
+    Task<Models.AccessDataCache.UserAccessData?> IAccessDataCacheService.RequestAndCacheUser(string username)
     {
         throw new NotImplementedException();
     }
