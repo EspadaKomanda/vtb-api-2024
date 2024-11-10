@@ -4,7 +4,7 @@ using TourService.KafkaException;
 using UserService.Models.Account.Requests;
 
 // TODO: add GetUser and GetUsernameAndAvatar
-namespace ApiGatewayService.Controllers
+namespace ApiGatewayService.Controllers.UserService
 {
     [ApiController]
     [Route("api/[controller]")]
