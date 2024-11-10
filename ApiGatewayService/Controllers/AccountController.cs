@@ -1,12 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using ApiGatewayService.Services.User;
 using Microsoft.AspNetCore.Mvc;
 using TourService.KafkaException;
 using UserService.Models.Account.Requests;
 
+// TODO: add GetUser and GetUsernameAndAvatar
 namespace ApiGatewayService.Controllers
 {
     [ApiController]
@@ -204,6 +201,14 @@ namespace ApiGatewayService.Controllers
                 }
                 return BadRequest(ex.Message);
             }
+        }
+
+        [HttpGet]
+        [Route("getUser")]
+        public async Task<IActionResult> GetUser([FromQuery] GetUserRequest getUserRequest)
+        {
+            // TODO: implement method
+            throw new NotImplementedException();
         }
     }
 }

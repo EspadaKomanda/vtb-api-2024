@@ -11,8 +11,5 @@ namespace ApiGatewayService.Exceptions.UserService.Account
         public BeginRegistrationException() { }
         public BeginRegistrationException(string message) : base(message) { }
         public BeginRegistrationException(string message, System.Exception inner) : base(message, inner) { }
-        protected BeginRegistrationException(
-            System.Runtime.Serialization.SerializationInfo info,
-            System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
     }
 }
