@@ -46,25 +46,15 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-Logging.configureLogging();
+//Logging.configureLogging();
 
-builder.Host.UseSerilog();
+//builder.Host.UseSerilog();
 
 builder.Services.AddControllers();
 
 var app = builder.Build();
 
 app.UseHttpsRedirection();
-
-builder.Services.AddAuthorizationBuilder()
-    .AddPolicy("Access", policy =>
-    {
-        policy.RequireClaim("TokenType", "access");
-    })
-    .AddPolicy("Refresh", policy =>
-    {
-        policy.RequireClaim("TokenType", "refresh");
-    });
 
 builder.Services.AddCors(options => 
 {
