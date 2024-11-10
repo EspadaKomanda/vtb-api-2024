@@ -2,15 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
-    using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
-namespace TourService.Attributes.Validation
+namespace EntertaimentService.Attributes.Validation
 {
 
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
-    sealed public class Text : ValidationAttribute
+    sealed public class EntertaimentText : ValidationAttribute
     {
         private static readonly string[] ProhibitedWords = 
         { 

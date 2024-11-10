@@ -3,7 +3,7 @@ using EntertaimentService.Attributes.Validation;
 
 namespace EntertaimentService.Database.Models
 {
-    public class Tour
+    public class Entertaiment
     {
         [Key]
         public long Id { get; set; }
@@ -22,7 +22,7 @@ namespace EntertaimentService.Database.Models
         [Required]
         public bool IsActive { get; set; }
         public double Rating { get; set; }
-        [Text]
+        [EntertaimentText]
         public string? Comment { get; set;} = null!;
         public ICollection<Photo>? Photos { get; set; }
         public ICollection<Review>? Reviews { get; set; }

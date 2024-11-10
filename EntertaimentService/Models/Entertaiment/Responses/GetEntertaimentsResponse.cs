@@ -1,8 +1,8 @@
 using EntertaimentService.Models.DTO;
 
-namespace Entertaiment.Models.Tour.Responses;
+namespace EntertaimentService.Models.Tour.Responses;
 
-public class GetToursResponse
+public class GetEntertaimentsResponse
 {
     public long Amount { get; set; }
     public int Page { get; set; }

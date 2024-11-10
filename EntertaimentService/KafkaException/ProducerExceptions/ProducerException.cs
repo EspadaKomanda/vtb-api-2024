@@ -1,4 +1,4 @@
-﻿namespace TourService.KafkaException;
+﻿namespace EntertaimentService.KafkaException;
 
 public class ProducerException : MyKafkaException
 {
