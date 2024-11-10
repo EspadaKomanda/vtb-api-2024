@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import useAccumulationStore from "../stores/accumulation_store.js";
 
 export default function AccumulationComponent() {
@@ -22,7 +21,6 @@ export default function AccumulationComponent() {
                         </span>
                     </div>
                 </div>
-
                 <p>{actualSum}/{sum}₽</p>          
             </div>
         </div>

@@ -26,11 +26,6 @@ export default function NavigationComponent() {
                     </Link>
                 </li>
                 <li>
-                    <Link href="/choice_dosug" className={currentPath === "/choice_dosug" ? "active" : ""}>
-                        Выбрать досуг
-                    </Link>
-                </li>
-                <li>
                     <Link href="/wish_list" className={currentPath === "/wish_list" ? "active" : ""}>
                         Желаемое
                     </Link>

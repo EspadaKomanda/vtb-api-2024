@@ -9,6 +9,7 @@ const EmailConfirmation = () => {
   const [code, setCode] = useState('');
   const [error, setError] = useState('');
   const closeRegister = auntificationStore((state) => state.closeRegister);
+  const setIsAuthenticated = auntificationStore((state) => state.setIsAuthenticated);
   const [checkEmail, setCheckEmail] = useState(false);
 
   const handleSubmit = async (e) => {
@@ -48,6 +49,7 @@ const EmailConfirmation = () => {
     } finally {
       setCheckEmail(false);
     }
+    setIsAuthenticated(true);
 
     //TODO remove THIS, temporary for checking
     {closeRegister();

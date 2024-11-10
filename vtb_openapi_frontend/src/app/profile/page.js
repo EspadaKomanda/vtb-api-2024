@@ -10,45 +10,37 @@ export default function Profile() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isDragging, setIsDragging] = useState(false);
     const fileInputRef = useRef(null);
+    
+    // Get state and actions from the store
     const isLoginOpen = auntificationStore((state) => state.isLoginOpen);
     const isRegisterOpen = auntificationStore((state) => state.isRegisterOpen);
     const openLogin = auntificationStore((state) => state.openLogin);
     const openRegister = auntificationStore((state) => state.openRegister);
-    const [isAuthenticated, setIsAuthenticated] = useState(true);
-    const [firstName, setFirstName] = useState("Имя")
-    const [lastName, setLastName] = useState("Фамилия")
-    const [promocode, setPromocode] = useState("Промокод")
-    const [bonuses, setBonuses] = useState("0")
+    const isAuthenticated = auntificationStore((state) => state.isAuthenticated); // Get isAuthenticated from the store
+    const setIsAuthenticated = auntificationStore((state) => state.setIsAuthenticated); // Get setIsAuthenticated from the store
 
-
-    // useEffect(() => {
-    //     const token = document.cookie.split('; ').find(row => row.startsWith('authToken='));
-    //     if (token) {
-    //         setIsAuthenticated(true);
-    //     } else {
-    //         setIsAuthenticated(false);
-    //     }
-    // }, []);
+    const [firstName, setFirstName] = useState("Имя");
+    const [lastName, setLastName] = useState("Фамилия");
+    const [promocode, setPromocode] = useState("Промокод");
+    const [bonuses, setBonuses] = useState("0");
 
     const fetchProfile = async () => {
         try {
-
             const fullNameResponse = await fetch('/profile_json_files/fullname.json');
-            const fullNameData = await (fullNameResponse).json();
+            const fullNameData = await fullNameResponse.json();
             setFirstName(fullNameData.firstName);
             setLastName(fullNameData.lastName);
 
             const promocodeResponse = await fetch('/profile_json_files/promocode.json');
-            const promocodeData = await (promocodeResponse).json();
+            const promocodeData = await promocodeResponse.json();
             setPromocode(promocodeData.promocode);
 
             const bonusesResponse = await fetch('/profile_json_files/bonuses.json');
-            const bonusesData = await (bonusesResponse).json();
+            const bonusesData = await bonusesResponse.json();
             setBonuses(bonusesData.bonuses);
-            
         } catch (error) {
             console.error('Ошибка при получении данных:', error);
-          }
+        }
     };
 
     useEffect(() => {
@@ -88,7 +80,7 @@ export default function Profile() {
 
     return (
         <>
-            <header className="pb-40 bg-cover bg-center" style={{ backgroundImage: "url('/images/bg_profile.png')" }}>
+            <header className="pb-40 bg-cover bg-center" style={{ backgroundImage: "url('/images/bg_profile.jpg')" }}>
                 <NavigationComponent />
             </header>
             {isAuthenticated ? (
@@ -104,7 +96,7 @@ export default function Profile() {
                                 onClick={() => setIsModalOpen(true)}
                             />
                         </div>
-                        <h2 className=" text-5xl font-bold flex mt-32 -translate-x-1/2">    
+                        <h2 className="text-5xl font-bold flex mt-32 -translate-x-1/2">    
                             {lastName} {firstName}
                         </h2>
                     </div>
@@ -152,3 +144,4 @@ export default function Profile() {
         </>
     );
 }
+

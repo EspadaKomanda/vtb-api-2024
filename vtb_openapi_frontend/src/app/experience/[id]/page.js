@@ -55,7 +55,7 @@ const ExperienceDetailPage = ({ params }) => {
                 <h1 className="text-white text-3xl font-bold mb-5">{experience.name}</h1>
                 <Image src={experience.image} alt={experience.name} width={1000} height={1000} className='w-full h-auto' />
                 <p className="text-gray-300 mt-10 text-3xl"><strong>Описание:</strong> {experience.description}</p>
-                <p className="text-gray-300 mt-4 text-3xl"><strong>Адрес:</strong> {experience.description}</p>
+                <p className="text-gray-300 mt-4 text-3xl"><strong>Адрес:</strong> {experience.address}</p>
                 <div className='flex mt-4'>
                     <p className="text-gray-300  mr-5 text-3xl"><strong>Рейтинг:</strong> </p>
                     <div className="flex items-center">
