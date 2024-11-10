@@ -34,6 +34,7 @@
           "Microsoft.AspNetCore.App"
         ]
       },
+<<<<<<< HEAD
       "Microsoft.Bcl.TimeProvider/8.0.1": {
         "type": "package",
         "compile": {
@@ -51,6 +52,9 @@
         }
       },
       "Microsoft.CSharp/4.7.0": {
+=======
+      "Microsoft.CSharp/4.6.0": {
+>>>>>>> master
         "type": "package",
         "compile": {
           "ref/netcoreapp2.0/_._": {}
@@ -59,6 +63,7 @@
           "lib/netcoreapp2.0/_._": {}
         }
       },
+<<<<<<< HEAD
       "Microsoft.Extensions.Caching.Abstractions/8.0.0": {
         "type": "package",
         "dependencies": {
@@ -97,6 +102,8 @@
           }
         }
       },
+=======
+>>>>>>> master
       "Microsoft.Extensions.Configuration.Abstractions/8.0.0": {
         "type": "package",
         "dependencies": {
@@ -154,7 +161,11 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
+<<<<<<< HEAD
       "Microsoft.Extensions.DependencyInjection.Abstractions/8.0.2": {
+=======
+      "Microsoft.Extensions.DependencyInjection.Abstractions/8.0.0": {
+>>>>>>> master
         "type": "package",
         "compile": {
           "lib/net8.0/Microsoft.Extensions.DependencyInjection.Abstractions.dll": {
@@ -170,8 +181,17 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
+<<<<<<< HEAD
       "Microsoft.Extensions.DependencyModel/8.0.2": {
         "type": "package",
+=======
+      "Microsoft.Extensions.DependencyModel/8.0.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Text.Encodings.Web": "8.0.0",
+          "System.Text.Json": "8.0.0"
+        },
+>>>>>>> master
         "compile": {
           "lib/net8.0/Microsoft.Extensions.DependencyModel.dll": {
             "related": ".xml"
@@ -270,10 +290,17 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
+<<<<<<< HEAD
       "Microsoft.Extensions.Logging.Abstractions/8.0.2": {
         "type": "package",
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.2"
+=======
+      "Microsoft.Extensions.Logging.Abstractions/8.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.0"
+>>>>>>> master
         },
         "compile": {
           "lib/net8.0/Microsoft.Extensions.Logging.Abstractions.dll": {
@@ -289,7 +316,11 @@
           "buildTransitive/net6.0/Microsoft.Extensions.Logging.Abstractions.targets": {}
         }
       },
+<<<<<<< HEAD
       "Microsoft.Extensions.Options/8.0.2": {
+=======
+      "Microsoft.Extensions.Options/8.0.0": {
+>>>>>>> master
         "type": "package",
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.0",
@@ -325,6 +356,7 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
+<<<<<<< HEAD
       "Microsoft.IdentityModel.Abstractions/8.2.0": {
         "type": "package",
         "compile": {
@@ -388,6 +420,8 @@
           }
         }
       },
+=======
+>>>>>>> master
       "Microsoft.OpenApi/1.4.3": {
         "type": "package",
         "compile": {
@@ -414,12 +448,21 @@
           }
         }
       },
+<<<<<<< HEAD
       "OpenSearch.Net/1.7.1": {
         "type": "package",
         "dependencies": {
           "Microsoft.CSharp": "4.7.0",
           "System.Buffers": "4.5.1",
           "System.Diagnostics.DiagnosticSource": "6.0.1"
+=======
+      "OpenSearch.Net/1.2.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.CSharp": "4.6.0",
+          "System.Buffers": "4.5.1",
+          "System.Diagnostics.DiagnosticSource": "5.0.0"
+>>>>>>> master
         },
         "compile": {
           "lib/netstandard2.1/OpenSearch.Net.dll": {
@@ -448,7 +491,11 @@
           }
         }
       },
+<<<<<<< HEAD
       "Serilog/4.1.0": {
+=======
+      "Serilog/4.0.0": {
+>>>>>>> master
         "type": "package",
         "compile": {
           "lib/net8.0/Serilog.dll": {
@@ -461,6 +508,7 @@
           }
         }
       },
+<<<<<<< HEAD
       "Serilog.AspNetCore/8.0.3": {
         "type": "package",
         "dependencies": {
@@ -469,6 +517,18 @@
           "Serilog.Extensions.Hosting": "8.0.0",
           "Serilog.Formatting.Compact": "2.0.0",
           "Serilog.Settings.Configuration": "8.0.4",
+=======
+      "Serilog.AspNetCore/8.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection": "8.0.0",
+          "Microsoft.Extensions.Logging": "8.0.0",
+          "Serilog": "3.1.1",
+          "Serilog.Extensions.Hosting": "8.0.0",
+          "Serilog.Extensions.Logging": "8.0.0",
+          "Serilog.Formatting.Compact": "2.0.0",
+          "Serilog.Settings.Configuration": "8.0.0",
+>>>>>>> master
           "Serilog.Sinks.Console": "5.0.0",
           "Serilog.Sinks.Debug": "2.0.0",
           "Serilog.Sinks.File": "5.0.0"
@@ -487,6 +547,7 @@
           "Microsoft.AspNetCore.App"
         ]
       },
+<<<<<<< HEAD
       "Serilog.Enrichers.Environment/3.0.1": {
         "type": "package",
         "dependencies": {
@@ -501,6 +562,18 @@
           "lib/net8.0/Serilog.Enrichers.Environment.dll": {
             "related": ".xml"
           }
+=======
+      "Serilog.Enrichers.Environment/2.3.0": {
+        "type": "package",
+        "dependencies": {
+          "Serilog": "2.3.0"
+        },
+        "compile": {
+          "lib/netstandard2.0/Serilog.Enrichers.Environment.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/Serilog.Enrichers.Environment.dll": {}
+>>>>>>> master
         }
       },
       "Serilog.Exceptions/8.4.0": {
@@ -557,6 +630,7 @@
           }
         }
       },
+<<<<<<< HEAD
       "Serilog.Formatting.Compact/3.0.0": {
         "type": "package",
         "dependencies": {
@@ -564,19 +638,39 @@
         },
         "compile": {
           "lib/net8.0/Serilog.Formatting.Compact.dll": {
+=======
+      "Serilog.Formatting.Compact/2.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Serilog": "3.1.0"
+        },
+        "compile": {
+          "lib/net7.0/Serilog.Formatting.Compact.dll": {
+>>>>>>> master
             "related": ".xml"
           }
         },
         "runtime": {
+<<<<<<< HEAD
           "lib/net8.0/Serilog.Formatting.Compact.dll": {
+=======
+          "lib/net7.0/Serilog.Formatting.Compact.dll": {
+>>>>>>> master
             "related": ".xml"
           }
         }
       },
+<<<<<<< HEAD
       "Serilog.Formatting.OpenSearch/1.2.0": {
         "type": "package",
         "dependencies": {
           "Serilog": "4.0.0"
+=======
+      "Serilog.Formatting.OpenSearch/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Serilog": "2.12.0"
+>>>>>>> master
         },
         "compile": {
           "lib/netstandard2.0/Serilog.Formatting.OpenSearch.dll": {
@@ -589,11 +683,19 @@
           }
         }
       },
+<<<<<<< HEAD
       "Serilog.Settings.Configuration/8.0.4": {
         "type": "package",
         "dependencies": {
           "Microsoft.Extensions.Configuration.Binder": "8.0.0",
           "Microsoft.Extensions.DependencyModel": "8.0.2",
+=======
+      "Serilog.Settings.Configuration/8.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Microsoft.Extensions.Configuration.Binder": "8.0.0",
+          "Microsoft.Extensions.DependencyModel": "8.0.0",
+>>>>>>> master
           "Serilog": "3.1.1"
         },
         "compile": {
@@ -607,6 +709,7 @@
           }
         }
       },
+<<<<<<< HEAD
       "Serilog.Sinks.Console/6.0.0": {
         "type": "package",
         "dependencies": {
@@ -614,15 +717,29 @@
         },
         "compile": {
           "lib/net8.0/Serilog.Sinks.Console.dll": {
+=======
+      "Serilog.Sinks.Console/5.0.1": {
+        "type": "package",
+        "dependencies": {
+          "Serilog": "3.1.1"
+        },
+        "compile": {
+          "lib/net7.0/Serilog.Sinks.Console.dll": {
+>>>>>>> master
             "related": ".xml"
           }
         },
         "runtime": {
+<<<<<<< HEAD
           "lib/net8.0/Serilog.Sinks.Console.dll": {
+=======
+          "lib/net7.0/Serilog.Sinks.Console.dll": {
+>>>>>>> master
             "related": ".xml"
           }
         }
       },
+<<<<<<< HEAD
       "Serilog.Sinks.Debug/3.0.0": {
         "type": "package",
         "dependencies": {
@@ -630,15 +747,29 @@
         },
         "compile": {
           "lib/net8.0/Serilog.Sinks.Debug.dll": {
+=======
+      "Serilog.Sinks.Debug/2.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Serilog": "2.10.0"
+        },
+        "compile": {
+          "lib/netstandard2.1/Serilog.Sinks.Debug.dll": {
+>>>>>>> master
             "related": ".xml"
           }
         },
         "runtime": {
+<<<<<<< HEAD
           "lib/net8.0/Serilog.Sinks.Debug.dll": {
+=======
+          "lib/netstandard2.1/Serilog.Sinks.Debug.dll": {
+>>>>>>> master
             "related": ".xml"
           }
         }
       },
+<<<<<<< HEAD
       "Serilog.Sinks.File/6.0.0": {
         "type": "package",
         "dependencies": {
@@ -665,6 +796,34 @@
           "Serilog.Sinks.File": "5.0.0",
           "Serilog.Sinks.PeriodicBatching": "5.0.0",
           "System.Diagnostics.DiagnosticSource": "8.0.1"
+=======
+      "Serilog.Sinks.File/5.0.0": {
+        "type": "package",
+        "dependencies": {
+          "Serilog": "2.10.0"
+        },
+        "compile": {
+          "lib/net5.0/Serilog.Sinks.File.dll": {
+            "related": ".pdb;.xml"
+          }
+        },
+        "runtime": {
+          "lib/net5.0/Serilog.Sinks.File.dll": {
+            "related": ".pdb;.xml"
+          }
+        }
+      },
+      "Serilog.Sinks.OpenSearch/1.0.0": {
+        "type": "package",
+        "dependencies": {
+          "OpenSearch.Net": "1.2.0",
+          "Serilog": "2.12.0",
+          "Serilog.Formatting.Compact": "1.1.0",
+          "Serilog.Formatting.OpenSearch": "1.0.0",
+          "Serilog.Sinks.File": "5.0.0",
+          "Serilog.Sinks.PeriodicBatching": "3.1.0",
+          "System.Diagnostics.DiagnosticSource": "6.0.0"
+>>>>>>> master
         },
         "compile": {
           "lib/netstandard2.0/Serilog.Sinks.OpenSearch.dll": {
@@ -677,6 +836,7 @@
           }
         }
       },
+<<<<<<< HEAD
       "Serilog.Sinks.PeriodicBatching/5.0.0": {
         "type": "package",
         "dependencies": {
@@ -684,11 +844,24 @@
         },
         "compile": {
           "lib/net8.0/Serilog.Sinks.PeriodicBatching.dll": {
+=======
+      "Serilog.Sinks.PeriodicBatching/3.1.0": {
+        "type": "package",
+        "dependencies": {
+          "Serilog": "2.0.0"
+        },
+        "compile": {
+          "lib/netstandard2.1/Serilog.Sinks.PeriodicBatching.dll": {
+>>>>>>> master
             "related": ".xml"
           }
         },
         "runtime": {
+<<<<<<< HEAD
           "lib/net8.0/Serilog.Sinks.PeriodicBatching.dll": {
+=======
+          "lib/netstandard2.1/Serilog.Sinks.PeriodicBatching.dll": {
+>>>>>>> master
             "related": ".xml"
           }
         }
@@ -719,7 +892,11 @@
           "lib/netcoreapp2.0/_._": {}
         }
       },
+<<<<<<< HEAD
       "System.Diagnostics.DiagnosticSource/8.0.1": {
+=======
+      "System.Diagnostics.DiagnosticSource/8.0.0": {
+>>>>>>> master
         "type": "package",
         "compile": {
           "lib/net8.0/System.Diagnostics.DiagnosticSource.dll": {
@@ -735,6 +912,7 @@
           "buildTransitive/net6.0/_._": {}
         }
       },
+<<<<<<< HEAD
       "System.IdentityModel.Tokens.Jwt/8.2.0": {
         "type": "package",
         "dependencies": {
@@ -752,6 +930,8 @@
           }
         }
       },
+=======
+>>>>>>> master
       "System.IO.Pipelines/5.0.1": {
         "type": "package",
         "compile": {
@@ -773,6 +953,50 @@
         "runtime": {
           "lib/netcoreapp2.0/_._": {}
         }
+<<<<<<< HEAD
+=======
+      },
+      "System.Text.Encodings.Web/8.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/net8.0/System.Text.Encodings.Web.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/System.Text.Encodings.Web.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        },
+        "runtimeTargets": {
+          "runtimes/browser/lib/net8.0/System.Text.Encodings.Web.dll": {
+            "assetType": "runtime",
+            "rid": "browser"
+          }
+        }
+      },
+      "System.Text.Json/8.0.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Text.Encodings.Web": "8.0.0"
+        },
+        "compile": {
+          "lib/net8.0/System.Text.Json.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/System.Text.Json.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/System.Text.Json.targets": {}
+        }
+>>>>>>> master
       }
     }
   },
@@ -823,6 +1047,7 @@
         "microsoft.aspnetcore.openapi.nuspec"
       ]
     },
+<<<<<<< HEAD
     "Microsoft.Bcl.TimeProvider/8.0.1": {
       "sha512": "C7kWHJnMRY7EvJev2S8+yJHZ1y7A4ZlLbA4NE+O23BDIAN5mHeqND1m+SKv1ChRS5YlCDW7yAMUe7lttRsJaAA==",
       "type": "package",
@@ -853,6 +1078,12 @@
       "sha512": "pTj+D3uJWyN3My70i2Hqo+OXixq3Os2D1nJ2x92FFo6sk8fYS1m1WLNTs0Dc1uPaViH0YvEEwvzddQ7y4rhXmA==",
       "type": "package",
       "path": "microsoft.csharp/4.7.0",
+=======
+    "Microsoft.CSharp/4.6.0": {
+      "sha512": "kxn3M2rnAGy5N5DgcIwcE8QTePWU/XiYcQVzn9HqTls2NKluVzVSmVWRjK7OUPWbljCXuZxHyhEz9kPRIQeXow==",
+      "type": "package",
+      "path": "microsoft.csharp/4.6.0",
+>>>>>>> master
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -875,7 +1106,11 @@
         "lib/xamarinmac20/_._",
         "lib/xamarintvos10/_._",
         "lib/xamarinwatchos10/_._",
+<<<<<<< HEAD
         "microsoft.csharp.4.7.0.nupkg.sha512",
+=======
+        "microsoft.csharp.4.6.0.nupkg.sha512",
+>>>>>>> master
         "microsoft.csharp.nuspec",
         "ref/MonoAndroid10/_._",
         "ref/MonoTouch10/_._",
@@ -918,6 +1153,7 @@
         "version.txt"
       ]
     },
+<<<<<<< HEAD
     "Microsoft.Extensions.Caching.Abstractions/8.0.0": {
       "sha512": "3KuSxeHoNYdxVYfg2IRZCThcrlJ1XJqIXkAWikCsbm5C/bCjv7G0WoKDyuR98Q+T607QT2Zl5GsbGRkENcV2yQ==",
       "type": "package",
@@ -967,6 +1203,8 @@
         "microsoft.extensions.caching.stackexchangeredis.nuspec"
       ]
     },
+=======
+>>>>>>> master
     "Microsoft.Extensions.Configuration.Abstractions/8.0.0": {
       "sha512": "3lE/iLSutpgX1CC0NOW70FJoGARRHbyKmG7dc0klnUZ9Dd9hS6N/POPWhKhMLCEuNN5nXEY5agmlFtH562vqhQ==",
       "type": "package",
@@ -1070,10 +1308,17 @@
         "useSharedDesignerContext.txt"
       ]
     },
+<<<<<<< HEAD
     "Microsoft.Extensions.DependencyInjection.Abstractions/8.0.2": {
       "sha512": "3iE7UF7MQkCv1cxzCahz+Y/guQbTqieyxyaWKhrRO91itI9cOKO76OHeQDahqG4MmW5umr3CcCvGmK92lWNlbg==",
       "type": "package",
       "path": "microsoft.extensions.dependencyinjection.abstractions/8.0.2",
+=======
+    "Microsoft.Extensions.DependencyInjection.Abstractions/8.0.0": {
+      "sha512": "cjWrLkJXK0rs4zofsK4bSdg+jhDLTaxrkXu4gS6Y7MAlCvRyNNgwY/lJi5RDlQOnSZweHqoyvgvbdvQsRIW+hg==",
+      "type": "package",
+      "path": "microsoft.extensions.dependencyinjection.abstractions/8.0.0",
+>>>>>>> master
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1097,15 +1342,26 @@
         "lib/netstandard2.0/Microsoft.Extensions.DependencyInjection.Abstractions.xml",
         "lib/netstandard2.1/Microsoft.Extensions.DependencyInjection.Abstractions.dll",
         "lib/netstandard2.1/Microsoft.Extensions.DependencyInjection.Abstractions.xml",
+<<<<<<< HEAD
         "microsoft.extensions.dependencyinjection.abstractions.8.0.2.nupkg.sha512",
+=======
+        "microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
+>>>>>>> master
         "microsoft.extensions.dependencyinjection.abstractions.nuspec",
         "useSharedDesignerContext.txt"
       ]
     },
+<<<<<<< HEAD
     "Microsoft.Extensions.DependencyModel/8.0.2": {
       "sha512": "mUBDZZRgZrSyFOsJ2qJJ9fXfqd/kXJwf3AiDoqLD9m6TjY5OO/vLNOb9fb4juC0487eq4hcGN/M2Rh/CKS7QYw==",
       "type": "package",
       "path": "microsoft.extensions.dependencymodel/8.0.2",
+=======
+    "Microsoft.Extensions.DependencyModel/8.0.0": {
+      "sha512": "NSmDw3K0ozNDgShSIpsZcbFIzBX4w28nDag+TfaQujkXGazBm+lid5onlWoCBy4VsLxqnnKjEBbGSJVWJMf43g==",
+      "type": "package",
+      "path": "microsoft.extensions.dependencymodel/8.0.0",
+>>>>>>> master
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1127,7 +1383,11 @@
         "lib/net8.0/Microsoft.Extensions.DependencyModel.xml",
         "lib/netstandard2.0/Microsoft.Extensions.DependencyModel.dll",
         "lib/netstandard2.0/Microsoft.Extensions.DependencyModel.xml",
+<<<<<<< HEAD
         "microsoft.extensions.dependencymodel.8.0.2.nupkg.sha512",
+=======
+        "microsoft.extensions.dependencymodel.8.0.0.nupkg.sha512",
+>>>>>>> master
         "microsoft.extensions.dependencymodel.nuspec",
         "useSharedDesignerContext.txt"
       ]
@@ -1253,10 +1513,17 @@
         "useSharedDesignerContext.txt"
       ]
     },
+<<<<<<< HEAD
     "Microsoft.Extensions.Logging.Abstractions/8.0.2": {
       "sha512": "nroMDjS7hNBPtkZqVBbSiQaQjWRDxITI8Y7XnDs97rqG3EbzVTNLZQf7bIeUJcaHOV8bca47s1Uxq94+2oGdxA==",
       "type": "package",
       "path": "microsoft.extensions.logging.abstractions/8.0.2",
+=======
+    "Microsoft.Extensions.Logging.Abstractions/8.0.0": {
+      "sha512": "arDBqTgFCyS0EvRV7O3MZturChstm50OJ0y9bDJvAcmEPJm0FFpFyjU/JLYyStNGGey081DvnQYlncNX5SJJGA==",
+      "type": "package",
+      "path": "microsoft.extensions.logging.abstractions/8.0.0",
+>>>>>>> master
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1321,15 +1588,26 @@
         "lib/net8.0/Microsoft.Extensions.Logging.Abstractions.xml",
         "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.dll",
         "lib/netstandard2.0/Microsoft.Extensions.Logging.Abstractions.xml",
+<<<<<<< HEAD
         "microsoft.extensions.logging.abstractions.8.0.2.nupkg.sha512",
+=======
+        "microsoft.extensions.logging.abstractions.8.0.0.nupkg.sha512",
+>>>>>>> master
         "microsoft.extensions.logging.abstractions.nuspec",
         "useSharedDesignerContext.txt"
       ]
     },
+<<<<<<< HEAD
     "Microsoft.Extensions.Options/8.0.2": {
       "sha512": "dWGKvhFybsaZpGmzkGCbNNwBD1rVlWzrZKANLW/CcbFJpCEceMCGzT7zZwHOGBCbwM0SzBuceMj5HN1LKV1QqA==",
       "type": "package",
       "path": "microsoft.extensions.options/8.0.2",
+=======
+    "Microsoft.Extensions.Options/8.0.0": {
+      "sha512": "JOVOfqpnqlVLUzINQ2fox8evY2SKLYJ3BV8QDe/Jyp21u1T7r45x/R/5QdteURMR5r01GxeJSBBUOCOyaNXA3g==",
+      "type": "package",
+      "path": "microsoft.extensions.options/8.0.0",
+>>>>>>> master
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1368,7 +1646,11 @@
         "lib/netstandard2.0/Microsoft.Extensions.Options.xml",
         "lib/netstandard2.1/Microsoft.Extensions.Options.dll",
         "lib/netstandard2.1/Microsoft.Extensions.Options.xml",
+<<<<<<< HEAD
         "microsoft.extensions.options.8.0.2.nupkg.sha512",
+=======
+        "microsoft.extensions.options.8.0.0.nupkg.sha512",
+>>>>>>> master
         "microsoft.extensions.options.nuspec",
         "useSharedDesignerContext.txt"
       ]
@@ -1403,6 +1685,7 @@
         "useSharedDesignerContext.txt"
       ]
     },
+<<<<<<< HEAD
     "Microsoft.IdentityModel.Abstractions/8.2.0": {
       "sha512": "27ClfnelIu92kLGOaz0vjdXR1Jv7hAdLffxxNgR8T0+IMWmxeVyO3cU8oohmuTrWUFOfd2tsSGaRNewnuClIZw==",
       "type": "package",
@@ -1499,6 +1782,8 @@
         "microsoft.identitymodel.tokens.nuspec"
       ]
     },
+=======
+>>>>>>> master
     "Microsoft.OpenApi/1.4.3": {
       "sha512": "rURwggB+QZYcSVbDr7HSdhw/FELvMlriW10OeOzjPT7pstefMo7IThhtNtDudxbXhW+lj0NfX72Ka5EDsG8x6w==",
       "type": "package",
@@ -1543,10 +1828,17 @@
         "packageIcon.png"
       ]
     },
+<<<<<<< HEAD
     "OpenSearch.Net/1.7.1": {
       "sha512": "paL7K/gXfIvHGzcT2i+lNYkM6k04cySQDz8Zh/+cPG2EG7r3yJNJ0rREM/bBIlt6gafocBko+T9YDlDRj3hiWg==",
       "type": "package",
       "path": "opensearch.net/1.7.1",
+=======
+    "OpenSearch.Net/1.2.0": {
+      "sha512": "eawNOvFa4F7QP2Fg7o8e3RP99ThdsPhRG1HijwK3V7p/7VA0xXd+8lfY6F8igQDIfgoLb7/8tYPyh35jEX8VKw==",
+      "type": "package",
+      "path": "opensearch.net/1.2.0",
+>>>>>>> master
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1561,7 +1853,11 @@
         "lib/netstandard2.1/OpenSearch.Net.xml",
         "license.txt",
         "nuget-icon.png",
+<<<<<<< HEAD
         "opensearch.net.1.7.1.nupkg.sha512",
+=======
+        "opensearch.net.1.2.0.nupkg.sha512",
+>>>>>>> master
         "opensearch.net.nuspec"
       ]
     },
@@ -1588,10 +1884,17 @@
         "pipelines.sockets.unofficial.nuspec"
       ]
     },
+<<<<<<< HEAD
     "Serilog/4.1.0": {
       "sha512": "u1aZI8HZ62LWlq5dZLFwm6jMax/sUwnWZSw5lkPsCt518cJBxFKoNmc7oSxe5aA5BgSkzy9rzwFGR/i/acnSPw==",
       "type": "package",
       "path": "serilog/4.1.0",
+=======
+    "Serilog/4.0.0": {
+      "sha512": "2jDkUrSh5EofOp7Lx5Zgy0EB+7hXjjxE2ktTb1WVQmU00lDACR2TdROGKU0K1pDTBSJBN1PqgYpgOZF8mL7NJw==",
+      "type": "package",
+      "path": "serilog/4.0.0",
+>>>>>>> master
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1607,6 +1910,7 @@
         "lib/net8.0/Serilog.xml",
         "lib/netstandard2.0/Serilog.dll",
         "lib/netstandard2.0/Serilog.xml",
+<<<<<<< HEAD
         "serilog.4.1.0.nupkg.sha512",
         "serilog.nuspec"
       ]
@@ -1615,6 +1919,16 @@
       "sha512": "Y5at41mc0OV982DEJslBKHd6uzcWO6POwR3QceJ6gtpMPxCzm4+FElGPF0RdaTD7MGsP6XXE05LMbSi0NO+sXg==",
       "type": "package",
       "path": "serilog.aspnetcore/8.0.3",
+=======
+        "serilog.4.0.0.nupkg.sha512",
+        "serilog.nuspec"
+      ]
+    },
+    "Serilog.AspNetCore/8.0.1": {
+      "sha512": "B/X+wAfS7yWLVOTD83B+Ip9yl4MkhioaXj90JSoWi1Ayi8XHepEnsBdrkojg08eodCnmOKmShFUN2GgEc6c0CQ==",
+      "type": "package",
+      "path": "serilog.aspnetcore/8.0.1",
+>>>>>>> master
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1630,6 +1944,7 @@
         "lib/net8.0/Serilog.AspNetCore.xml",
         "lib/netstandard2.0/Serilog.AspNetCore.dll",
         "lib/netstandard2.0/Serilog.AspNetCore.xml",
+<<<<<<< HEAD
         "serilog.aspnetcore.8.0.3.nupkg.sha512",
         "serilog.aspnetcore.nuspec"
       ]
@@ -1654,6 +1969,24 @@
         "lib/netstandard2.0/Serilog.Enrichers.Environment.xml",
         "serilog-enricher-nuget.png",
         "serilog.enrichers.environment.3.0.1.nupkg.sha512",
+=======
+        "serilog.aspnetcore.8.0.1.nupkg.sha512",
+        "serilog.aspnetcore.nuspec"
+      ]
+    },
+    "Serilog.Enrichers.Environment/2.3.0": {
+      "sha512": "AdZXURQ0dQCCjst3Jn3lwFtGicWjGE4wov9E5BPc4N5cruGmd2y9wprCYEjFteU84QMbxk35fpeTuHs6M4VGYw==",
+      "type": "package",
+      "path": "serilog.enrichers.environment/2.3.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net45/Serilog.Enrichers.Environment.dll",
+        "lib/netstandard1.3/Serilog.Enrichers.Environment.dll",
+        "lib/netstandard1.5/Serilog.Enrichers.Environment.dll",
+        "lib/netstandard2.0/Serilog.Enrichers.Environment.dll",
+        "serilog.enrichers.environment.2.3.0.nupkg.sha512",
+>>>>>>> master
         "serilog.enrichers.environment.nuspec"
       ]
     },
@@ -1739,10 +2072,17 @@
         "serilog.extensions.logging.nuspec"
       ]
     },
+<<<<<<< HEAD
     "Serilog.Formatting.Compact/3.0.0": {
       "sha512": "wQsv14w9cqlfB5FX2MZpNsTawckN4a8dryuNGbebB/3Nh1pXnROHZov3swtu3Nj5oNG7Ba+xdu7Et/ulAUPanQ==",
       "type": "package",
       "path": "serilog.formatting.compact/3.0.0",
+=======
+    "Serilog.Formatting.Compact/2.0.0": {
+      "sha512": "ob6z3ikzFM3D1xalhFuBIK1IOWf+XrQq+H4KeH4VqBcPpNcmUgZlRQ2h3Q7wvthpdZBBoY86qZOI2LCXNaLlNA==",
+      "type": "package",
+      "path": "serilog.formatting.compact/2.0.0",
+>>>>>>> master
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1753,6 +2093,7 @@
         "lib/net471/Serilog.Formatting.Compact.xml",
         "lib/net6.0/Serilog.Formatting.Compact.dll",
         "lib/net6.0/Serilog.Formatting.Compact.xml",
+<<<<<<< HEAD
         "lib/net8.0/Serilog.Formatting.Compact.dll",
         "lib/net8.0/Serilog.Formatting.Compact.xml",
         "lib/netstandard2.0/Serilog.Formatting.Compact.dll",
@@ -1766,6 +2107,23 @@
       "sha512": "1toqdT4LvsALd0+ze7zWlAe3zHDty/B+KElx+C3OrPo8l+ZC8v85PaVW/yqoGGRuaB2CeWZE6lkW83U+Kk60KQ==",
       "type": "package",
       "path": "serilog.formatting.opensearch/1.2.0",
+=======
+        "lib/net7.0/Serilog.Formatting.Compact.dll",
+        "lib/net7.0/Serilog.Formatting.Compact.xml",
+        "lib/netstandard2.0/Serilog.Formatting.Compact.dll",
+        "lib/netstandard2.0/Serilog.Formatting.Compact.xml",
+        "lib/netstandard2.1/Serilog.Formatting.Compact.dll",
+        "lib/netstandard2.1/Serilog.Formatting.Compact.xml",
+        "serilog-extension-nuget.png",
+        "serilog.formatting.compact.2.0.0.nupkg.sha512",
+        "serilog.formatting.compact.nuspec"
+      ]
+    },
+    "Serilog.Formatting.OpenSearch/1.0.0": {
+      "sha512": "RO8aEB6uzZEUmgE7MSwyVtevutAuXsk9b2BeKoH/Mq4Ns8U7gKdTEgSRkZdVYFY5XyrcLIOUlieXqmcjgpBFnA==",
+      "type": "package",
+      "path": "serilog.formatting.opensearch/1.0.0",
+>>>>>>> master
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1773,6 +2131,7 @@
         "lib/netstandard2.0/Serilog.Formatting.OpenSearch.dll",
         "lib/netstandard2.0/Serilog.Formatting.OpenSearch.xml",
         "serilog-sink-nuget.png",
+<<<<<<< HEAD
         "serilog.formatting.opensearch.1.2.0.nupkg.sha512",
         "serilog.formatting.opensearch.nuspec"
       ]
@@ -1781,6 +2140,16 @@
       "sha512": "pkxvq0umBKK8IKFJc1aV5S/HGRG/NIxJ6FV42KaTPLfDmBOAbBUB1m5gqqlGxzEa1MgDDWtQlWJdHTSxVWNx+Q==",
       "type": "package",
       "path": "serilog.settings.configuration/8.0.4",
+=======
+        "serilog.formatting.opensearch.1.0.0.nupkg.sha512",
+        "serilog.formatting.opensearch.nuspec"
+      ]
+    },
+    "Serilog.Settings.Configuration/8.0.0": {
+      "sha512": "nR0iL5HwKj5v6ULo3/zpP8NMcq9E2pxYA6XKTSWCbugVs4YqPyvaqaKOY+OMpPivKp7zMEpax2UKHnDodbRB0Q==",
+      "type": "package",
+      "path": "serilog.settings.configuration/8.0.0",
+>>>>>>> master
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1796,6 +2165,7 @@
         "lib/net8.0/Serilog.Settings.Configuration.xml",
         "lib/netstandard2.0/Serilog.Settings.Configuration.dll",
         "lib/netstandard2.0/Serilog.Settings.Configuration.xml",
+<<<<<<< HEAD
         "serilog.settings.configuration.8.0.4.nupkg.sha512",
         "serilog.settings.configuration.nuspec"
       ]
@@ -1804,6 +2174,16 @@
       "sha512": "fQGWqVMClCP2yEyTXPIinSr5c+CBGUvBybPxjAGcf7ctDhadFhrQw03Mv8rJ07/wR5PDfFjewf2LimvXCDzpbA==",
       "type": "package",
       "path": "serilog.sinks.console/6.0.0",
+=======
+        "serilog.settings.configuration.8.0.0.nupkg.sha512",
+        "serilog.settings.configuration.nuspec"
+      ]
+    },
+    "Serilog.Sinks.Console/5.0.1": {
+      "sha512": "6Jt8jl9y2ey8VV7nVEUAyjjyxjAQuvd5+qj4XYAT9CwcsvR70HHULGBeD+K2WCALFXf7CFsNQT4lON6qXcu2AA==",
+      "type": "package",
+      "path": "serilog.sinks.console/5.0.1",
+>>>>>>> master
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1813,6 +2193,7 @@
         "lib/net462/Serilog.Sinks.Console.xml",
         "lib/net471/Serilog.Sinks.Console.dll",
         "lib/net471/Serilog.Sinks.Console.xml",
+<<<<<<< HEAD
         "lib/net6.0/Serilog.Sinks.Console.dll",
         "lib/net6.0/Serilog.Sinks.Console.xml",
         "lib/net8.0/Serilog.Sinks.Console.dll",
@@ -1873,6 +2254,75 @@
       "sha512": "CzosKWfnHtNMnJo9Rz9AK1YUtIbCz9CnHCWrj8j+GMP9Ja98S4+kPLiz6cEMhadobexCntwJbQE75ja4wVBlrg==",
       "type": "package",
       "path": "serilog.sinks.opensearch/1.2.0",
+=======
+        "lib/net5.0/Serilog.Sinks.Console.dll",
+        "lib/net5.0/Serilog.Sinks.Console.xml",
+        "lib/net6.0/Serilog.Sinks.Console.dll",
+        "lib/net6.0/Serilog.Sinks.Console.xml",
+        "lib/net7.0/Serilog.Sinks.Console.dll",
+        "lib/net7.0/Serilog.Sinks.Console.xml",
+        "lib/netstandard2.0/Serilog.Sinks.Console.dll",
+        "lib/netstandard2.0/Serilog.Sinks.Console.xml",
+        "lib/netstandard2.1/Serilog.Sinks.Console.dll",
+        "lib/netstandard2.1/Serilog.Sinks.Console.xml",
+        "serilog.sinks.console.5.0.1.nupkg.sha512",
+        "serilog.sinks.console.nuspec"
+      ]
+    },
+    "Serilog.Sinks.Debug/2.0.0": {
+      "sha512": "Y6g3OBJ4JzTyyw16fDqtFcQ41qQAydnEvEqmXjhwhgjsnG/FaJ8GUqF5ldsC/bVkK8KYmqrPhDO+tm4dF6xx4A==",
+      "type": "package",
+      "path": "serilog.sinks.debug/2.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "icon.png",
+        "lib/net45/Serilog.Sinks.Debug.dll",
+        "lib/net45/Serilog.Sinks.Debug.xml",
+        "lib/net46/Serilog.Sinks.Debug.dll",
+        "lib/net46/Serilog.Sinks.Debug.xml",
+        "lib/netstandard1.0/Serilog.Sinks.Debug.dll",
+        "lib/netstandard1.0/Serilog.Sinks.Debug.xml",
+        "lib/netstandard2.0/Serilog.Sinks.Debug.dll",
+        "lib/netstandard2.0/Serilog.Sinks.Debug.xml",
+        "lib/netstandard2.1/Serilog.Sinks.Debug.dll",
+        "lib/netstandard2.1/Serilog.Sinks.Debug.xml",
+        "serilog.sinks.debug.2.0.0.nupkg.sha512",
+        "serilog.sinks.debug.nuspec"
+      ]
+    },
+    "Serilog.Sinks.File/5.0.0": {
+      "sha512": "uwV5hdhWPwUH1szhO8PJpFiahqXmzPzJT/sOijH/kFgUx+cyoDTMM8MHD0adw9+Iem6itoibbUXHYslzXsLEAg==",
+      "type": "package",
+      "path": "serilog.sinks.file/5.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "images/icon.png",
+        "lib/net45/Serilog.Sinks.File.dll",
+        "lib/net45/Serilog.Sinks.File.pdb",
+        "lib/net45/Serilog.Sinks.File.xml",
+        "lib/net5.0/Serilog.Sinks.File.dll",
+        "lib/net5.0/Serilog.Sinks.File.pdb",
+        "lib/net5.0/Serilog.Sinks.File.xml",
+        "lib/netstandard1.3/Serilog.Sinks.File.dll",
+        "lib/netstandard1.3/Serilog.Sinks.File.pdb",
+        "lib/netstandard1.3/Serilog.Sinks.File.xml",
+        "lib/netstandard2.0/Serilog.Sinks.File.dll",
+        "lib/netstandard2.0/Serilog.Sinks.File.pdb",
+        "lib/netstandard2.0/Serilog.Sinks.File.xml",
+        "lib/netstandard2.1/Serilog.Sinks.File.dll",
+        "lib/netstandard2.1/Serilog.Sinks.File.pdb",
+        "lib/netstandard2.1/Serilog.Sinks.File.xml",
+        "serilog.sinks.file.5.0.0.nupkg.sha512",
+        "serilog.sinks.file.nuspec"
+      ]
+    },
+    "Serilog.Sinks.OpenSearch/1.0.0": {
+      "sha512": "OyHVgttWqlkcD5Fd06aFztfT/IzM23kIabW9ovYT4gVNuhI+WO7iYA8dIiEslyqeABG71toTaN3LeVG0H9FgYQ==",
+      "type": "package",
+      "path": "serilog.sinks.opensearch/1.0.0",
+>>>>>>> master
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1880,6 +2330,7 @@
         "lib/netstandard2.0/Serilog.Sinks.OpenSearch.dll",
         "lib/netstandard2.0/Serilog.Sinks.OpenSearch.xml",
         "serilog-sink-nuget.png",
+<<<<<<< HEAD
         "serilog.sinks.opensearch.1.2.0.nupkg.sha512",
         "serilog.sinks.opensearch.nuspec"
       ]
@@ -1904,6 +2355,31 @@
         "lib/netstandard2.0/Serilog.Sinks.PeriodicBatching.dll",
         "lib/netstandard2.0/Serilog.Sinks.PeriodicBatching.xml",
         "serilog.sinks.periodicbatching.5.0.0.nupkg.sha512",
+=======
+        "serilog.sinks.opensearch.1.0.0.nupkg.sha512",
+        "serilog.sinks.opensearch.nuspec"
+      ]
+    },
+    "Serilog.Sinks.PeriodicBatching/3.1.0": {
+      "sha512": "NDWR7m3PalVlGEq3rzoktrXikjFMLmpwF0HI4sowo8YDdU+gqPlTHlDQiOGxHfB0sTfjPA9JjA7ctKG9zqjGkw==",
+      "type": "package",
+      "path": "serilog.sinks.periodicbatching/3.1.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "icon.png",
+        "lib/net45/Serilog.Sinks.PeriodicBatching.dll",
+        "lib/net45/Serilog.Sinks.PeriodicBatching.xml",
+        "lib/netstandard1.1/Serilog.Sinks.PeriodicBatching.dll",
+        "lib/netstandard1.1/Serilog.Sinks.PeriodicBatching.xml",
+        "lib/netstandard1.2/Serilog.Sinks.PeriodicBatching.dll",
+        "lib/netstandard1.2/Serilog.Sinks.PeriodicBatching.xml",
+        "lib/netstandard2.0/Serilog.Sinks.PeriodicBatching.dll",
+        "lib/netstandard2.0/Serilog.Sinks.PeriodicBatching.xml",
+        "lib/netstandard2.1/Serilog.Sinks.PeriodicBatching.dll",
+        "lib/netstandard2.1/Serilog.Sinks.PeriodicBatching.xml",
+        "serilog.sinks.periodicbatching.3.1.0.nupkg.sha512",
+>>>>>>> master
         "serilog.sinks.periodicbatching.nuspec"
       ]
     },
@@ -1959,10 +2435,17 @@
         "version.txt"
       ]
     },
+<<<<<<< HEAD
     "System.Diagnostics.DiagnosticSource/8.0.1": {
       "sha512": "vaoWjvkG1aenR2XdjaVivlCV9fADfgyhW5bZtXT23qaEea0lWiUljdQuze4E31vKM7ZWJaSUsbYIKE3rnzfZUg==",
       "type": "package",
       "path": "system.diagnostics.diagnosticsource/8.0.1",
+=======
+    "System.Diagnostics.DiagnosticSource/8.0.0": {
+      "sha512": "c9xLpVz6PL9lp/djOWtk5KPDZq3cSYpmXoJQY524EOtuFl5z9ZtsotpsyrDW40U1DRnQSYvcPKEUV0X//u6gkQ==",
+      "type": "package",
+      "path": "system.diagnostics.diagnosticsource/8.0.0",
+>>>>>>> master
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -1983,11 +2466,16 @@
         "lib/net8.0/System.Diagnostics.DiagnosticSource.xml",
         "lib/netstandard2.0/System.Diagnostics.DiagnosticSource.dll",
         "lib/netstandard2.0/System.Diagnostics.DiagnosticSource.xml",
+<<<<<<< HEAD
         "system.diagnostics.diagnosticsource.8.0.1.nupkg.sha512",
+=======
+        "system.diagnostics.diagnosticsource.8.0.0.nupkg.sha512",
+>>>>>>> master
         "system.diagnostics.diagnosticsource.nuspec",
         "useSharedDesignerContext.txt"
       ]
     },
+<<<<<<< HEAD
     "System.IdentityModel.Tokens.Jwt/8.2.0": {
       "sha512": "M61kEnR2ljMFL2vLHmHrodCqPO/zKsYsaRu3jdagYOP/y0ZdFoFoATyfwR0bJ5quBsWEPL5y8QU7CJiEh2kq+Q==",
       "type": "package",
@@ -2012,6 +2500,8 @@
         "system.identitymodel.tokens.jwt.nuspec"
       ]
     },
+=======
+>>>>>>> master
     "System.IO.Pipelines/5.0.1": {
       "sha512": "qEePWsaq9LoEEIqhbGe6D5J8c9IqQOUuTzzV6wn1POlfdLkJliZY3OlB0j0f17uMWlqZYjH7txj+2YbyrIA8Yg==",
       "type": "package",
@@ -2110,12 +2600,124 @@
         "useSharedDesignerContext.txt",
         "version.txt"
       ]
+<<<<<<< HEAD
+=======
+    },
+    "System.Text.Encodings.Web/8.0.0": {
+      "sha512": "yev/k9GHAEGx2Rg3/tU6MQh4HGBXJs70y7j1LaM1i/ER9po+6nnQ6RRqTJn1E7Xu0fbIFK80Nh5EoODxrbxwBQ==",
+      "type": "package",
+      "path": "system.text.encodings.web/8.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/net461/System.Text.Encodings.Web.targets",
+        "buildTransitive/net462/_._",
+        "buildTransitive/net6.0/_._",
+        "buildTransitive/netcoreapp2.0/System.Text.Encodings.Web.targets",
+        "lib/net462/System.Text.Encodings.Web.dll",
+        "lib/net462/System.Text.Encodings.Web.xml",
+        "lib/net6.0/System.Text.Encodings.Web.dll",
+        "lib/net6.0/System.Text.Encodings.Web.xml",
+        "lib/net7.0/System.Text.Encodings.Web.dll",
+        "lib/net7.0/System.Text.Encodings.Web.xml",
+        "lib/net8.0/System.Text.Encodings.Web.dll",
+        "lib/net8.0/System.Text.Encodings.Web.xml",
+        "lib/netstandard2.0/System.Text.Encodings.Web.dll",
+        "lib/netstandard2.0/System.Text.Encodings.Web.xml",
+        "runtimes/browser/lib/net6.0/System.Text.Encodings.Web.dll",
+        "runtimes/browser/lib/net6.0/System.Text.Encodings.Web.xml",
+        "runtimes/browser/lib/net7.0/System.Text.Encodings.Web.dll",
+        "runtimes/browser/lib/net7.0/System.Text.Encodings.Web.xml",
+        "runtimes/browser/lib/net8.0/System.Text.Encodings.Web.dll",
+        "runtimes/browser/lib/net8.0/System.Text.Encodings.Web.xml",
+        "system.text.encodings.web.8.0.0.nupkg.sha512",
+        "system.text.encodings.web.nuspec",
+        "useSharedDesignerContext.txt"
+      ]
+    },
+    "System.Text.Json/8.0.0": {
+      "sha512": "OdrZO2WjkiEG6ajEFRABTRCi/wuXQPxeV6g8xvUJqdxMvvuCCEk86zPla8UiIQJz3durtUEbNyY/3lIhS0yZvQ==",
+      "type": "package",
+      "path": "system.text.json/8.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "PACKAGE.md",
+        "THIRD-PARTY-NOTICES.TXT",
+        "analyzers/dotnet/roslyn3.11/cs/System.Text.Json.SourceGeneration.dll",
+        "analyzers/dotnet/roslyn3.11/cs/cs/System.Text.Json.SourceGeneration.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/de/System.Text.Json.SourceGeneration.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/es/System.Text.Json.SourceGeneration.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/fr/System.Text.Json.SourceGeneration.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/it/System.Text.Json.SourceGeneration.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/ja/System.Text.Json.SourceGeneration.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/ko/System.Text.Json.SourceGeneration.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/pl/System.Text.Json.SourceGeneration.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/pt-BR/System.Text.Json.SourceGeneration.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/ru/System.Text.Json.SourceGeneration.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/tr/System.Text.Json.SourceGeneration.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/zh-Hans/System.Text.Json.SourceGeneration.resources.dll",
+        "analyzers/dotnet/roslyn3.11/cs/zh-Hant/System.Text.Json.SourceGeneration.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/System.Text.Json.SourceGeneration.dll",
+        "analyzers/dotnet/roslyn4.0/cs/cs/System.Text.Json.SourceGeneration.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/de/System.Text.Json.SourceGeneration.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/es/System.Text.Json.SourceGeneration.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/fr/System.Text.Json.SourceGeneration.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/it/System.Text.Json.SourceGeneration.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/ja/System.Text.Json.SourceGeneration.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/ko/System.Text.Json.SourceGeneration.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/pl/System.Text.Json.SourceGeneration.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/pt-BR/System.Text.Json.SourceGeneration.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/ru/System.Text.Json.SourceGeneration.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/tr/System.Text.Json.SourceGeneration.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/zh-Hans/System.Text.Json.SourceGeneration.resources.dll",
+        "analyzers/dotnet/roslyn4.0/cs/zh-Hant/System.Text.Json.SourceGeneration.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/System.Text.Json.SourceGeneration.dll",
+        "analyzers/dotnet/roslyn4.4/cs/cs/System.Text.Json.SourceGeneration.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/de/System.Text.Json.SourceGeneration.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/es/System.Text.Json.SourceGeneration.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/fr/System.Text.Json.SourceGeneration.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/it/System.Text.Json.SourceGeneration.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/ja/System.Text.Json.SourceGeneration.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/ko/System.Text.Json.SourceGeneration.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/pl/System.Text.Json.SourceGeneration.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/pt-BR/System.Text.Json.SourceGeneration.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/ru/System.Text.Json.SourceGeneration.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/tr/System.Text.Json.SourceGeneration.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/zh-Hans/System.Text.Json.SourceGeneration.resources.dll",
+        "analyzers/dotnet/roslyn4.4/cs/zh-Hant/System.Text.Json.SourceGeneration.resources.dll",
+        "buildTransitive/net461/System.Text.Json.targets",
+        "buildTransitive/net462/System.Text.Json.targets",
+        "buildTransitive/net6.0/System.Text.Json.targets",
+        "buildTransitive/netcoreapp2.0/System.Text.Json.targets",
+        "buildTransitive/netstandard2.0/System.Text.Json.targets",
+        "lib/net462/System.Text.Json.dll",
+        "lib/net462/System.Text.Json.xml",
+        "lib/net6.0/System.Text.Json.dll",
+        "lib/net6.0/System.Text.Json.xml",
+        "lib/net7.0/System.Text.Json.dll",
+        "lib/net7.0/System.Text.Json.xml",
+        "lib/net8.0/System.Text.Json.dll",
+        "lib/net8.0/System.Text.Json.xml",
+        "lib/netstandard2.0/System.Text.Json.dll",
+        "lib/netstandard2.0/System.Text.Json.xml",
+        "system.text.json.8.0.0.nupkg.sha512",
+        "system.text.json.nuspec",
+        "useSharedDesignerContext.txt"
+      ]
+>>>>>>> master
     }
   },
   "projectFileDependencyGroups": {
     "net8.0": [
       "BCrypt.Net-Next >= 4.0.3",
       "Microsoft.AspNetCore.OpenApi >= 8.0.10",
+<<<<<<< HEAD
       "Microsoft.Extensions.Caching.StackExchangeRedis >= 8.0.10",
       "Newtonsoft.Json >= 13.0.3",
       "Serilog >= 4.1.0",
@@ -2134,10 +2736,29 @@
   },
   "packageFolders": {
     "/home/ereshkigal/.nuget/packages/": {}
+=======
+      "Newtonsoft.Json >= 13.0.3",
+      "Serilog >= 4.0.0",
+      "Serilog.AspNetCore >= 8.0.1",
+      "Serilog.Enrichers.Environment >= 2.3.0",
+      "Serilog.Exceptions >= 8.4.0",
+      "Serilog.Extensions.Logging >= 8.0.0",
+      "Serilog.Formatting.OpenSearch >= 1.0.0",
+      "Serilog.Sinks.Console >= 5.0.1",
+      "Serilog.Sinks.Debug >= 2.0.0",
+      "Serilog.Sinks.File >= 5.0.0",
+      "Serilog.Sinks.OpenSearch >= 1.0.0",
+      "StackExchange.Redis >= 2.8.16"
+    ]
+  },
+  "packageFolders": {
+    "/home/greg/.nuget/packages/": {}
+>>>>>>> master
   },
   "project": {
     "version": "1.0.0",
     "restore": {
+<<<<<<< HEAD
       "projectUniqueName": "/home/ereshkigal/hakathon/vtb/vtb-api-2024/AuthService/AuthService.csproj",
       "projectName": "AuthService",
       "projectPath": "/home/ereshkigal/hakathon/vtb/vtb-api-2024/AuthService/AuthService.csproj",
@@ -2146,6 +2767,16 @@
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/ereshkigal/.nuget/NuGet/NuGet.Config"
+=======
+      "projectUniqueName": "/home/greg/Desktop/vtb-api-2024/AuthService/AuthService.csproj",
+      "projectName": "AuthService",
+      "projectPath": "/home/greg/Desktop/vtb-api-2024/AuthService/AuthService.csproj",
+      "packagesPath": "/home/greg/.nuget/packages/",
+      "outputPath": "/home/greg/Desktop/vtb-api-2024/AuthService/obj/",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "/home/greg/.nuget/NuGet/NuGet.Config"
+>>>>>>> master
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -2177,16 +2808,20 @@
             "target": "Package",
             "version": "[8.0.10, )"
           },
+<<<<<<< HEAD
           "Microsoft.Extensions.Caching.StackExchangeRedis": {
             "target": "Package",
             "version": "[8.0.10, )"
           },
+=======
+>>>>>>> master
           "Newtonsoft.Json": {
             "target": "Package",
             "version": "[13.0.3, )"
           },
           "Serilog": {
             "target": "Package",
+<<<<<<< HEAD
             "version": "[4.1.0, )"
           },
           "Serilog.AspNetCore": {
@@ -2196,6 +2831,17 @@
           "Serilog.Enrichers.Environment": {
             "target": "Package",
             "version": "[3.0.1, )"
+=======
+            "version": "[4.0.0, )"
+          },
+          "Serilog.AspNetCore": {
+            "target": "Package",
+            "version": "[8.0.1, )"
+          },
+          "Serilog.Enrichers.Environment": {
+            "target": "Package",
+            "version": "[2.3.0, )"
+>>>>>>> master
           },
           "Serilog.Exceptions": {
             "target": "Package",
@@ -2207,6 +2853,7 @@
           },
           "Serilog.Formatting.OpenSearch": {
             "target": "Package",
+<<<<<<< HEAD
             "version": "[1.2.0, )"
           },
           "Serilog.Sinks.Console": {
@@ -2224,14 +2871,36 @@
           "Serilog.Sinks.OpenSearch": {
             "target": "Package",
             "version": "[1.2.0, )"
+=======
+            "version": "[1.0.0, )"
+          },
+          "Serilog.Sinks.Console": {
+            "target": "Package",
+            "version": "[5.0.1, )"
+          },
+          "Serilog.Sinks.Debug": {
+            "target": "Package",
+            "version": "[2.0.0, )"
+          },
+          "Serilog.Sinks.File": {
+            "target": "Package",
+            "version": "[5.0.0, )"
+          },
+          "Serilog.Sinks.OpenSearch": {
+            "target": "Package",
+            "version": "[1.0.0, )"
+>>>>>>> master
           },
           "StackExchange.Redis": {
             "target": "Package",
             "version": "[2.8.16, )"
+<<<<<<< HEAD
           },
           "System.IdentityModel.Tokens.Jwt": {
             "target": "Package",
             "version": "[8.2.0, )"
+=======
+>>>>>>> master
           }
         },
         "imports": [
