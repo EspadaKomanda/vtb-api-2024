@@ -35,13 +35,5 @@ namespace ApiGatewayService.Controllers.UserService
             // TODO: implement method
             throw new NotImplementedException();
         }
-
-        // [HttpGet]
-        // [Route("getUsernameAndAvatar")]
-        // public async Task<IActionResult> GetUsernameAndAvatar()
-        // {
-        //     // implement method
-        //     throw new NotImplementedException();
-        // }
     }
 }
