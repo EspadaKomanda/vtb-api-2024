@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/ereshkigal/hakathon/vtb/vtb-api-2024/TourService/TourService.csproj": {}
+    "/home/greg/Desktop/vtb/PromoService/PromoService.csproj": {}
   },
   "projects": {
-    "/home/ereshkigal/hakathon/vtb/vtb-api-2024/TourService/TourService.csproj": {
+    "/home/greg/Desktop/vtb/PromoService/PromoService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/ereshkigal/hakathon/vtb/vtb-api-2024/TourService/TourService.csproj",
-        "projectName": "TourService",
-        "projectPath": "/home/ereshkigal/hakathon/vtb/vtb-api-2024/TourService/TourService.csproj",
-        "packagesPath": "/home/ereshkigal/.nuget/packages/",
-        "outputPath": "/home/ereshkigal/hakathon/vtb/vtb-api-2024/TourService/obj/",
+        "projectUniqueName": "/home/greg/Desktop/vtb/PromoService/PromoService.csproj",
+        "projectName": "PromoService",
+        "projectPath": "/home/greg/Desktop/vtb/PromoService/PromoService.csproj",
+        "packagesPath": "/home/greg/.nuget/packages/",
+        "outputPath": "/home/greg/Desktop/vtb/PromoService/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/ereshkigal/.nuget/NuGet/NuGet.Config"
+          "/home/greg/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -38,67 +38,33 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
-            "AWSSDK.Extensions.NETCore.Setup": {
-              "target": "Package",
-              "version": "[3.7.301, )"
-            },
-            "AWSSDK.S3": {
-              "target": "Package",
-              "version": "[3.7.309.1, )"
-            },
-
-            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
-              "target": "Package",
-              "version": "[12.0.1, )"
-            },
-
-            "Confluent.Kafka": {
-              "target": "Package",
-              "version": "[2.4.0, )"
-            },
-            "Confluent.SchemaRegistry": {
-              "target": "Package",
-              "version": "[2.4.0, )"
-            },
-            "Confluent.SchemaRegistry.Serdes.Json": {
-              "target": "Package",
-              "version": "[2.4.0, )"
-            },
-            "Grpc.AspNetCore": {
-              "target": "Package",
-              "version": "[2.63.0, )"
-            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
-              "version": "[8.0.6, )"
+              "version": "[8.0.10, )"
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[8.0.6, )"
+              "version": "[8.0.10, )"
             },
             "Microsoft.Extensions.Caching.StackExchangeRedis": {
               "target": "Package",
-              "version": "[8.0.6, )"
-            },
-            "Newtonsoft.Json": {
-              "target": "Package",
-              "version": "[13.0.3, )"
+              "version": "[8.0.10, )"
             },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
-              "version": "[8.0.4, )"
+              "version": "[8.0.10, )"
             },
             "Serilog": {
               "target": "Package",
-              "version": "[4.0.0, )"
+              "version": "[4.1.0, )"
             },
             "Serilog.AspNetCore": {
               "target": "Package",
-              "version": "[8.0.1, )"
+              "version": "[8.0.3, )"
             },
             "Serilog.Enrichers.Environment": {
               "target": "Package",
-              "version": "[2.3.0, )"
+              "version": "[3.0.1, )"
             },
             "Serilog.Exceptions": {
               "target": "Package",
@@ -110,23 +76,23 @@
             },
             "Serilog.Formatting.OpenSearch": {
               "target": "Package",
-              "version": "[1.0.0, )"
+              "version": "[1.2.0, )"
             },
             "Serilog.Sinks.Console": {
               "target": "Package",
-              "version": "[5.0.1, )"
+              "version": "[6.0.0, )"
             },
             "Serilog.Sinks.Debug": {
               "target": "Package",
-              "version": "[2.0.0, )"
+              "version": "[3.0.0, )"
             },
             "Serilog.Sinks.File": {
               "target": "Package",
-              "version": "[5.0.0, )"
+              "version": "[6.0.0, )"
             },
             "Serilog.Sinks.OpenSearch": {
               "target": "Package",
-              "version": "[1.0.0, )"
+              "version": "[1.2.0, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

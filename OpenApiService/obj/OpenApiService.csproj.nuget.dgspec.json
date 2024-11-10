@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/ereshkigal/hakathon/vtb/vtb-api-2024/TourService/TourService.csproj": {}
+    "/home/ereshkigal/hakathon/vtb/vtb-api-2024/OpenApiService/OpenApiService.csproj": {}
   },
   "projects": {
-    "/home/ereshkigal/hakathon/vtb/vtb-api-2024/TourService/TourService.csproj": {
+    "/home/ereshkigal/hakathon/vtb/vtb-api-2024/OpenApiService/OpenApiService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/ereshkigal/hakathon/vtb/vtb-api-2024/TourService/TourService.csproj",
-        "projectName": "TourService",
-        "projectPath": "/home/ereshkigal/hakathon/vtb/vtb-api-2024/TourService/TourService.csproj",
+        "projectUniqueName": "/home/ereshkigal/hakathon/vtb/vtb-api-2024/OpenApiService/OpenApiService.csproj",
+        "projectName": "OpenApiService",
+        "projectPath": "/home/ereshkigal/hakathon/vtb/vtb-api-2024/OpenApiService/OpenApiService.csproj",
         "packagesPath": "/home/ereshkigal/.nuget/packages/",
-        "outputPath": "/home/ereshkigal/hakathon/vtb/vtb-api-2024/TourService/obj/",
+        "outputPath": "/home/ereshkigal/hakathon/vtb/vtb-api-2024/OpenApiService/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/ereshkigal/.nuget/NuGet/NuGet.Config"
@@ -46,12 +46,6 @@
               "target": "Package",
               "version": "[3.7.309.1, )"
             },
-
-            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
-              "target": "Package",
-              "version": "[12.0.1, )"
-            },
-
             "Confluent.Kafka": {
               "target": "Package",
               "version": "[2.4.0, )"

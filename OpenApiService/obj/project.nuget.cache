@@ -1,12 +1,9 @@
 {
   "version": 2,
-  "dgSpecHash": "ISEANC0VFv1RrJ36+CN8sefe00TtgUng4IBXA326KsIf1zamu77g9lUMGe/S5FZZiFW59a4pry6St7xmSvMl3w==",
+  "dgSpecHash": "c691mcuIJBqf8tgz1ngwZuoQmwJvCJzsV7x/fU64HtjdEdRhD+9yUSry/eeTfbpFfr6ygb1PCKHd9cqoSxtbuQ==",
   "success": true,
-  "projectFilePath": "/home/ereshkigal/hakathon/vtb/vtb-api-2024/TourService/TourService.csproj",
+  "projectFilePath": "/home/ereshkigal/hakathon/vtb/vtb-api-2024/OpenApiService/OpenApiService.csproj",
   "expectedPackageFiles": [
-    "/home/ereshkigal/.nuget/packages/automapper/12.0.1/automapper.12.0.1.nupkg.sha512",
-    "/home/ereshkigal/.nuget/packages/automapper.extensions.microsoft.dependencyinjection/12.0.1/automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
-
     "/home/ereshkigal/.nuget/packages/awssdk.core/3.7.304.13/awssdk.core.3.7.304.13.nupkg.sha512",
     "/home/ereshkigal/.nuget/packages/awssdk.extensions.netcore.setup/3.7.301/awssdk.extensions.netcore.setup.3.7.301.nupkg.sha512",
     "/home/ereshkigal/.nuget/packages/awssdk.s3/3.7.309.1/awssdk.s3.3.7.309.1.nupkg.sha512",
@@ -24,8 +21,7 @@
     "/home/ereshkigal/.nuget/packages/grpc.tools/2.63.0/grpc.tools.2.63.0.nupkg.sha512",
     "/home/ereshkigal/.nuget/packages/librdkafka.redist/2.4.0/librdkafka.redist.2.4.0.nupkg.sha512",
     "/home/ereshkigal/.nuget/packages/microsoft.aspnetcore.openapi/8.0.6/microsoft.aspnetcore.openapi.8.0.6.nupkg.sha512",
-
-    "/home/ereshkigal/.nuget/packages/microsoft.csharp/4.7.0/microsoft.csharp.4.7.0.nupkg.sha512",
+    "/home/ereshkigal/.nuget/packages/microsoft.csharp/4.6.0/microsoft.csharp.4.6.0.nupkg.sha512",
     "/home/ereshkigal/.nuget/packages/microsoft.entityframeworkcore/8.0.6/microsoft.entityframeworkcore.8.0.6.nupkg.sha512",
     "/home/ereshkigal/.nuget/packages/microsoft.entityframeworkcore.abstractions/8.0.6/microsoft.entityframeworkcore.abstractions.8.0.6.nupkg.sha512",
     "/home/ereshkigal/.nuget/packages/microsoft.entityframeworkcore.analyzers/8.0.6/microsoft.entityframeworkcore.analyzers.8.0.6.nupkg.sha512",
