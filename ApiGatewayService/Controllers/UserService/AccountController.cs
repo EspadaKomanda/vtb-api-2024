@@ -1,17 +1,18 @@
 using ApiGatewayService.Services.UserService.Account;
 using Microsoft.AspNetCore.Mvc;
 using TourService.KafkaException;
-using UserService.Models.Account.Requests;
+
+using ApiGatewayService.Models.UserService.Account.Requests;
 
 // TODO: add GetUser and GetUsernameAndAvatar
 namespace ApiGatewayService.Controllers.UserService
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class AccountController(ILogger<AccountController> logger, IAccountService userService) : ControllerBase
+    public class AccountController(ILogger<AccountController> logger, IAccountService accountService) : ControllerBase
     {
         private readonly ILogger<AccountController> _logger = logger;
-        private readonly IAccountService _userService = userService;
+        private readonly IAccountService _accountService = accountService;
         
         [HttpPost]
         [Route("accessAccountData")]
@@ -19,7 +20,7 @@ namespace ApiGatewayService.Controllers.UserService
         {
             try
             {
-                var account = await userService.AccountAccessData(accountAccessDataRequest);
+                var account = await _accountService.AccountAccessData(accountAccessDataRequest);
                 return Ok(account);
             }
             catch(Exception ex)
@@ -38,7 +39,7 @@ namespace ApiGatewayService.Controllers.UserService
         {
             try
             {
-                var result = await userService.BeginPasswordReset(beginPasswordResetRequest);
+                var result = await _accountService.BeginPasswordReset(beginPasswordResetRequest);
                 return Ok(result);
             }
             catch(Exception ex)
@@ -57,7 +58,7 @@ namespace ApiGatewayService.Controllers.UserService
         {
             try
             {
-                var result = await userService.BeginRegistration(beginRegistrationRequest);
+                var result = await _accountService.BeginRegistration(beginRegistrationRequest);
                 return Ok(result);
             }
             catch(Exception ex)
@@ -76,7 +77,7 @@ namespace ApiGatewayService.Controllers.UserService
         {
             try
             {
-                var result = await userService.ChangePassword(changePasswordRequest);
+                var result = await _accountService.ChangePassword(changePasswordRequest);
                 return Ok(result);
             }
             catch(Exception ex)
@@ -95,7 +96,7 @@ namespace ApiGatewayService.Controllers.UserService
         {
             try
             {
-                var result = await userService.CompletePasswordReset(completePasswordResetRequest);
+                var result = await _accountService.CompletePasswordReset(completePasswordResetRequest);
                 return Ok(result);
             }
             catch(Exception ex)
@@ -114,7 +115,7 @@ namespace ApiGatewayService.Controllers.UserService
         {
             try
             {
-                var result = await userService.CompleteRegistration(completeRegistrationRequest);
+                var result = await _accountService.CompleteRegistration(completeRegistrationRequest);
                 return Ok(result);
             }
             catch(Exception ex)
@@ -133,7 +134,7 @@ namespace ApiGatewayService.Controllers.UserService
         {
             try
             {
-                var result = await userService.ResendRegistrationCode(resendRegistrationCodeRequest);
+                var result = await _accountService.ResendRegistrationCode(resendRegistrationCodeRequest);
                 return Ok(result);
             }
             catch(Exception ex)
@@ -152,7 +153,7 @@ namespace ApiGatewayService.Controllers.UserService
         {
             try
             {
-                var result = await userService.ResendPasswordResetCode(resendPasswordResetCodeRequest);
+                var result = await _accountService.ResendPasswordResetCode(resendPasswordResetCodeRequest);
                 return Ok(result);
             }
             catch(Exception ex)
@@ -171,7 +172,7 @@ namespace ApiGatewayService.Controllers.UserService
         {
             try
             {
-                var result = await userService.VerifyPasswordResetCode(verifyPasswordResetCodeRequest);
+                var result = await _accountService.VerifyPasswordResetCode(verifyPasswordResetCodeRequest);
                 return Ok(result);
             }
             catch(Exception ex)
@@ -190,7 +191,7 @@ namespace ApiGatewayService.Controllers.UserService
         {
             try
             {
-                var result = await userService.VerifyRegistrationCode(verifyPasswordResetCodeRequest);
+                var result = await _accountService.VerifyRegistrationCode(verifyPasswordResetCodeRequest);
                 return Ok(result);
             }
             catch(Exception ex)

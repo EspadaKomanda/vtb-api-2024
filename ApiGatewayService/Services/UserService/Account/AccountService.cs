@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ApiGatewayService.Exceptions.UserService.Account;
+using ApiGatewayService.Models.UserService.Account.Requests;
+using ApiGatewayService.Models.UserService.Account.Responses;
 using Confluent.Kafka;
 using Newtonsoft.Json;
 using TourService.Kafka;
-using UserService.Models.Account.Requests;
-using UserService.Models.Account.Responses;
 
 namespace ApiGatewayService.Services.UserService.Account
 {
