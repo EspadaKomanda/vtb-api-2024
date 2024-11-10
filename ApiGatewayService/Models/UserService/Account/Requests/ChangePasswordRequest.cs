@@ -11,6 +11,8 @@ namespace ApiGatewayService.Models.UserService.Account.Requests;
 public class ChangePasswordRequest
 {
     [Required]
+    public long UserId { get; set; }
+    [Required]
     public string OldPassword { get; set; } = null!;
 
     [Required]

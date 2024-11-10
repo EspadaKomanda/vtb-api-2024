@@ -1,6 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-
-namespace ApiGatewayService.Models.UserService.Profile.Requests;
+namespace UserService.Models.Profile.Requests;
 
 public class UploadAvatarRequest
 {

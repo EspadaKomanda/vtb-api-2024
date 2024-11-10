@@ -1,4 +1,4 @@
-namespace ApiGatewayService.Models.UserService.Account.Responses;
+namespace UserService.Models.Account.Responses;
 
 public class GetUserResponse
 {

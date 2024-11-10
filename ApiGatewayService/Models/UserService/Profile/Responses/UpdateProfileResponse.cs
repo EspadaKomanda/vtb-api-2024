@@ -1,3 +1,5 @@
-namespace ApiGatewayService.Models.UserService.Profile.Responses;
+
+using UserService.Database.Models;
+namespace UserService.Models.Profile.Responses;
 
 public class UpdateProfileResponse : Meta;

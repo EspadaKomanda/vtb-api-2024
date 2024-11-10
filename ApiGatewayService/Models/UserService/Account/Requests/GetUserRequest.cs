@@ -1,4 +1,5 @@
-namespace ApiGatewayService.Models.UserService.Account.Requests;
+
+namespace UserService.Models.Account.Requests;
 
 public class GetUserRequest
 {
