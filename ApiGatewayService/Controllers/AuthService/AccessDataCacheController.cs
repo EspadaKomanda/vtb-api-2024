@@ -7,7 +7,7 @@ namespace ApiGatewayService.Controllers.AuthService;
 [Route("api/[controller]")]
 public class AccessDataCacheController : Controller
 {
-    Task<IActionResult> RecacheUser([FromBody] RecacheUserRequest recacheUserRequest)
+    public Task<IActionResult> RecacheUser([FromBody] RecacheUserRequest recacheUserRequest)
     {
         throw new NotImplementedException();
     }

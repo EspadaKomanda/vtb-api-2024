@@ -9,7 +9,7 @@ public class PromoApplicationController : ControllerBase
     /// <summary>
     /// Фиксирует факт использования пользователем промокода для определенного набора товаров
     /// </summary>
-    Task<IActionResult> RegisterPromoUse(long userId)
+    public Task<IActionResult> RegisterPromoUse(long userId)
     {
         throw new NotImplementedException();
     }
@@ -17,7 +17,7 @@ public class PromoApplicationController : ControllerBase
     /// <summary>
     /// Позволяет удостовериться, что пользователь может применить промокод для данного набора товаров
     /// </summary>
-    Task<IActionResult> ValidatePromocodeApplication(long userId)
+    public Task<IActionResult> ValidatePromocodeApplication(long userId)
     {
         throw new NotImplementedException();
     }
@@ -25,7 +25,7 @@ public class PromoApplicationController : ControllerBase
     /// <summary>
     /// Позволяет получить промокоды, использованные пользователем, и информацию о них
     /// </summary>
-    Task<IActionResult> GetMyPromoApplications(long userId)
+    public Task<IActionResult> GetMyPromoApplications(long userId)
     {
         throw new NotImplementedException();
     }
