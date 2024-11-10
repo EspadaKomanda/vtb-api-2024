@@ -1,10 +1,14 @@
 using ApiGatewayService.Models.UserService.Profile.Requests;
 using ApiGatewayService.Models.UserService.Profile.Responses;
+using TourService.Kafka;
 
 namespace ApiGatewayService.Services.UserService.Profile;
 
-public class ProfileService : IProfileService
+public class ProfileService(ILogger<ProfileService> logger, KafkaRequestService kafkaRequestService) : IProfileService
 {
+    private readonly ILogger<ProfileService> _logger = logger;
+    private readonly KafkaRequestService _kafkaRequestService = kafkaRequestService;
+
     public Task<GetProfileResponse> GetProfile(GetProfileRequest getProfileRequest)
     {
         throw new NotImplementedException();

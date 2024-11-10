@@ -1,5 +1,4 @@
 using ApiGatewayService.Models.UserService.Profile.Requests;
-using ApiGatewayService.Services.UserService.Account;
 using ApiGatewayService.Services.UserService.Profile;
 using Microsoft.AspNetCore.Mvc;
 
