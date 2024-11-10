@@ -85,21 +85,22 @@ export default function Profile() {
             </header>
             {isAuthenticated ? (
                 <main className="container p-5 text-white">
-                    <div className="flex items-center justify-center">
-                        <div className="relative w-60 h-60">
+                    <div className="flex items-center justify-center flex-col">
+                        <div className="relative w-60 h-40">
                             <Image 
                                 src={avatar} 
                                 alt="" 
                                 width={240} 
                                 height={240} 
-                                className="rounded-full bg-custom-gradient cursor-pointer border-4 absolute left-1/2 -top-32 transform" 
+                                className="rounded-full absolute -top-32 bg-custom-gradient cursor-pointer border-4 mx-auto" 
                                 onClick={() => setIsModalOpen(true)}
                             />
                         </div>
-                        <h2 className="text-5xl font-bold flex mt-32 -translate-x-1/2">    
+                        <h2 className="text-5xl font-bold flex justify-center">    
                             {lastName} {firstName}
                         </h2>
                     </div>
+
                     <p className="text-3xl mt-20">Ваш промокод на скидку <span className="font-bold text-4xl pl-5 text-customColor4">{promocode}</span></p>
                     <p className="text-3xl mt-10">Бонусы <span className="font-bold text-4xl pl-16 text-customColor4">{bonuses} Б</span></p> 
                 </main>
