@@ -1,0 +1,12 @@
+{
+    "id": 2,
+    "name": "Отдых на Черном море",
+    "date": "2023-10-15",
+    "description": "Отличный отдых на Черном море",
+    "address": "Сочи, ул. Курортный проспект, 10",
+    "price": 20000,
+    "distance": 500,
+    "rating": 1.8,
+    "credit": false,
+    "image": "/images/slider1.png"
+}

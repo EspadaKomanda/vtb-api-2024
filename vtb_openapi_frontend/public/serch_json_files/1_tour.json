@@ -1,0 +1,12 @@
+{
+    "id": 1,
+    "name": "Тур по Золотому кольцу",
+    "date": "2023-10-01",
+    "description": "Замечательный тур по Золотому кольцу",
+    "address": "Москва, Красная площадь, 1",
+    "price": 15000,
+    "distance": 300,
+    "rating": 3.1,
+    "credit": true,
+    "image": "/images/exemple_tour1.png"
+}

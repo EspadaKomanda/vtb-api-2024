@@ -398,6 +398,8 @@ FodyWeavers.xsd
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
+
+node_modules
 !.vscode/extensions.json
 *.code-workspace
 

@@ -1,0 +1,36 @@
+nav a {
+    padding: 10px 24px;
+    transition: font-size 0.5s ease-in-out;
+    color: #ffffff;
+}
+
+nav a:hover {
+    font-size: 34px;
+}
+
+.active {
+    border: 3px solid #0085FF;
+    border-radius: 41px;
+}
+
+@media (max-width: 1500px) {
+    nav a {
+        color: #6c5cbd;
+    }
+}
+
+@media (max-width: 450px) {
+    nav a {
+        color: #ffffff;
+        background-color: #4A5068;
+        border-radius: 41px;
+        margin: 0 20px;
+    }
+
+    .active {
+        border: 3px solid #0E162D;
+        border-radius: 41px;
+    }
+    
+}
+
