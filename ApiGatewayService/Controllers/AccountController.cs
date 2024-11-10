@@ -1,4 +1,4 @@
-using ApiGatewayService.Services.User;
+using ApiGatewayService.Services.UserService.Account;
 using Microsoft.AspNetCore.Mvc;
 using TourService.KafkaException;
 using UserService.Models.Account.Requests;
@@ -8,10 +8,10 @@ namespace ApiGatewayService.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class AccountController(ILogger<AccountController> logger, IUserService userService) : ControllerBase
+    public class AccountController(ILogger<AccountController> logger, IAccountService userService) : ControllerBase
     {
         private readonly ILogger<AccountController> _logger = logger;
-        private readonly IUserService _userService = userService;
+        private readonly IAccountService _userService = userService;
         
         [HttpPost]
         [Route("accessAccountData")]

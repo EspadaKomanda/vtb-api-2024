@@ -1,15 +1,15 @@
 using ApiGatewayService.Models.Profile.Requests;
-using ApiGatewayService.Services.User;
+using ApiGatewayService.Services.UserService.Account;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApiGatewayService.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ProfileController(ILogger<ProfileController> logger, IUserService userService) : ControllerBase
+    public class ProfileController(ILogger<ProfileController> logger, IAccountService userService) : ControllerBase
     {
         private readonly ILogger<ProfileController> _logger = logger;
-        private readonly IUserService _userService = userService;
+        private readonly IAccountService _userService = userService;
 
         [HttpGet]
         [Route("getProfile")]

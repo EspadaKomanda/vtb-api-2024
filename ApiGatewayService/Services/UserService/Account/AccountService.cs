@@ -10,11 +10,11 @@ using TourService.Kafka;
 using UserService.Models.Account.Requests;
 using UserService.Models.Account.Responses;
 
-namespace ApiGatewayService.Services.User
+namespace ApiGatewayService.Services.UserService.Account
 {
-    public class UserService(ILogger<UserService> logger, KafkaRequestService kafkaRequestService) : IUserService
+    public class AccountService(ILogger<AccountService> logger, KafkaRequestService kafkaRequestService) : IAccountService
     {
-        private readonly ILogger<UserService> _logger = logger;
+        private readonly ILogger<AccountService> _logger = logger;
         private readonly KafkaRequestService _kafkaRequestService = kafkaRequestService;
 
         public async Task<AccountAccessDataResponse> AccountAccessData(AccountAccessDataRequest request)

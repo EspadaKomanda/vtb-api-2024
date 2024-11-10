@@ -5,13 +5,13 @@ using System.Threading.Tasks;
 using UserService.Models.Account.Requests;
 using UserService.Models.Account.Responses;
 
-namespace ApiGatewayService.Services.User
+namespace ApiGatewayService.Services.UserService.Account
 {
     /// <summary>
     /// <c>IAccountService</c> ответственен за работу с аккаунтом 
     /// пользователя.
     /// </summary>
-    public interface IUserService
+    public interface IAccountService
     {
         /// <summary>
         /// Выполняет регистрацию нового пользователя и отправляет 
