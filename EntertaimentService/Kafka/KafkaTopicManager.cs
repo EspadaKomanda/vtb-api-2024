@@ -69,6 +69,6 @@ public class KafkaTopicManager(IAdminClient adminClient)
             throw new CreateTopicException("Failed to create topic");
         }
     }
-
+    
   
 }

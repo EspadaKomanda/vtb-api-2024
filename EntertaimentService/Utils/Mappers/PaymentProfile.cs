@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using TourService.Database.Models;
-using TourService.Models.PaymentMethod;
-using TourService.Models.PaymentVariant;
+using EntertaimentService.Database.Models;
+using EntertaimentService.Models.PaymentMethod;
+using EntertaimentService.Models.PaymentVariant;
 
-namespace TourService.Utils.Mappers
+namespace EntertaimentService.Utils.Mappers
 {
     public class PaymentProfile : Profile
     {

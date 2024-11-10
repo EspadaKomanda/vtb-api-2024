@@ -1,7 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 using EntertaimentService.Attributes.Validation;
-using Entertaiment.Attributes.Validation;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EntertaimentService.Database.Models
@@ -25,7 +24,7 @@ namespace EntertaimentService.Database.Models
         [Rating(1,10)]
         public int Rating {get;set;}
 
-        [Text]
+        [EntertaimentText]
         public string Text {get; set;} = null!;
 
         [Required]

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TourService.Models.Benefits.Responses
+namespace EntertaimentService.Models.Benefits.Responses
 {
     public class GetBenefitResponse
     {

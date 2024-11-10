@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TourService.Utils.Models
+namespace EntertaimentService.Utils.Models
 {
     public class Bucket
     {

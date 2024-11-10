@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EntertaimentService.Attributes.Validation;
 
-namespace EntertaimentService.Models.Tour.Requests
+namespace EntertaimentService.Models.Entertaiment.Requests
 {
     public class UpdateEntertaimentRequest
     {

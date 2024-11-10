@@ -3,7 +3,7 @@ using EntertaimentService.Attributes.Validation;
 
 namespace EntertaimentService.Models.Entertaiment.Requests;
 
-public class AddTourRequest
+public class AddEntertaimentRequest
 {
     [Required]
     [EntertaimentName]
@@ -23,7 +23,7 @@ public class AddTourRequest
 
     [Coordinates]
     public string? Coordinates { get; set; }
-
+    public string? Comment { get; set; }
     [Required]
     public bool IsActive { get; set; }
 

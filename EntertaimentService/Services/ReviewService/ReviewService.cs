@@ -268,7 +268,7 @@ namespace EntertaimentService.Services.ReviewService
                     Headers = new Headers()
                     {
                         new Header("method",Encoding.UTF8.GetBytes("GetUsernameAvatar")),
-                        new Header("sender",Encoding.UTF8.GetBytes("TourService"))
+                        new Header("sender",Encoding.UTF8.GetBytes("entertaimentService"))
                     }
                 };
                 if(await _kafkaRequestService.Produce("userServiceAccountsRequests",message,"userServiceAccountsResponses"))

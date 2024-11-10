@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Confluent.Kafka;
-using TourService.Kafka;
-using TourService.KafkaException;
-using TourService.KafkaException.ConsumerException;
-using TourService.Kafka.Utils;
-using TourService.KafkaException.ConfigurationException;
+using EntertaimentService.Kafka;
+using EntertaimentService.KafkaException;
+using EntertaimentService.KafkaException.ConsumerException;
+using EntertaimentService.Kafka.Utils;
+using EntertaimentService.KafkaException.ConfigurationException;
 using Newtonsoft.Json;
 
-namespace TourService.Kafka
+namespace EntertaimentService.Kafka
 {
     public class KafkaRequestService
     {

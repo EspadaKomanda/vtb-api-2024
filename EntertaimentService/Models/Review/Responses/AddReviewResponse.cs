@@ -1,6 +1,6 @@
-namespace TourService.Models.Review.Responses;
+namespace EntertaimentService.Models.Review.Responses;
 
-public class PostReviewResponse
+public class AddReviewResponse
 {
     public long ReviewId { get; set; }
 }

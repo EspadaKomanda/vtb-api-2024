@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using EntertaimentService.Database.Models;
 using EntertaimentService.Models.DTO;
-using EntertaimentService.Models.Tour.Requests;
+using EntertaimentService.Models.Entertaiment.Requests;
 
 namespace EntertaimentService.Services.EntertaimentServices
 {

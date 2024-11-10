@@ -1,4 +1,4 @@
-﻿namespace TourService.KafkaException.ConsumerException;
+﻿namespace EntertaimentService.KafkaException.ConsumerException;
 
 public class ConsumerTopicUnavailableException : ConsumerException
 {

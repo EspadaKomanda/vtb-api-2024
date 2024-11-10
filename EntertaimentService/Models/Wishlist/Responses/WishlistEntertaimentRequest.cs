@@ -1,4 +1,4 @@
-namespace TourService.Models.Wishlist.Responses;
+namespace EntertaimentService.Models.Wishlist.Responses;
 
 public class WishlistTourResponse
 {

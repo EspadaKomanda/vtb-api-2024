@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using TourService.Database.Models;
-using TourService.Models.DTO;
+using EntertaimentService.Database.Models;
+using EntertaimentService.Models.DTO;
 
-namespace TourService.Utils.Mappers
+namespace EntertaimentService.Utils.Mappers
 {
     public class ReviewProfile : Profile
     {
@@ -14,7 +14,7 @@ namespace TourService.Utils.Mappers
         {
             CreateMap<Review, ReviewDto>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-                .ForMember(dest => dest.TourId, opt => opt.MapFrom(src => src.TourId))
+                .ForMember(dest => dest.EntertaimentId, opt => opt.MapFrom(src => src.EntertaimentId))
                 .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date))
                 .ForMember(dest => dest.Rating, opt => opt.MapFrom(src => src.Rating))
                 .ForMember(dest => dest.Text, opt => opt.MapFrom(src => src.Text))
@@ -25,7 +25,7 @@ namespace TourService.Utils.Mappers
                 .ForMember(dest => dest.PositiveFeedbacksCount, opt => opt.Ignore());
             CreateProjection<Review, ReviewDto>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-                .ForMember(dest => dest.TourId, opt => opt.MapFrom(src => src.TourId))
+                .ForMember(dest => dest.EntertaimentId, opt => opt.MapFrom(src => src.EntertaimentId))
                 .ForMember(dest => dest.Date, opt => opt.MapFrom(src => src.Date))
                 .ForMember(dest => dest.Rating, opt => opt.MapFrom(src => src.Rating))
                 .ForMember(dest => dest.Text, opt => opt.MapFrom(src => src.Text))

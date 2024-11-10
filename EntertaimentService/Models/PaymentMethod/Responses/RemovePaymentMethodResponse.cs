@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TourService.Models.PaymentMethod.Responses
+namespace EntertaimentService.Models.PaymentMethod.Responses
 {
-    public class RemovePaymentMethodRequest
+    public class RemovePaymentMethodResponse
     {
         public bool IsSuccess { get; set; }
     }

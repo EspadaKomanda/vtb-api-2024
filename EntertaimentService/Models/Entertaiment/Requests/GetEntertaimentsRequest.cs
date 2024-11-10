@@ -1,4 +1,3 @@
-using Entertaiment.Attributes.Validation;
 using EntertaimentService.Attributes.Validation;
 
 namespace EntertaimentService.Models.Tour.Requests;

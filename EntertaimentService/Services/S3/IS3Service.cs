@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TourService.Database.Models;
+using EntertaimentService.Database.Models;
 
-namespace TourService.Services.S3
+namespace EntertaimentService.Services.S3
 {
     public interface IS3Service
     {

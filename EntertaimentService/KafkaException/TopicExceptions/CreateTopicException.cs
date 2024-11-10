@@ -1,4 +1,4 @@
-﻿namespace EntertaimentService.KafkaException;
+﻿namespace TourService.KafkaException;
 
 public class CreateTopicException : TopicException
 {

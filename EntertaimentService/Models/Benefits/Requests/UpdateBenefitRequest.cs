@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using TourService.Attributes.Validation;
+using EntertaimentService.Attributes.Validation;
 
-namespace TourService.Models.Benefits
+namespace EntertaimentService.Models.Benefits
 {
     public class UpdateBenefitRequest
     {
         [Required]
         public long BenefitId { get; set; }
         [Required]
-        [TourName]
+        [EntertaimentName]
         public string BenefitName { get; set;} = null!;
     }
 }

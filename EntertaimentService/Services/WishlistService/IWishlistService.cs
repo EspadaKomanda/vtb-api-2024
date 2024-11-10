@@ -6,7 +6,7 @@ using EntertaimentService.Models.DTO;
 using EntertaimentService.Models.Wishlist.Requests;
 using EntertaimentService.Models.Wishlist.Responses;
 
-namespace TourService.Services.WishlistService
+namespace EntertaimentService.Services.WishlistService
 {
     public interface IWishlistService
     {

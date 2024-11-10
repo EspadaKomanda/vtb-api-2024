@@ -1,4 +1,4 @@
-﻿namespace EntertaimentService.KafkaException.ConsumerException;
+﻿namespace TourService.KafkaException.ConsumerException;
 
 public class ConsumerException : MyKafkaException
 {

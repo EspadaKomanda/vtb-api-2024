@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using EntertaimentService.KafkaException;
+using TourService.KafkaException;
 
-namespace EntertaimentService.KafkaException.ConfigurationException
+namespace TourService.KafkaException.ConfigurationException
 {
    public class ConfigureMessageBusException : MyKafkaException
    {

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using TourService.Database.Models;
-using TourService.Models.Category;
+using EntertaimentService.Database.Models;
+using EntertaimentService.Models.Category;
 
-namespace TourService.Utils.Mappers
+namespace EntertaimentService.Utils.Mappers
 {
     public class CategoryProfile : Profile
     {
