@@ -7,6 +7,6 @@ namespace TourService.Models.PaymentVariant.Responses
 {
     public class GetPaymentVariantResponse
     {
-        
+        public PaymentVariantDto PaymentVariant { get; set; } = null!;
     }
 }

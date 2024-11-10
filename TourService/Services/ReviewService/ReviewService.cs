@@ -84,7 +84,7 @@ namespace TourService.Services.ReviewService
                 ReviewDto reviewDto = _mapper.Map<ReviewDto>(review);
                 if(!review.IsAnonymous && review.UserId != null)
                 {
-                    GetUsernameAvatarResponse getUsernameAvatar = await GetUsernameAvatar(new GetUsernameAvatarRequest(){
+                    GetUsernameAvatarResponse getUsernameAvatar = await GetUsernameAvatar(new GetUserNameAvatar(){
                         UserId = (long)review.UserId
                     });
                     reviewDto.AuthorAvatar = getUsernameAvatar.Avatar;
@@ -145,7 +145,7 @@ namespace TourService.Services.ReviewService
                     var reviewDto = reviewDtos.FirstOrDefault(x => x.Id == review.Id)!;   
                     if(!review.IsAnonymous && review.UserId != null)
                     {
-                        GetUsernameAvatarResponse getUsernameAvatar = GetUsernameAvatar(new GetUsernameAvatarRequest(){
+                        GetUsernameAvatarResponse getUsernameAvatar = GetUsernameAvatar(new GetUserNameAvatar(){
                             UserId = (long)review.UserId
                         }).Result;
                         reviewDto.AuthorName = getUsernameAvatar.Username;
@@ -256,7 +256,7 @@ namespace TourService.Services.ReviewService
             }
         }
 
-        private async Task<GetUsernameAvatarResponse> GetUsernameAvatar(GetUsernameAvatarRequest request)
+        private async Task<GetUsernameAvatarResponse> GetUsernameAvatar(GetUserNameAvatar request)
         {
             try
             {

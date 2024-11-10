@@ -23,7 +23,7 @@ public class AddTourRequest
 
     [Coordinates]
     public string? Coordinates { get; set; }
-
+    public string? Comment { get; set; }
     [Required]
     public bool IsActive { get; set; }
 

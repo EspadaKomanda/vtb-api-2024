@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace TourService.Models.PaymentMethod.Responses
 {
-    public class RemovePaymentMethodRequest
+    public class RemovePaymentMethodResponse
     {
         public bool IsSuccess { get; set; }
     }

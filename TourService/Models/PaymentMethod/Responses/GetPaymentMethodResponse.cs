@@ -7,6 +7,6 @@ namespace TourService.Models.PaymentMethod.Responses
 {
     public class GetPaymentMethodResponse
     {
-        public PaymentMethodDto PaymentMethod { get; set; } = null1;
+        public PaymentMethodDto PaymentMethod { get; set; } = null!;
     }
 }

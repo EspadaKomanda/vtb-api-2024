@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TourService.Models.User.Requests
 {
-    public class GetUserNameAvatarRequest
+    public class GetUserNameAvatar
     {
         [Required]
         public long UserId { get; set; }

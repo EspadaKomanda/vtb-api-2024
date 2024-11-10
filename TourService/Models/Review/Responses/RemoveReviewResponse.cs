@@ -1,6 +1,6 @@
 namespace TourService.Models.Review.Responses;
 
-public class DeleteReviewResponse
+public class RemoveReviewResponse
 {
     public bool IsSuccess { get; set; }
 }

@@ -32,7 +32,31 @@ namespace TourService.Utils.Mappers
                 .ForMember(dest => dest.PaymentVariantId, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.PaymentMethodId, opt => opt.MapFrom(src => src.PaymentMethodId))
                 .ForMember(dest => dest.PaymentVariantName, opt => opt.MapFrom(src => src.Name));
-        
+            
+            
+
+
+            CreateMap<PaymentMethodDto, PaymentMethod>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.PaymentMethodId))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.PaymentMethodName))
+                .ForMember(dest => dest.PaymentVariants, opt => opt.MapFrom(src => src.PaymentVariants));
+
+            CreateProjection<PaymentMethodDto, PaymentMethod>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.PaymentMethodId))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.PaymentMethodName))
+                .ForMember(dest => dest.PaymentVariants, opt => opt.MapFrom(src => src.PaymentVariants));
+
+            CreateMap<PaymentVariantDto, PaymentVariant>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.PaymentVariantId))
+                .ForMember(dest => dest.PaymentMethodId, opt => opt.MapFrom(src => src.PaymentMethodId))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.PaymentVariantName));
+
+            CreateProjection<PaymentVariantDto, PaymentVariant>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.PaymentVariantId))
+                .ForMember(dest => dest.PaymentMethodId, opt => opt.MapFrom(src => src.PaymentMethodId))
+                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.PaymentVariantName));
+
+       
         }
     }
 }
