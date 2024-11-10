@@ -1,3 +1,4 @@
+using TourService.Kafka;
 using UserService.Database.Models;
 using UserService.Exceptions.Account;
 using UserService.Models.Account.Requests;
@@ -7,11 +8,11 @@ using UserService.Utils;
 
 namespace UserService.Services.Account;
 
-public class AccountService(IUnitOfWork unitOfWork, ILogger<AccountService> logger) : IAccountService
+public class AccountService(IUnitOfWork unitOfWork, ILogger<AccountService> logger, KafkaRequestService kafkaRequestService) : IAccountService
 {
     private readonly IUnitOfWork _uow = unitOfWork;
     private readonly ILogger<AccountService> _logger = logger;
-
+    private readonly KafkaRequestService _kafkaRequestService = kafkaRequestService;
     public async Task<AccountAccessDataResponse> AccountAccessData(AccountAccessDataRequest request)
     {
         if ((request.Email ?? request.Username) is null)

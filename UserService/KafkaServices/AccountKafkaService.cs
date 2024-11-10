@@ -51,7 +51,7 @@ namespace UserService.KafkaServices
                         var methodString = Encoding.UTF8.GetString(headerBytes.GetValueBytes());
                         switch (methodString)
                         {
-                            case "AccountAccessData":
+                            case "accountAccessData":
                                 try
                                 {
                                     if(await base.Produce(_accountResponseTopic,new Message<string, string>()
@@ -59,7 +59,7 @@ namespace UserService.KafkaServices
                                         Key = consumeResult.Message.Key,
                                         Value = JsonConvert.SerializeObject( await _accountService.AccountAccessData(JsonConvert.DeserializeObject<AccountAccessDataRequest>(consumeResult.Message.Value))),
                                         Headers = [
-                                            new Header("method",Encoding.UTF8.GetBytes("AccountAccessData")),
+                                            new Header("method",Encoding.UTF8.GetBytes("accountAccessData")),
                                             new Header("sender",Encoding.UTF8.GetBytes("userService")),
                                         ]
                                     }))
@@ -81,7 +81,7 @@ namespace UserService.KafkaServices
                                         Key = consumeResult.Message.Key,
                                         Value = JsonConvert.SerializeObject(new MessageResponse(){ Message = e.Message}),
                                         Headers = [
-                                            new Header("method", Encoding.UTF8.GetBytes("AccountAccessData")), 
+                                            new Header("method", Encoding.UTF8.GetBytes("accountAccessData")), 
                                             new Header("sender", Encoding.UTF8.GetBytes("userService")), 
                                             new Header("error", Encoding.UTF8.GetBytes(e.Message))
                                         ]
@@ -91,7 +91,7 @@ namespace UserService.KafkaServices
                                 }
 
                                 break;
-                            case "BeginPasswordReset":
+                            case "beginPasswordReset":
                                 try
                                 {
                                     if(await base.Produce(_accountResponseTopic,new Message<string, string>()
@@ -99,7 +99,7 @@ namespace UserService.KafkaServices
                                         Key = consumeResult.Message.Key,
                                         Value = JsonConvert.SerializeObject( await _accountService.BeginPasswordReset(JsonConvert.DeserializeObject<BeginPasswordResetRequest>(consumeResult.Message.Value))),
                                         Headers = [
-                                            new Header("method",Encoding.UTF8.GetBytes("BeginPasswordReset")),
+                                            new Header("method",Encoding.UTF8.GetBytes("beginPasswordReset")),
                                             new Header("sender",Encoding.UTF8.GetBytes("userService")),
                                         ]
                                     }))
@@ -120,7 +120,7 @@ namespace UserService.KafkaServices
                                         Key = consumeResult.Message.Key,
                                         Value = JsonConvert.SerializeObject(new MessageResponse(){ Message = e.Message}),
                                         Headers = [
-                                            new Header("method", Encoding.UTF8.GetBytes("BeginPasswordReset")), 
+                                            new Header("method", Encoding.UTF8.GetBytes("beginPasswordReset")), 
                                             new Header("sender", Encoding.UTF8.GetBytes("userService")), 
                                             new Header("error", Encoding.UTF8.GetBytes(e.Message))
                                         ]
@@ -129,7 +129,7 @@ namespace UserService.KafkaServices
                                     _logger.LogError(e, "Error sending message");
                                 }
                                 break;
-                            case "BeginRegistration":
+                            case "beginRegistration":
                                 try
                                 {
                                     if(await base.Produce(_accountResponseTopic,new Message<string, string>()
@@ -137,7 +137,7 @@ namespace UserService.KafkaServices
                                         Key = consumeResult.Message.Key,
                                         Value = JsonConvert.SerializeObject( await _accountService.BeginRegistration(JsonConvert.DeserializeObject<BeginRegistrationRequest>(consumeResult.Message.Value))),
                                         Headers = [
-                                            new Header("method",Encoding.UTF8.GetBytes("BeginRegistration")),
+                                            new Header("method",Encoding.UTF8.GetBytes("beginRegistration")),
                                             new Header("sender",Encoding.UTF8.GetBytes("userService")),
                                         ]
                                     }))
@@ -158,7 +158,7 @@ namespace UserService.KafkaServices
                                         Key = consumeResult.Message.Key,
                                         Value = JsonConvert.SerializeObject(new MessageResponse(){ Message = e.Message}),
                                         Headers = [
-                                            new Header("method", Encoding.UTF8.GetBytes("BeginRegistration")), 
+                                            new Header("method", Encoding.UTF8.GetBytes("beginRegistration")), 
                                             new Header("sender", Encoding.UTF8.GetBytes("userService")), 
                                             new Header("error", Encoding.UTF8.GetBytes(e.Message))
                                         ]
@@ -167,7 +167,7 @@ namespace UserService.KafkaServices
                                     _logger.LogError(e, "Error sending message");
                                 }
                                 break;
-                            case "ChangePassword":
+                            case "changePassword":
                                 try
                                 {
                                     if(await base.Produce(_accountResponseTopic,new Message<string, string>()
@@ -175,7 +175,7 @@ namespace UserService.KafkaServices
                                         Key = consumeResult.Message.Key,
                                         Value = JsonConvert.SerializeObject( await _accountService.ChangePassword(JsonConvert.DeserializeObject<ChangePasswordRequest>(consumeResult.Message.Value))),
                                         Headers = [
-                                            new Header("method",Encoding.UTF8.GetBytes("ChangePassword")),
+                                            new Header("method",Encoding.UTF8.GetBytes("changePassword")),
                                             new Header("sender",Encoding.UTF8.GetBytes("userService")),
                                         ]
                                     }))
@@ -196,7 +196,7 @@ namespace UserService.KafkaServices
                                         Key = consumeResult.Message.Key,
                                         Value = JsonConvert.SerializeObject(new MessageResponse(){ Message = e.Message}),
                                         Headers = [
-                                            new Header("method", Encoding.UTF8.GetBytes("ChangePassword")), 
+                                            new Header("method", Encoding.UTF8.GetBytes("changePassword")), 
                                             new Header("sender", Encoding.UTF8.GetBytes("userService")), 
                                             new Header("error", Encoding.UTF8.GetBytes(e.Message))
                                         ]
@@ -205,7 +205,7 @@ namespace UserService.KafkaServices
                                     _logger.LogError(e, "Error sending message");
                                 }
                                 break;
-                            case "CompletePasswordReset":
+                            case "completePasswordReset":
                                 try
                                 {
                                     if(await base.Produce(_accountResponseTopic,new Message<string, string>()
@@ -213,7 +213,7 @@ namespace UserService.KafkaServices
                                         Key = consumeResult.Message.Key, 
                                         Value = JsonConvert.SerializeObject(await _accountService.CompletePasswordReset(JsonConvert.DeserializeObject<CompletePasswordResetRequest>(consumeResult.Message.Value))),
                                         Headers = [
-                                            new Header("method",Encoding.UTF8.GetBytes("CompletePasswordReset")),
+                                            new Header("method",Encoding.UTF8.GetBytes("completePasswordReset")),
                                             new Header("sender",Encoding.UTF8.GetBytes("userService")),
                                         ]
                                     }))
@@ -235,7 +235,7 @@ namespace UserService.KafkaServices
                                         Key = consumeResult.Message.Key,
                                         Value = JsonConvert.SerializeObject(new MessageResponse(){ Message = e.Message}),
                                         Headers = [
-                                            new Header("method", Encoding.UTF8.GetBytes("CompletePasswordReset")), 
+                                            new Header("method", Encoding.UTF8.GetBytes("completePasswordReset")), 
                                             new Header("sender", Encoding.UTF8.GetBytes("userService")), 
                                             new Header("error", Encoding.UTF8.GetBytes(e.Message))
                                         ]
@@ -244,7 +244,7 @@ namespace UserService.KafkaServices
                                     _logger.LogError(e, "Error sending message");
                                 }
                                 break;
-                            case "CompleteRegistration":
+                            case "completeRegistration":
                                 try
                                 {
                                     if(await base.Produce(_accountResponseTopic,new Message<string, string>()
@@ -252,7 +252,7 @@ namespace UserService.KafkaServices
                                         Key = consumeResult.Message.Key,
                                         Value = JsonConvert.SerializeObject( await _accountService.CompleteRegistration(JsonConvert.DeserializeObject<CompleteRegistrationRequest>(consumeResult.Message.Value))),
                                         Headers = [
-                                            new Header("method",Encoding.UTF8.GetBytes("CompleteRegistration")),
+                                            new Header("method",Encoding.UTF8.GetBytes("completeRegistration")),
                                             new Header("sender",Encoding.UTF8.GetBytes("userService")),
                                         ]
                                     }))
@@ -274,7 +274,7 @@ namespace UserService.KafkaServices
                                         Key = consumeResult.Message.Key,
                                         Value = JsonConvert.SerializeObject(new MessageResponse(){ Message = e.Message}),
                                         Headers = [
-                                            new Header("method", Encoding.UTF8.GetBytes("CompleteRegistration")), 
+                                            new Header("method", Encoding.UTF8.GetBytes("completeRegistration")), 
                                             new Header("sender", Encoding.UTF8.GetBytes("userService")), 
                                             new Header("error", Encoding.UTF8.GetBytes(e.Message))
                                         ]
@@ -283,7 +283,7 @@ namespace UserService.KafkaServices
                                     _logger.LogError(e, "Error sending message");
                                 }   
                                 break;
-                            case "ResendPasswordResetCode":
+                            case "resendPasswordResetCode":
                                 try
                                 {
                                     if(await base.Produce(_accountResponseTopic,new Message<string, string>()
@@ -291,7 +291,7 @@ namespace UserService.KafkaServices
                                         Key = consumeResult.Message.Key,
                                         Value  = JsonConvert.SerializeObject(await _accountService.ResendPasswordResetCode(JsonConvert.DeserializeObject<ResendPasswordResetCodeRequest>(consumeResult.Message.Value))),
                                         Headers = [
-                                            new Header("method",Encoding.UTF8.GetBytes("ResendPasswordResetCode")),
+                                            new Header("method",Encoding.UTF8.GetBytes("resendPasswordResetCode")),
                                             new Header("sender",Encoding.UTF8.GetBytes("userService")),
                                         ]
                                     }))
@@ -312,16 +312,17 @@ namespace UserService.KafkaServices
                                         Key = consumeResult.Message.Key,
                                         Value = JsonConvert.SerializeObject(new MessageResponse(){ Message = e.Message}),
                                         Headers = [
-                                            new Header("method", Encoding.UTF8.GetBytes("ResendPasswordResetCode")), 
+                                            new Header("method", Encoding.UTF8.GetBytes("resendPasswordResetCode")), 
                                             new Header("sender", Encoding.UTF8.GetBytes("userService")), 
                                             new Header("error", Encoding.UTF8.GetBytes(e.Message))
                                         ]
+                                        
                                     });
                                     _consumer.Commit(consumeResult);
                                     _logger.LogError(e, "Error sending message");
                                 }
                                 break;
-                            case "ResendRegistrationCode":
+                            case "resendRegistrationCode":
                                 try
                                 {
                                     if(await base.Produce(_accountResponseTopic,new Message<string, string>()
@@ -329,7 +330,7 @@ namespace UserService.KafkaServices
                                         Key = consumeResult.Message.Key, 
                                         Value = JsonConvert.SerializeObject( await _accountService.ResendRegistrationCode(JsonConvert.DeserializeObject<ResendRegistrationCodeRequest>(consumeResult.Message.Value))),
                                         Headers = [
-                                            new Header("method",Encoding.UTF8.GetBytes("ResendRegistrationCode")),
+                                            new Header("method",Encoding.UTF8.GetBytes("resendRegistrationCode")),
                                             new Header("sender",Encoding.UTF8.GetBytes("userService")),
                                         ]
                                     }))
@@ -350,7 +351,7 @@ namespace UserService.KafkaServices
                                         Key = consumeResult.Message.Key,
                                         Value = JsonConvert.SerializeObject(new MessageResponse(){ Message = e.Message}),
                                         Headers = [
-                                            new Header("method", Encoding.UTF8.GetBytes("ResendRegistrationCode")), 
+                                            new Header("method", Encoding.UTF8.GetBytes("resendRegistrationCode")), 
                                             new Header("sender", Encoding.UTF8.GetBytes("userService")), 
                                             new Header("error", Encoding.UTF8.GetBytes(e.Message))
                                         ]

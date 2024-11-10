@@ -115,24 +115,14 @@ namespace TourService.Kafka
             }
             return Responses;
         }
-        public T GetMessage<T>(string MessageKey, string topicName)
-        {
-            if(IsMessageRecieved(MessageKey))
-            {
-                var message = _recievedMessagesBus.FirstOrDefault(x=>x.TopicName == topicName)!.Messages.FirstOrDefault(x=>x.Key==MessageKey);
-                _recievedMessagesBus.FirstOrDefault(x=>x.TopicName == topicName)!.Messages.Remove(message);
-                return JsonConvert.DeserializeObject<T>(message.Value);
-            }
-            throw new ConsumerException("Message not recieved");
-        }
+
         private bool IsTopicAvailable(string topicName)
         {
             try
             {
-                bool IsTopicExists = _kafkaTopicManager.CheckTopicExists(topicName);
-                if (IsTopicExists)
+                if(_kafkaTopicManager.CheckTopicExists(topicName))
                 {
-                    return IsTopicExists;
+                    return true;
                 }
                 _logger.LogError("Unable to subscribe to topic");
                 throw new ConsumerTopicUnavailableException("Topic unavailable");
@@ -218,6 +208,18 @@ namespace TourService.Kafka
                 throw;
             }
         }
+        
+        public T GetMessage<T>(string MessageKey, string topicName)
+        {
+            if(IsMessageRecieved(MessageKey))
+            {
+                var message = _recievedMessagesBus.FirstOrDefault(x=>x.TopicName == topicName)!.Messages.FirstOrDefault(x=>x.Key==MessageKey);
+                _recievedMessagesBus.FirstOrDefault(x=>x.TopicName == topicName)!.Messages.Remove(message);
+                return JsonConvert.DeserializeObject<T>(message.Value);
+            }
+            throw new ConsumerException("Message not recieved");
+        }
+
         private bool IsTopicPendingMessageBusExist(string responseTopic)
         {
             return _pendingMessagesBus.Any(x => x.TopicName == responseTopic);

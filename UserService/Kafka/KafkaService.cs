@@ -4,6 +4,7 @@ using Confluent.Kafka;
 using TourService.KafkaException;
 using TourService.KafkaException.ConsumerException;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 namespace TourService.Kafka;
 
 public abstract class KafkaService(ILogger<KafkaService> logger, IProducer<string, string> producer, KafkaTopicManager kafkaTopicManager)
@@ -112,10 +113,23 @@ public abstract class KafkaService(ILogger<KafkaService> logger, IProducer<strin
             }
             throw;
         }
-       
-       
-        
     }
+    protected bool IsValid(object value)
+    {
+        var validationResults = new List<ValidationResult>();
+        var validationContext = new ValidationContext(value, null, null);
+        
+        bool isValid = Validator.TryValidateObject(value, validationContext, validationResults, true);
 
+        if (!isValid)
+        {
+            foreach (var validationResult in validationResults)
+            {
+                _logger.LogError(validationResult.ErrorMessage);
+            }
+        }
+
+        return isValid;
+    }
     
 }
