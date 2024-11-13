@@ -28,6 +28,7 @@ public class AuthenticationService(IJwtService jwtService, IAccessDataCacheServi
             throw new InvalidPasswordException("Invalid password");
         }
 
+        _logger.LogInformation("Password was successfully verified for user {user}, creating tokens", user.Username);
         return new LoginResponse
             {
                 AccessToken = _jwtService.GenerateAccessToken(user),
