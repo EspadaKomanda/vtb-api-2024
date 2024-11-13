@@ -1,9 +1,13 @@
 using AuthService.Exceptions.Auth;
 using AuthService.Models;
+using AuthService.Models.Auth.Requests;
+using AuthService.Models.Auth.Responses;
 using AuthService.Models.Authentication.Requests;
 using AuthService.Models.Authentication.Responses;
 using AuthService.Services.AccessDataCache;
 using AuthService.Services.Jwt;
+using AuthService.Services.Models;
+using AuthService.Utils;
 
 namespace AuthService.Services.Authentication;
 
@@ -13,6 +17,23 @@ public class AuthenticationService(IJwtService jwtService, IAccessDataCacheServi
     private readonly IJwtService _jwtService = jwtService;
     private readonly IAccessDataCacheService _adcs = accessDataCacheService;
     private readonly ILogger<AuthenticationService> _logger = logger;
+
+    public async Task<LoginResponse> Login(LoginRequest request)
+    {
+        UserAccessData user = await _adcs.RequestAndCacheUser(request.Username) ?? throw new UserNotFoundException($"User not found: {request.Username}");
+
+        if (!BcryptUtils.VerifyPassword(request.Password, user.Password))
+        {
+            _logger.LogWarning("Password verification was not successful for user {user}", user.Username);
+            throw new InvalidPasswordException("Invalid password");
+        }
+
+        return new LoginResponse
+            {
+                AccessToken = _jwtService.GenerateAccessToken(user),
+                RefreshToken = _jwtService.GenerateRefreshToken(user)
+            };
+    }
 
     public async Task<RefreshResponse> Refresh(RefreshRequest request)
     {
