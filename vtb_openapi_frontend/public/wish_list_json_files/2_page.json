@@ -14,18 +14,6 @@
             "likes": 1223
         },
         {
-            "id": 7,
-            "name": "Курильские острова",
-            "date": "2023-10-15",
-            "price": 20000,
-            "distance": 500,
-            "rating": 1.8,
-            "credit": false,
-            "image": "/images/slider1.png",
-            "like": false,
-            "likes": 3
-        },
-        {
             "id": 8,
             "name": "Экскурсия в Санкт-Петербург",
             "date": "2023-11-05",

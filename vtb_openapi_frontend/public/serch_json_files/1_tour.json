@@ -8,5 +8,7 @@
     "distance": 300,
     "rating": 3.1,
     "credit": true,
-    "image": "/images/exemple_tour1.png"
+    "image": "/images/exemple_tour1.png",
+    "like": true,
+    "likes": 13
 }

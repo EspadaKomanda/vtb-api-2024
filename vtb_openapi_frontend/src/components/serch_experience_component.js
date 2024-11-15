@@ -8,7 +8,7 @@ import '../styles/serch_experience_component_styles.css';
 import StarRating from './star_rating.js';
 import ExperienceItem from './experience_component.js'
 import { motion, AnimatePresence } from 'framer-motion';
-import Pagination from './pagination.js';
+import Pagination from './pagination_component.js';
 import experienceStore from '@/stores/experience_store.js';
 
 class FilterData {
@@ -25,7 +25,7 @@ class FilterData {
         this.distanceFrom = 0;
         this.distanceTo = 0;
         this.types = [];
-        this.ratingFrom = 1;
+        this.ratingFrom = 1;                                    
         this.credit = false;
     }
 }

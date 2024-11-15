@@ -8,5 +8,7 @@
     "distance": 500,
     "rating": 1.8,
     "credit": false,
-    "image": "/images/slider1.png"
+    "image": "/images/slider1.png",
+    "like": false,
+    "likes": 3
 }
