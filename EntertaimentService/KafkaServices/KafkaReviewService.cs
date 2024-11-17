@@ -22,6 +22,8 @@ namespace EntertaimentService.KafkaServices
 {
     public class KafkaReviewService : KafkaService
     {
+
+        //FIXME: If mykafkaException i have to reconfigure the producer
         private readonly string _reviewRequestTopic = Environment.GetEnvironmentVariable("REVIEW_REQUEST_TOPIC") ?? "reviewRequestTopic";
         private readonly string _reviewResponseTopic = Environment.GetEnvironmentVariable("REVIEW_RESPONSE_TOPIC") ?? "reviewResponseTopic"; 
         private readonly IReviewService _reviewService;
@@ -75,6 +77,7 @@ namespace EntertaimentService.KafkaServices
 
                                             _logger.LogInformation("Successfully sent message {Key}",consumeResult.Message.Key);
                                             _consumer.Commit(consumeResult);
+                                            break;
                                         }
                                     }
                                     _logger.LogError("Request validation error");
@@ -82,12 +85,7 @@ namespace EntertaimentService.KafkaServices
                                 }
                                 catch (Exception e)
                                 {
-                                    if(e is MyKafkaException)
-                                    {
-                                        _logger.LogError(e,"Error sending message");
-                                        throw;
-                                    }
-                                     _ = await base.Produce(_reviewResponseTopic, new Message<string, string>()
+                                    _ = await base.Produce(_reviewResponseTopic, new Message<string, string>()
                                     {
                                         Key = consumeResult.Message.Key,
                                         Value = JsonConvert.SerializeObject(new MessageResponse(){ Message = e.Message}),
@@ -124,6 +122,7 @@ namespace EntertaimentService.KafkaServices
 
                                             _logger.LogInformation("Successfully sent message {Key}",consumeResult.Message.Key);
                                             _consumer.Commit(consumeResult);
+                                            break;
                                         }
                                     }
                                     _logger.LogError("Request validation error");
@@ -131,12 +130,7 @@ namespace EntertaimentService.KafkaServices
                                 }
                                 catch (Exception e)
                                 {
-                                    if(e is MyKafkaException)
-                                    {
-                                        _logger.LogError(e,"Error sending message");
-                                        throw;
-                                    }
-                                     _ = await base.Produce(_reviewResponseTopic, new Message<string, string>()
+                                    _ = await base.Produce(_reviewResponseTopic, new Message<string, string>()
                                     {
                                         Key = consumeResult.Message.Key,
                                         Value = JsonConvert.SerializeObject(new MessageResponse(){ Message = e.Message}),
@@ -172,6 +166,7 @@ namespace EntertaimentService.KafkaServices
 
                                             _logger.LogInformation("Successfully sent message {Key}",consumeResult.Message.Key);
                                             _consumer.Commit(consumeResult);
+                                            break;
                                         }
                                     }
                                     _logger.LogError("Request validation error");
@@ -179,12 +174,7 @@ namespace EntertaimentService.KafkaServices
                                 }
                                 catch (Exception e)
                                 {
-                                    if(e is MyKafkaException)
-                                    {
-                                        _logger.LogError(e,"Error sending message");
-                                        throw;
-                                    }
-                                     _ = await base.Produce(_reviewResponseTopic, new Message<string, string>()
+                                    _ = await base.Produce(_reviewResponseTopic, new Message<string, string>()
                                     {
                                         Key = consumeResult.Message.Key,
                                         Value = JsonConvert.SerializeObject(new MessageResponse(){ Message = e.Message}),
@@ -220,6 +210,7 @@ namespace EntertaimentService.KafkaServices
 
                                             _logger.LogInformation("Successfully sent message {Key}",consumeResult.Message.Key);
                                             _consumer.Commit(consumeResult);
+                                            break;
                                         }
                                     }
                                     _logger.LogError("Request validation error");
@@ -227,12 +218,7 @@ namespace EntertaimentService.KafkaServices
                                 }
                                 catch (Exception e)
                                 {
-                                    if(e is MyKafkaException)
-                                    {
-                                        _logger.LogError(e,"Error sending message");
-                                        throw;
-                                    }
-                                     _ = await base.Produce(_reviewResponseTopic, new Message<string, string>()
+                                    _ = await base.Produce(_reviewResponseTopic, new Message<string, string>()
                                     {
                                         Key = consumeResult.Message.Key,
                                         Value = JsonConvert.SerializeObject(new MessageResponse(){ Message = e.Message}),
@@ -268,6 +254,7 @@ namespace EntertaimentService.KafkaServices
 
                                             _logger.LogInformation("Successfully sent message {Key}",consumeResult.Message.Key);
                                             _consumer.Commit(consumeResult);
+                                            break;
                                         }
                                     }
                                     _logger.LogError("Request validation error");
@@ -275,12 +262,7 @@ namespace EntertaimentService.KafkaServices
                                 }
                                 catch (Exception e)
                                 {
-                                    if(e is MyKafkaException)
-                                    {
-                                        _logger.LogError(e,"Error sending message");
-                                        throw;
-                                    }
-                                     _ = await base.Produce(_reviewResponseTopic, new Message<string, string>()
+                                    _ = await base.Produce(_reviewResponseTopic, new Message<string, string>()
                                     {
                                         Key = consumeResult.Message.Key,
                                         Value = JsonConvert.SerializeObject(new MessageResponse(){ Message = e.Message}),
@@ -316,6 +298,7 @@ namespace EntertaimentService.KafkaServices
 
                                             _logger.LogInformation("Successfully sent message {Key}",consumeResult.Message.Key);
                                             _consumer.Commit(consumeResult);
+                                            break;
                                         }
                                     }
                                     _logger.LogError("Request validation error");
@@ -323,12 +306,7 @@ namespace EntertaimentService.KafkaServices
                                 }
                                 catch (Exception e)
                                 {
-                                    if(e is MyKafkaException)
-                                    {
-                                        _logger.LogError(e,"Error sending message");
-                                        throw;
-                                    }
-                                     _ = await base.Produce(_reviewResponseTopic, new Message<string, string>()
+                                    _ = await base.Produce(_reviewResponseTopic, new Message<string, string>()
                                     {
                                         Key = consumeResult.Message.Key,
                                         Value = JsonConvert.SerializeObject(new MessageResponse(){ Message = e.Message}),
@@ -353,10 +331,7 @@ namespace EntertaimentService.KafkaServices
             }
             catch(Exception ex)
             {
-                if(_consumer != null)
-                { 
-                    _consumer.Dispose();
-                }
+              
                 if (ex is MyKafkaException)
                 {
                     _logger.LogError(ex,"Consumer error");

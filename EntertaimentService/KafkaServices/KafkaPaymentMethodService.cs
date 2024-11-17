@@ -20,6 +20,8 @@ namespace EntertaimentService.KafkaServices
 {
     public class KafkaPaymentMethodService : KafkaService
     {
+
+        //FIXME: If mykafkaException i have to reconfigure the producer
         private readonly string _paymentMethodRequestTopic = Environment.GetEnvironmentVariable("PAYMENTMETHOD_REQUEST_TOPIC") ?? "paymentMethodRequestTopic";
         private readonly string _paymentMethodResponseTopic = Environment.GetEnvironmentVariable("PAYMENTMETHOD_RESPONSE_TOPIC") ?? "paymentMethodResponseTopic"; 
         private readonly IPaymentMethodService _paymentMethodService;
@@ -79,6 +81,7 @@ namespace EntertaimentService.KafkaServices
 
                                             _logger.LogInformation("Successfully sent message {Key}",consumeResult.Message.Key);
                                             _consumer.Commit(consumeResult);
+                                            break;
                                         }
                                     }
                                     _logger.LogError("Request validation error");
@@ -86,11 +89,7 @@ namespace EntertaimentService.KafkaServices
                                 }
                                 catch (Exception e)
                                 {
-                                    if(e is MyKafkaException)
-                                    {
-                                        _logger.LogError(e,"Error sending message");
-                                        throw;
-                                    }
+                                    
                                      _ = await base.Produce(_paymentMethodResponseTopic, new Message<string, string>()
                                     {
                                         Key = consumeResult.Message.Key,
@@ -128,6 +127,7 @@ namespace EntertaimentService.KafkaServices
 
                                             _logger.LogInformation("Successfully sent message {Key}",consumeResult.Message.Key);
                                             _consumer.Commit(consumeResult);
+                                            break;
                                         }
                                     }
                                     _logger.LogError("Request validation error");
@@ -135,11 +135,7 @@ namespace EntertaimentService.KafkaServices
                                 }
                                 catch (Exception e)
                                 {
-                                    if(e is MyKafkaException)
-                                    {
-                                        _logger.LogError(e,"Error sending message");
-                                        throw;
-                                    }
+                                    
                                      _ = await base.Produce(_paymentMethodResponseTopic, new Message<string, string>()
                                     {
                                         Key = consumeResult.Message.Key,
@@ -176,6 +172,7 @@ namespace EntertaimentService.KafkaServices
 
                                             _logger.LogInformation("Successfully sent message {Key}",consumeResult.Message.Key);
                                             _consumer.Commit(consumeResult);
+                                            break;
                                         }
                                     }
                                     _logger.LogError("Request validation error");
@@ -183,11 +180,7 @@ namespace EntertaimentService.KafkaServices
                                 }
                                 catch (Exception e)
                                 {
-                                    if(e is MyKafkaException)
-                                    {
-                                        _logger.LogError(e,"Error sending message");
-                                        throw;
-                                    }
+                                    
                                      _ = await base.Produce(_paymentMethodResponseTopic, new Message<string, string>()
                                     {
                                         Key = consumeResult.Message.Key,
@@ -224,6 +217,7 @@ namespace EntertaimentService.KafkaServices
 
                                             _logger.LogInformation("Successfully sent message {Key}",consumeResult.Message.Key);
                                             _consumer.Commit(consumeResult);
+                                            break;
                                         }
                                     }
                                     _logger.LogError("Request validation error");
@@ -231,11 +225,7 @@ namespace EntertaimentService.KafkaServices
                                 }
                                 catch (Exception e)
                                 {
-                                    if(e is MyKafkaException)
-                                    {
-                                        _logger.LogError(e,"Error sending message");
-                                        throw;
-                                    }
+                                    
                                      _ = await base.Produce(_paymentMethodResponseTopic, new Message<string, string>()
                                     {
                                         Key = consumeResult.Message.Key,
