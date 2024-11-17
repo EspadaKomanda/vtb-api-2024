@@ -64,23 +64,37 @@ namespace EntertaimentService.Services.EntertaimentServices
                 IQueryable<Entertaiment> entertaiments;
                 if(getEntertaiments.Categories!=null)
                 {
-                    entertaiments = _unitOfWork.Entertaiments.GetAll()
-                    .Join(_unitOfWork.EntertaimentCategories.GetAll(), t => t.Id, tc => tc.EntertaimentId, (t, tc) => new { Entertaiment = t, Category = tc })
-                    .Where(x => getEntertaiments.Categories.Contains(x.Category.CategoryId))
-                    .Select(x => x.Entertaiment)
-                    .Distinct()
-                    .Where(x=>x.Rating>= getEntertaiments.MinimalRating && x.Rating<=getEntertaiments.MaximalRating)
-                    .Where(x=>x.Price>=getEntertaiments.MinimalPrice && x.Price<=getEntertaiments.MaximalPrice)
-                    .Skip((getEntertaiments.Page - 1) * 10)
-                    .Take(10);
+                    var entertainments = _unitOfWork.Entertaiments.GetAll()
+                        .Where(e => 
+                            _unitOfWork.EntertaimentCategories.GetAll()
+                                .Where(ec => getEntertaiments.Categories.Contains(ec.CategoryId))
+                                .Select(ec => ec.EntertaimentId)
+                                .Contains(e.Id)
+                        )
+                        .Where(e => e.Rating >= getEntertaiments.MinimalRating && e.Rating <= getEntertaiments.MaximalRating)
+                        .Where(e => e.Price >= getEntertaiments.MinimalPrice && e.Price <= getEntertaiments.MaximalPrice)
+                        .Distinct()
+                        .Skip((getEntertaiments.Page - 1) * 10)
+                        .Take(10)
+                        .ToList();
+
                 }
                 else
                 {
-                    entertaiments = _unitOfWork.Entertaiments.GetAll()
-                    .Where(x=>x.Rating>= getEntertaiments.MinimalRating && x.Rating<=getEntertaiments.MaximalRating)
-                    .Where(x=>x.Price>=getEntertaiments.MinimalPrice && x.Price<=getEntertaiments.MaximalPrice)
-                    .Skip((getEntertaiments.Page - 1) * 10)
-                    .Take(10);
+                    var entertainments = _unitOfWork.Entertaiments.GetAll()
+                        .Where(e => 
+                            e.Rating >= getEntertaiments.MinimalRating && e.Rating <= getEntertaiments.MaximalRating &&
+                            e.Price >= getEntertaiments.MinimalPrice && e.Price <= getEntertaiments.MaximalPrice &&
+                            _unitOfWork.EntertaimentCategories.GetAll()
+                                .Where(ec => getEntertaiments.Categories.Contains(ec.CategoryId))
+                                .Select(ec => ec.EntertaimentId)
+                                .Contains(e.Id)
+                        )
+                        .Distinct()
+                        .Skip((getEntertaiments.Page - 1) * 10)
+                        .Take(10)
+                        .ToList();
+
                 }
                 var entertaimentDtos = _mapper.ProjectTo<EntertaimentDto>(entertaiments);
                 foreach(var entertaimentDto in entertaimentDtos)
