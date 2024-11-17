@@ -125,6 +125,8 @@ public class AccountService(IUnitOfWork unitOfWork, ILogger<AccountService> logg
             _logger.LogDebug("Email {request.Email} and username {request.Username} are not taken, proceeding with registration", request.Email, request.Username);
         }
 
+        using var transaction = _uow.BeginTransaction();
+        
         // User creation
         user = new User
         {
@@ -151,7 +153,6 @@ public class AccountService(IUnitOfWork unitOfWork, ILogger<AccountService> logg
             UserId = user.Id
         };
 
-        using var transaction = _uow.BeginTransaction();
         try
         {
             await _uow.RegistrationCodes.AddAsync(regCode);
