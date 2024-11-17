@@ -125,23 +125,22 @@ namespace TourService.Services.TourService
                 {
                     tours = _unitOfWork.Tours.GetAll()
                         .Where(t => 
-                            _unitOfWork.TourCategories.GetAll()
-                                .Where(tc => getTours.Categories.Contains(tc.CategoryId))
-                                .Select(tc => tc.TourId)
-                                .Contains(t.Id)
-                        )
-                        .Where(t => t.Rating >= getTours.MinimalRating && t.Rating <= getTours.MaximalRating)
-                        .Where(t => t.Price >= getTours.MinimalPrice && t.Price <= getTours.MaximalPrice)
-                        .Distinct()
+                            t.Rating >= getTours.MinimalRating && 
+                            t.Rating <= getTours.MaximalRating && 
+                            t.Price >= getTours.MinimalPrice && 
+                            t.Price <= getTours.MaximalPrice &&
+                            _unitOfWork.TourCategories.GetAll(new FindOptions())
+                                .Any(tc => tc.TourId == t.Id && getTours.Categories.Contains(tc.CategoryId)))
                         .Skip((getTours.Page - 1) * 10)
                         .Take(10)
                         .ToList();
+
                 }
                 else if(getTours.TourTags!=null)
                 {
                     tours = _unitOfWork.Tours.GetAll()
                         .Where(t => 
-                            _unitOfWork.TourTags.GetAll()
+                            _unitOfWork.TourTags.GetAll(new FindOptions())
                                 .Where(tt => getTours.TourTags.Contains(tt.TagId))
                                 .Select(tt => tt.TourId)
                                 .Contains(t.Id)

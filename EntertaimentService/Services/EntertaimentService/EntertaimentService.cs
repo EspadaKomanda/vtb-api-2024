@@ -64,7 +64,7 @@ namespace EntertaimentService.Services.EntertaimentServices
                 IQueryable<Entertaiment> entertaiments;
                 if(getEntertaiments.Categories!=null)
                 {
-                    var entertainments = _unitOfWork.Entertaiments.GetAll()
+                    entertainments = _unitOfWork.Entertaiments.GetAll()
                         .Where(e => 
                             _unitOfWork.EntertaimentCategories.GetAll()
                                 .Where(ec => getEntertaiments.Categories.Contains(ec.CategoryId))
@@ -81,7 +81,7 @@ namespace EntertaimentService.Services.EntertaimentServices
                 }
                 else
                 {
-                    var entertainments = _unitOfWork.Entertaiments.GetAll()
+                    entertainments = _unitOfWork.Entertaiments.GetAll()
                         .Where(e => 
                             e.Rating >= getEntertaiments.MinimalRating && e.Rating <= getEntertaiments.MaximalRating &&
                             e.Price >= getEntertaiments.MinimalPrice && e.Price <= getEntertaiments.MaximalPrice &&
