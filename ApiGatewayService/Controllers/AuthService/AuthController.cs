@@ -13,7 +13,8 @@ public class AuthController(ILogger<AuthController> logger, IAuthService authSer
     private readonly ILogger<AuthController> _logger = logger;
     private readonly IAuthService _authService = authService;
 
-    [HttpPost("validateAccessToken")]
+    [HttpPost]
+    [Route("validateAccessToken")]
     public async Task<IActionResult> ValidateAccessToken([FromBody] ValidateAccessTokenRequest request)
     {
         try
@@ -31,7 +32,8 @@ public class AuthController(ILogger<AuthController> logger, IAuthService authSer
         }
     }
 
-    [HttpPost("validateRefreshToken")]
+    [HttpPost]
+    [Route("validateRefreshToken")]
     public async Task<IActionResult> ValidateRefreshToken([FromBody] ValidateRefreshTokenRequest request)
     {
         try
@@ -49,7 +51,8 @@ public class AuthController(ILogger<AuthController> logger, IAuthService authSer
         }
     }
 
-    [HttpPost("refresh")]
+    [HttpPost]
+    [Route("refresh")]
     public async Task<IActionResult> Refresh([FromBody] RefreshRequest request)
     {
         try

@@ -1,5 +1,7 @@
 
-using UserService.Database.Models;
+
+
+using ApiGatewayService.Models.UserService.Profile;
 
 namespace UserService.Models.Profile.Responses;
 

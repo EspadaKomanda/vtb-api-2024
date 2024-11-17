@@ -4,6 +4,7 @@ using Confluent.Kafka;
 using TourService.KafkaException;
 using TourService.KafkaException.ConsumerException;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 namespace TourService.Kafka;
 
 public abstract class KafkaService(ILogger<KafkaService> logger, IProducer<string, string> producer, KafkaTopicManager kafkaTopicManager)
@@ -19,14 +20,15 @@ public abstract class KafkaService(ILogger<KafkaService> logger, IProducer<strin
         {
             var config = new ConsumerConfig
             {
-                GroupId = "test-consumer-group",
-                BootstrapServers = Environment.GetEnvironmentVariable("BOOTSTRAP_SERVERS"),
+                GroupId = "user-service-consumer-group"+Guid.NewGuid().ToString(),
+                BootstrapServers = Environment.GetEnvironmentVariable("KAFKA_BROKERS"),
                 AutoOffsetReset = AutoOffsetReset.Earliest
             };
             _consumer = new ConsumerBuilder<string, string>(config).Build();
             if(IsTopicAvailable(topicName))
             {
                 _consumer.Subscribe(topicName);
+                return;
             }
             throw new ConsumerTopicUnavailableException("Topic unavailable");
         }
@@ -45,13 +47,15 @@ public abstract class KafkaService(ILogger<KafkaService> logger, IProducer<strin
     {
         try
         {
-             bool IsTopicExists = _kafkaTopicManager.CheckTopicExists(topicName);
-                if (IsTopicExists)
-                {
-                    return IsTopicExists;
-                }
-                _logger.LogError("Unable to subscribe to topic");
-                throw new ConsumerTopicUnavailableException("Topic unavailable");
+            bool IsTopicExists = _kafkaTopicManager.CheckTopicExists(topicName);
+            if (IsTopicExists)
+            {
+                return IsTopicExists;
+            }
+            else
+            {
+                return _kafkaTopicManager.CreateTopic(topicName, 3, 1);
+            }
            
         }
         catch (Exception e)
@@ -116,6 +120,22 @@ public abstract class KafkaService(ILogger<KafkaService> logger, IProducer<strin
        
         
     }
+    protected bool IsValid(object value)
+    {
+        var validationResults = new List<ValidationResult>();
+        var validationContext = new ValidationContext(value, null, null);
+        
+        bool isValid = Validator.TryValidateObject(value, validationContext, validationResults, true);
 
+        if (!isValid)
+        {
+            foreach (var validationResult in validationResults)
+            {
+                _logger.LogError(validationResult.ErrorMessage);
+            }
+        }
+
+        return isValid;
+    }
     
 }

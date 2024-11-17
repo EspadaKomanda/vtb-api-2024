@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
-using TourService.Database;
 using Microsoft.EntityFrameworkCore;
+using EntertaimentService.Database;
 
 namespace UserService.Repositories;
 

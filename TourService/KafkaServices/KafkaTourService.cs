@@ -100,6 +100,7 @@ namespace TourService.KafkaServices
 
                                             _logger.LogInformation("Successfully sent message {Key}",consumeResult.Message.Key);
                                             _consumer.Commit(consumeResult);
+                                            break;
                                         }
                                     }
                                     _logger.LogError("Request validation error");
@@ -151,6 +152,8 @@ namespace TourService.KafkaServices
 
                                             _logger.LogInformation("Successfully sent message {Key}",consumeResult.Message.Key);
                                             _consumer.Commit(consumeResult);
+
+                                            break;
                                         }
                                     }
                                     _logger.LogError("Request validation error");
@@ -204,6 +207,8 @@ namespace TourService.KafkaServices
 
                                             _logger.LogInformation("Successfully sent message {Key}",consumeResult.Message.Key);
                                             _consumer.Commit(consumeResult);
+
+                                            break;
                                         }
                                     }
                                     _logger.LogError("Request validation error");
@@ -640,12 +645,11 @@ namespace TourService.KafkaServices
                 if (ex is MyKafkaException)
                 {
                     _logger.LogError(ex,"Consumer error");
-                    throw new ConsumerException("Consumer error ",ex);
+                  
                 }
                 else
                 {
                     _logger.LogError(ex,"Unhandled error");
-                    throw;
                 }
             }
         }

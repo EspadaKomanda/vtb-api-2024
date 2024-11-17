@@ -19,6 +19,7 @@ using System.Text.RegularExpressions;
 
         public override bool IsValid(object? value)
         {
+            /*
             if (value == null)
             {
                 return false;
@@ -43,7 +44,7 @@ using System.Text.RegularExpressions;
                     return false;
                 }
             }
-
+            */
             return true;
         }
 

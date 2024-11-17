@@ -4,6 +4,7 @@ namespace UserService.Models.Profile.Requests;
 
 public class UpdateProfileRequest
 {
+    public long UserId { get; set; }
     [ValidName]
     public string? Name { get; set; }
     [ValidName]

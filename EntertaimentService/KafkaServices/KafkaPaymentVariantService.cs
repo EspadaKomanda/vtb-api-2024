@@ -13,6 +13,8 @@ using EntertaimentService.Models.PaymentVariant.Requests;
 using EntertaimentService.Models.PaymentVariant.Responses;
 using EntertaimentService.Services.PaymentVariantService;
 using EntertaimentService.Database.Models;
+using TourService.Models.PaymentVariant.Responses;
+using TourService.Kafka;
 
 namespace EntertaimentService.KafkaServices
 {

@@ -8,7 +8,7 @@ namespace EntertaimentService.Models.Tour.Requests
 {
     public class UnlinkPaymentMethodRequest
     {
-         [Required]
+        [Required]
         public long EntertaimentId { get; set; }
         [Required]
         public long PaymentMethodId { get; set; }

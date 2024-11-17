@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using TourService.Attributes.Validation;
-
+using EntertaimentService.Attributes.Validation;
 namespace TourService.Models.Review.Requests
 {
     public class UpdateReviewRequest

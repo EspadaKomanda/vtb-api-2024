@@ -7,8 +7,11 @@ using EntertaimentService.Database.Models;
 using EntertaimentService.Exceptions.Database;
 using EntertaimentService.Models.Category;
 using EntertaimentService.Models.DTO;
+using EntertaimentService.Models.Entertaiment.Requests;
 using EntertaimentService.Models.PaymentMethod;
 using EntertaimentService.Models.Tour.Requests;
+using TourService.Models.Category;
+using TourService.Models.PaymentMethod;
 using UserService.Repositories;
 
 namespace EntertaimentService.Services.EntertaimentServices

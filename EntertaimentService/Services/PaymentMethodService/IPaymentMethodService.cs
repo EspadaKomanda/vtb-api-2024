@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using EntertaimentService.Database.Models;
 using EntertaimentService.Models.PaymentMethod;
 using EntertaimentService.Models.PaymentMethod.Requests;
+using TourService.Models.PaymentMethod;
 
 namespace EntertaimentService.Services.PaymentMethodService
 {

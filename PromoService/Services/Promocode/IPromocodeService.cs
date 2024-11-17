@@ -27,5 +27,5 @@ public interface IPromocodeService
     /// <summary>
     /// Получить активные промокоды.
     /// </summary>
-    GetActivePromocodesResponse GetActivePromocodes(GetActivePromocodesResponse request);
+    GetActivePromocodesResponse GetActivePromocodes(GetActivePromocodesRequest request);
 }

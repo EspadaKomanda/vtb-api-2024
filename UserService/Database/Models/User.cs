@@ -27,12 +27,6 @@ public class User
   public virtual Role Role { get; set; } = null!;
   public long RoleId { get; set; }
 
-  public virtual Meta? Meta { get; set; } = null!;
-  public long? MetaId { get; set; }
-
-  [Required]
-  public virtual PersonalData? PersonalData { get; set; } = null!;
-  public long? PersonalDataId { get; set; }
 
   [Required]
   public bool IsActivated { get; set; } = false;

@@ -1,0 +1,117 @@
+services:
+  auth-service:
+    build: AuthService
+    ports:
+      - 5095:5095
+    networks:
+      - external-network
+    environment:
+      - KAFKA_BROKERS=kafka:9092
+      - KAFKA_CLIENT_ID=auth-service
+      - DATA_CACHE_REQUEST_TOPIC=auth-access-data-cache-requests
+      - DATA_CACHE_RESPONSE_TOPIC=auth-access-data-cache-responses
+      - AUTH_REQUEST_TOPIC=auth-requests
+      - AUTH_RESPONSE_TOPIC=auth-responses
+  entertaiment-service:
+    build: EntertaimentService
+    ports:
+      - 5096:5096
+    networks:
+      - external-network
+    environment:
+      - KAFKA_BROKERS=kafka:9092
+      - KAFKA_CLIENT_ID=entertaiment-service
+      - S3_URL=http://s3:9000
+      - USER_RESPONSE_TOPIC=user-service-profile-responses
+      - USER_REQUEST_TOPIC=user-service-profile-requests
+      - WHISHLIST_REQUEST_TOPIC=entertaiment-wishlist-requests
+      - WHISHLIST_RESPONSE_TOPIC=entertaiment-wishlist-responses
+      - REVIEW_REQUEST_TOPIC=entertaiment-review-requests
+      - REVIEW_RESPONSE_TOPIC=entertaiment-review-responses
+      - PHOTO_REQUEST_TOPIC=entertaiment-photos-requests
+      - PHOTO_RESPONSE_TOPIC=entertaiment-photos-responses
+      - PAYMENTVARIANT_REQUEST_TOPIC=entertaiment-payment-variant-requests
+      - PAYMENTVARIANT_RESPONSE_TOPIC=entertaiment-payment-variant-responses
+      - PAYMENTMETHOD_REQUEST_TOPIC=entertaiment-payment-method-requests
+      - PAYMENTMETHOD_RESPONSE_Ttour-wishlist-responsesntertaiment-category-requests
+      - CATEGORY_RESPONSE_TOPIC=entertaiment-category-responses
+      - BENEFITRESPONSE_TOPIC=benefit-entertaiment-responses
+      - BENEFITREQUEST_TOPIC=benefit-entertaiment-requests
+  mail-service:
+    build: MailService
+    networks:
+      - external-network
+    ports:
+      - 5100:5100
+    environment:
+      - KAFKA_BROKERS=kafka:9092
+      - KAFKA_CLIENT_ID=mail-service
+      - MAIL_REQUEST_TOPIC=mail-requests
+      - MAIL_RESPONSE_TOPIC=mail-responses
+  promo-service:
+    build: PromoService
+    networks:
+      - external-network
+    ports:
+      - 5196:5196
+    environment:
+      - KAFKA_BROKERS=kafka:9092
+      - KAFKA_CLIENT_ID=promo-service
+      - PROMOCODE_RESPONSE_TOPIC=promo-application-responses
+      - PROMOCODE_REQUEST_TOPIC=promo-application-requests
+      - PROMO_APPLICATION_RESPONSE_TOPIC=promo-application-responses
+      - PROMO_APPLICATION_REQUEST_TOPIC=promo-application-requests
+      - USER_SERVICE_ACCOUNTS_RESPONSES=user-service-accounts-responses
+      - USER_SERVICE_ACCOUNTS_REQUESTS=user-service-accounts-requests
+  tour-service:
+    build: TourService
+    ports:
+      - 5170:5170
+    networks:
+      - external-network
+    environment:
+      - KAFKA_BROKERS=kafka:9092
+      - KAFKA_CLIENT_ID=tour-service
+      - S3_URL=http://s3:9000
+      - USER_RESPONSE_TOPIC=user-service-profile-responses
+      - USER_REQUEST_TOPIC=user-service-profile-requests
+      - BENEFITRESPONSE_TOPIC=benefit-entertaiment-responses
+      - BENEFITREQUEST_TOPIC=benefit-tour-requests
+      - CATEGORY_REQUEST_TOPIC=tour-category-requests
+      - CATEGORY_RESPONSE_TOPIC=tour-category-responses
+      - PAYMENTMETHOD_REQUEST_TOPIC=tour-payment-methods-requests
+      - PAYMENTMETHOD_RESPONSE_TOPIC=tour-payment-methods-responses
+      - PAYMENTVARIANT_REQUEST_TOPIC=tour-payment-variants-requests
+      - PAYMENTVARIANT_RESPONSE_TOPIC=tour-payment-variants-responses
+      - PHOTO_REQUEST_TOPIC=tour-photos-requests
+      - PHOTO_RESPONSE_TOPIC=tour-photos-responses
+      - REVIEW_REQUEST_TOPIC=tour-reviews-requests
+      - REVIEW_RESPONSE_TOPIC=tour-reviews-responses
+      - TAG_REQUEST_TOPIC=tour-tags-requests
+      - TAG_RESPONSE_TOPIC=tour-tags-responses
+      - TOUR_REQUEST_TOPIC=tour-requests
+      - TOUR_RESPONSE_TOPIC=tour-responses
+      - WHISHLIST_REQUEST_TOPIC=tour-wishlist-requests
+      - WHISHLIST_RESPONSE_TOPIC=tour-wishlist-responses
+  user-service:
+    build: UserService
+    ports:
+      - 5095:5095
+    networks:
+      - external-network
+    environment:
+      - KAFKA_BROKERS=kafka:9092
+      - KAFKA_CLIENT_ID=user-service
+      - S3_URL=http://s3:9000
+      - MAIL_RESPONSE_TOPIC=mail-responses
+      - DATA_CACHE_REQUEST_TOPIC=auth-access-data-cache-requests
+      - MAIL_REQUEST_TOPIC=mail-requests
+      - DATA_CACHE_RESPONSE_TOPIC=auth-access-data-cache-responses
+      - PROFILE_RESPONSE_TOPIC=user-service-profile-responses
+      - PROFILE_REQUEST_TOPIC=user-service-profile-requests
+      - ACCOUNT_RESPONSE_TOPIC=user-service-accounts-responses
+      - ACCOUNT_REQUEST_TOPIC=user-service-accounts-requests
+networks:
+  external-network:
+    external: true
+    name: npm_default

@@ -4,14 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Confluent.Kafka;
+using EntertaimentService.Kafka;
+using EntertaimentService.Kafka.Utils;
+using EntertaimentService.KafkaException;
+using EntertaimentService.KafkaException.ConsumerException;
+using EntertaimentService.Models.Photos.Requests;
+using EntertaimentService.Models.Photos.Responses;
+using EntertaimentService.Services.PhotoService;
 using Newtonsoft.Json;
 using TourService.Kafka;
-using TourService.Kafka.Utils;
-using TourService.KafkaException;
-using TourService.KafkaException.ConsumerException;
-using TourService.Models.Photos.Requests;
 using TourService.Models.Photos.Responses;
-using TourService.Services.PhotoService;
 
 namespace TourService.KafkaServices
 {

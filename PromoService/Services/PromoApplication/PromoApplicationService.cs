@@ -16,15 +16,15 @@ public class PromoApplicationService(IUnitOfWork unitOfWork, IUsersService users
     private readonly IUsersService _usersService = usersService;
     private readonly ILogger<PromocodeService> _logger = logger;
 
-    public GetMyPromoApplicationsResponse GetMyPromoApplications(long userId, GetMyPromoApplicationsRequest request)
+    public GetMyPromoApplicationsResponse GetMyPromoApplications(GetMyPromoApplicationsRequest request)
     {
         List<UserPromo> applications;
         List<PromoAppliedProduct> appliedProducts;
         List<Promo> promos;
         try
         {
-            _logger.LogDebug("Finding applications for user with id {UserId}", userId);
-            applications = [.. _uow.UserPromoRepo.Find(p => p.UserId == userId)];
+            _logger.LogDebug("Finding applications for user with id {UserId}", request.UserId);
+            applications = [.. _uow.UserPromoRepo.Find(p => p.UserId == request.UserId)];
             appliedProducts = [.. _uow.PromoAppliedProductRepo.Find(p => applications.Any(a => a.Id == p.UserPromoId))];
             promos = [.. _uow.PromoRepo.Find(p => applications.Any(a => a.PromoId == p.Id))];
 
@@ -44,19 +44,19 @@ public class PromoApplicationService(IUnitOfWork unitOfWork, IUsersService users
         }
         catch
         {
-            _logger.LogError("Failed to find applications for user with id {UserId}", userId);
+            _logger.LogError("Failed to find applications for user with id {UserId}", request.UserId);
             throw;
         }
 
 
     }
 
-    public async Task<RegisterPromoUseResponse> RegisterPromoUse(long userId, RegisterPromoUseRequest request)
+    public async Task<RegisterPromoUseResponse> RegisterPromoUse(RegisterPromoUseRequest request)
     {
         using var transaction = _uow.BeginTransaction();
         try
         {  
-            if ((await ValidatePromocodeApplication(userId, (ValidatePromocodeApplicationRequest)request)).IsSuccess)
+            if ((await ValidatePromocodeApplication( (ValidatePromocodeApplicationRequest)request)).IsSuccess)
             {
                 Promo promo = await _uow.PromoRepo.FindOneAsync(p => p.Code == request.PromoCode);
 
@@ -65,7 +65,7 @@ public class PromoApplicationService(IUnitOfWork unitOfWork, IUsersService users
                 UserPromo userPromo;
                 try 
                 {
-                    userPromo = await _uow.UserPromoRepo.FindOneAsync(p => p.UserId == userId && p.PromoId == promo.Id);
+                    userPromo = await _uow.UserPromoRepo.FindOneAsync(p => p.UserId == request.UserId && p.PromoId == promo.Id);
                     _logger.LogDebug("Application already exists in database, acquired it");
                 }
                 catch
@@ -75,7 +75,7 @@ public class PromoApplicationService(IUnitOfWork unitOfWork, IUsersService users
                     {
                         userPromo = new()
                         {
-                            UserId = userId,
+                            UserId = request.UserId,
                             PromoId = promo.Id
                         };
                         await _uow.UserPromoRepo.AddAsync(userPromo);
@@ -130,19 +130,19 @@ public class PromoApplicationService(IUnitOfWork unitOfWork, IUsersService users
         }
     }
 
-    public async Task<ValidatePromocodeApplicationResponse> ValidatePromocodeApplication(long userId, ValidatePromocodeApplicationRequest request)
+    public async Task<ValidatePromocodeApplicationResponse> ValidatePromocodeApplication(ValidatePromocodeApplicationRequest request)
     {
         User user;
         Promo promo;
 
         try
         {
-            _logger.LogDebug("Finding user with id {UserId}", userId);
-            user = await _usersService.GetUser(userId);
+            _logger.LogDebug("Finding user with id {UserId}", request.UserId);
+            user = await _usersService.GetUser(request.UserId);
         }
         catch
         {
-            _logger.LogError("Failed to find user with id {UserId}", userId);
+            _logger.LogError("Failed to find user with id {UserId}", request.UserId);
             throw;
         }
 
@@ -176,7 +176,7 @@ public class PromoApplicationService(IUnitOfWork unitOfWork, IUsersService users
 
         // Max per user check
         _logger.LogDebug("Checking max per user");
-        var userPromos = _uow.UserPromoRepo.Find(p => p.UserId == userId);
+        var userPromos = _uow.UserPromoRepo.Find(p => p.UserId == request.UserId);
         if (promo.MaxPerUser != null && userPromos.Count() >= promo.MaxPerUser)
         {
             _logger.LogDebug("Limit on uses of this promocode has been reached by the user");
@@ -198,7 +198,7 @@ public class PromoApplicationService(IUnitOfWork unitOfWork, IUsersService users
             _logger.LogDebug("Promocode is not yet active or already expired");
             throw new PromocodeInapplicapleException("Promocode is not yet active or already expired");
         }
-        _logger.LogDebug("Promocode {PromoId} for user {UserId} passed all checks", promo.Id, userId);
+        _logger.LogDebug("Promocode {PromoId} for user {UserId} passed all checks", promo.Id, request.UserId);
         return new()
         {
             IsSuccess = true

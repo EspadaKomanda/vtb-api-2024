@@ -14,6 +14,9 @@ using EntertaimentService.Models.Review.Requests;
 using EntertaimentService.Models.Review.Responses;
 using EntertaimentService.Services.ReviewService;
 using EntertaimentService.TourReview.Requests;
+using TourService.Models.Review.Responses;
+using TourService.Models.Review.Requests;
+using TourService.Kafka;
 
 namespace EntertaimentService.KafkaServices
 {

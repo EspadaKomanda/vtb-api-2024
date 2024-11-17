@@ -15,9 +15,12 @@ using EntertaimentService.Models.Benefits;
 using EntertaimentService.Models.DTO;
 using EntertaimentService.Models.Review.Requests;
 using EntertaimentService.Models.User.Requests;
-using EntertaimentService.Models.User.Responses;
 using EntertaimentService.TourReview.Requests;
 using UserService.Repositories;
+using TourService.Models.User.Responses;
+using TourService.Models.DTO;
+using TourService.Models.Review.Requests;
+using TourService.Kafka;
 
 namespace EntertaimentService.Services.ReviewService
 {
@@ -267,11 +270,11 @@ namespace EntertaimentService.Services.ReviewService
                     Value = JsonConvert.SerializeObject(request),
                     Headers = new Headers()
                     {
-                        new Header("method",Encoding.UTF8.GetBytes("GetUsernameAvatar")),
+                        new Header("method",Encoding.UTF8.GetBytes("getUsernameAvatar")),
                         new Header("sender",Encoding.UTF8.GetBytes("entertaimentService"))
                     }
                 };
-                if(await _kafkaRequestService.Produce("userServiceAccountsRequests",message,"userServiceAccountsResponses"))
+                if(await _kafkaRequestService.Produce(Environment.GetEnvironmentVariable("USER_REQUEST_TOPIC"),message,Environment.GetEnvironmentVariable("USER_RESPONSE_TOPIC")))
                 {
                     _logger.LogDebug("Message sent :{messageId}",messageId.ToString());
                     while (!_kafkaRequestService.IsMessageRecieved(messageId.ToString()))
@@ -279,7 +282,7 @@ namespace EntertaimentService.Services.ReviewService
                         Thread.Sleep(200);
                     }
                     _logger.LogDebug("Message recieved :{messageId}",messageId.ToString());
-                    return _kafkaRequestService.GetMessage<GetUsernameAvatarResponse>(messageId.ToString(),"userServiceAccountsResponses");
+                    return _kafkaRequestService.GetMessage<GetUsernameAvatarResponse>(messageId.ToString(),Environment.GetEnvironmentVariable("USER_RESPONSE_TOPIC"));
                 }
                 throw new ConsumerException("Message not recieved");
             }

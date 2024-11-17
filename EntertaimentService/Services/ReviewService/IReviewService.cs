@@ -6,6 +6,7 @@ using EntertaimentService.Database.Models;
 using EntertaimentService.Models.DTO;
 using EntertaimentService.Models.Review.Requests;
 using EntertaimentService.TourReview.Requests;
+using TourService.Models.Review.Requests;
 
 namespace EntertaimentService.Services.ReviewService
 {

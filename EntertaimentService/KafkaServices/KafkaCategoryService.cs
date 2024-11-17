@@ -10,8 +10,10 @@ using EntertaimentService.Kafka.Utils;
 using EntertaimentService.KafkaException;
 using EntertaimentService.KafkaException.ConsumerException;
 using EntertaimentService.Models.Category.Requests;
-using EntertaimentService.Models.Category.Responses;
 using EntertaimentService.Services.CategoryService;
+using TourService.Models.Category.Responses;
+using TourService.Models.Category.Requests;
+using TourService.Kafka;
 
 namespace EntertaimentService.KafkaServices
 {

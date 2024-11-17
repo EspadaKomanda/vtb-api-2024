@@ -31,7 +31,6 @@ namespace TourService.Utils
                     .Enrich.WithExceptionDetails()
                     .WriteTo.Debug()
                     .WriteTo.Console()
-                    .WriteTo.OpenSearch(_configureOpenSearchSink(configuration,environment))
                     .Enrich.WithProperty("Environment",environment)
                     .ReadFrom.Configuration(configuration)
                     .CreateLogger();

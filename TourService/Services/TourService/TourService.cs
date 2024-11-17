@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using TourService.Database.Models;
 using TourService.Exceptions.Database;
 using TourService.Models.Category;
 using TourService.Models.DTO;
 using TourService.Models.PaymentMethod;
+using TourService.Models.PaymentVariant;
 using TourService.Models.Tour.Requests;
 using UserService.Repositories;
 
@@ -41,12 +43,50 @@ namespace TourService.Services.TourService
             try
             {
                 Tour currentTour = await _unitOfWork.Tours.FindOneAsync(x=>x.Id == getTour.Id);
-                TourDto tourDto = _mapper.Map<TourDto>(currentTour);
-                tourDto.Photos = _mapper.ProjectTo<PhotoDto>(_unitOfWork.Photos.GetAll().Where(x=>x.TourId == getTour.Id)).ToList();
-                tourDto.Reviews = _mapper.ProjectTo<ReviewDto>(_unitOfWork.Reviews.GetAll().Where(x=>x.TourId == getTour.Id)).ToList();
-                tourDto.Categories = _mapper.ProjectTo<CategoryDto>(_unitOfWork.TourCategories.GetAll().Where(x => x.TourId == getTour.Id).Select(x => x.Category)).ToList();
-                tourDto.Tags = _mapper.ProjectTo<TagDto>(_unitOfWork.TourTags.GetAll().Where(x => x.TourId == getTour.Id).Select(x => x.Tag)).ToList();
-                tourDto.PaymentMethods = _mapper.ProjectTo<PaymentMethodDto>(_unitOfWork.TourPayments.GetAll().Where(x => x.TourId == getTour.Id).Select(x => x.PaymentMethod)).ToList();
+                TourDto tourDto = new TourDto(){
+                    Id = currentTour.Id,
+                    Name = currentTour.Name,
+                    Description = currentTour.Description,
+                    Price = currentTour.Price,
+                    Address = currentTour.Address,
+                    Coordinates = currentTour.Coordinates,
+                    IsActive = currentTour.IsActive,
+                    Comment = currentTour.Comment,
+                    SettlementDistance = currentTour.SettlementDistance,
+
+                };
+                tourDto.Photos = _unitOfWork.Photos.GetAll().Where(x=>x.TourId == getTour.Id)
+                .Select(x => new PhotoDto
+                {
+                    FileLink = x.FileLink,
+                    PhotoId = x.Id
+                    
+                }).ToList();
+                tourDto.Reviews = _unitOfWork.Reviews.GetAll().Where(x=>x.TourId == getTour.Id).Select(x=> new ReviewDto()
+                {
+                    Id = x.Id,
+                    Date = x.Date,
+                    Text = x.Text,
+                    Rating = x.Rating
+                    
+                }
+                ).ToList();
+                tourDto.Categories = _unitOfWork.TourCategories.GetAll().Where(x => x.TourId == getTour.Id).Select(x => x.Category).Select(x => new CategoryDto() 
+                { 
+                    CategoryId = x.Id, 
+                    CategoryName = x.Name
+
+                }).ToList();
+                tourDto.Tags = _unitOfWork.TourTags.GetAll().Where(x => x.TourId == getTour.Id).Select(x => x.Tag).Select(x => new TagDto() 
+                { 
+                    Id = x.Id,
+                    Name = x.Name 
+                }).ToList();
+                tourDto.PaymentMethods = _unitOfWork.TourPayments.GetAll().Where(x => x.TourId == getTour.Id).Select(x => x.PaymentMethod).Select(x => new PaymentMethodDto()
+                {
+                    PaymentMethodId = x.Id,
+                    PaymentMethodName = x.Name
+                }).ToList();
                 return tourDto;
             }
             catch(Exception ex)
@@ -59,7 +99,8 @@ namespace TourService.Services.TourService
         {
             try
             {
-                IQueryable<Tour> tours;
+                List<Tour> tours;
+                /*
                 if( getTours.Categories!=null && getTours.TourTags!=null)
                 {
                     tours = _unitOfWork.Tours.GetAll()
@@ -98,25 +139,60 @@ namespace TourService.Services.TourService
                     .Skip((getTours.Page - 1) * 10)
                     .Take(10);
                 }
-                else
-                {
-                    tours = _unitOfWork.Tours.GetAll()
-                    .Where(x=>x.Rating>= getTours.MinimalRating && x.Rating<=getTours.MaximalRating)
-                    .Where(x=>x.Price>=getTours.MinimalPrice && x.Price<=getTours.MaximalPrice)
-                    .Skip((getTours.Page - 1) * 10)
-                    .Take(10);
-                }
-                var tourDtos = _mapper.ProjectTo<TourDto>(tours);
+                */
+                
+                tours = _unitOfWork.Tours.GetAll()
+                .Skip((getTours.Page - 1) * 10)
+                .Take(10).ToList();
+                
+                var tourDtos = tours.Select(x => new TourDto(){
+                    Id = x.Id,
+                    Name = x.Name,
+                    Description = x.Description,
+                    Price = x.Price,
+                    Address = x.Address,
+                    Coordinates = x.Coordinates,
+                    IsActive = x.IsActive,
+                    Comment = x.Comment,
+                    SettlementDistance = x.SettlementDistance,
+                });
                 foreach(var tourDto in tourDtos)
                 {
-                    tourDto.Photos = _mapper.ProjectTo<PhotoDto>(_unitOfWork.Photos.GetAll().Where(x=>x.TourId == tourDto.Id)).ToList();
-                    tourDto.Reviews = _mapper.ProjectTo<ReviewDto>(_unitOfWork.Reviews.GetAll().Where(x=>x.TourId == tourDto.Id)).ToList();
-                    tourDto.Categories = _mapper.ProjectTo<CategoryDto>(_unitOfWork.TourCategories.GetAll().Where(x => x.TourId == tourDto.Id).Select(x => x.Category)).ToList();
-                    tourDto.Tags = _mapper.ProjectTo<TagDto>(_unitOfWork.TourTags.GetAll().Where(x => x.TourId == tourDto.Id).Select(x => x.Tag)).ToList();
-                    tourDto.PaymentMethods = _mapper.ProjectTo<PaymentMethodDto>(_unitOfWork.TourPayments.GetAll().Where(x => x.TourId == tourDto.Id).Select(x => x.PaymentMethod)).ToList();
+                    tourDto.Photos = _unitOfWork.Photos.GetAll().Where(x=>x.TourId == tourDto.Id)
+                    .Select(x => new PhotoDto
+                    {
+                        FileLink = x.FileLink,
+                        PhotoId = x.Id
+                        
+                    }).ToList();
+                    tourDto.Reviews = _unitOfWork.Reviews.GetAll().Where(x=>x.TourId == tourDto.Id).Select(x=> new ReviewDto()
+                    {
+                        Id = x.Id,
+                        Date = x.Date,
+                        Text = x.Text,
+                        Rating = x.Rating
+                        
+                    }
+                    ).ToList();
+                    tourDto.Categories = _unitOfWork.TourCategories.GetAll().Where(x => x.TourId == tourDto.Id).Select(x => x.Category).Select(x => new CategoryDto() 
+                    { 
+                        CategoryId = x.Id, 
+                        CategoryName = x.Name
+
+                    }).ToList();
+                    tourDto.Tags = _unitOfWork.TourTags.GetAll().Where(x => x.TourId == tourDto.Id).Select(x => x.Tag).Select(x => new TagDto() 
+                    { 
+                        Id = x.Id,
+                        Name = x.Name 
+                    }).ToList();
+                    tourDto.PaymentMethods = _unitOfWork.TourPayments.GetAll().Where(x => x.TourId == tourDto.Id).Select(x => x.PaymentMethod).Select(x => new PaymentMethodDto()
+                    {
+                        PaymentMethodId = x.Id,
+                        PaymentMethodName = x.Name
+                    }).ToList();
                 }
                 _logger.LogDebug("Successefully got tours");
-                return tourDtos;
+                return tourDtos.AsQueryable();
             }
             catch(Exception ex)
             {

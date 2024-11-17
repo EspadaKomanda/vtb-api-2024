@@ -11,16 +11,19 @@ using EntertaimentService.Kafka.Utils;
 using EntertaimentService.KafkaException;
 using EntertaimentService.KafkaException.ConsumerException;
 using EntertaimentService.Models.Entertaiment.Requests;
-using EntertaimentService.Models.Entertaiment.Responses;
 using EntertaimentService.Services.PhotoService;
 using EntertaimentService.Services.EntertaimentServices;
+using EntertaimentService.Models.Tour.Responses;
+using EntertaimentService.Models.Tour.Requests;
+using Entertainments.Models.Tour.Responses;
+using TourService.Kafka;
 
 namespace EntertaimentService.KafkaServices
 {
     public class KafkaEntertaimentService: KafkaService 
     {
-        private readonly string _tourRequestTopic = Environment.GetEnvironmentVariable("TOUR_REQUEST_TOPIC") ?? "tourRequestTopic";
-        private readonly string _tourResponseTopic = Environment.GetEnvironmentVariable("TOUR_RESPONSE_TOPIC") ?? "tourResponseTopic"; 
+        private readonly string _tourRequestTopic = Environment.GetEnvironmentVariable("ENTERTAIMENT_REQUEST_TOPIC") ?? "entertaimentRequestTopic";
+        private readonly string _tourResponseTopic = Environment.GetEnvironmentVariable("ENTERTAIMENT_RESPONSE_TOPIC") ?? "entertaimentResponseTopic"; 
         private readonly IEntertaimentService _tourService;
         private readonly IPhotoService _photoService;
         public KafkaEntertaimentService(ILogger<KafkaService> logger, IProducer<string, string> producer, KafkaTopicManager kafkaTopicManager, IEntertaimentService tourService, IPhotoService photoService) : base(logger, producer, kafkaTopicManager)

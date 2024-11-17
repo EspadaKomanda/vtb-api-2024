@@ -9,6 +9,7 @@ using EntertaimentService.Models.DTO;
 using EntertaimentService.Models.Wishlist.Requests;
 using UserService.Repositories;
 using EntertaimentService.Models.Wishlist.Responses;
+using EntertaimentService.Services.WishlistService;
 
 namespace TourService.Services.WishlistService
 {

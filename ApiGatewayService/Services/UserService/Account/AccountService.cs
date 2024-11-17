@@ -9,6 +9,8 @@ using ApiGatewayService.Models.UserService.Account.Responses;
 using Confluent.Kafka;
 using Newtonsoft.Json;
 using TourService.Kafka;
+using UserService.Models.Account.Requests;
+using UserService.Models.Account.Responses;
 
 namespace ApiGatewayService.Services.UserService.Account
 {
@@ -16,8 +18,10 @@ namespace ApiGatewayService.Services.UserService.Account
     {
         private readonly ILogger<AccountService> _logger = logger;
         private readonly KafkaRequestService _kafkaRequestService = kafkaRequestService;
-
-        public async Task<AccountAccessDataResponse> AccountAccessData(AccountAccessDataRequest request)
+        private readonly string requestTopic = Environment.GetEnvironmentVariable("USER_SERVICE_ACCOUNTS_REQUESTS");
+        private readonly string responseTopic = Environment.GetEnvironmentVariable("USER_SERVICE_ACCOUNTS_RESPONSES");
+        private readonly string serviceName = "apiGatewayService";
+        private async Task<Q> SendRequest<T,Q>(string methodName, T request)
         {
             try
             {
@@ -28,11 +32,11 @@ namespace ApiGatewayService.Services.UserService.Account
                     Value = JsonConvert.SerializeObject(request),
                     Headers = new Headers()
                     {
-                        new Header("method",Encoding.UTF8.GetBytes("AccountAccessData")),
-                        new Header("sender",Encoding.UTF8.GetBytes("ApiGatewayService"))
+                        new Header("method",Encoding.UTF8.GetBytes(methodName)),
+                        new Header("sender",Encoding.UTF8.GetBytes(serviceName))
                     }
                 };
-                if(await _kafkaRequestService.Produce("userServiceAccountsRequests",message,"userServiceAccountsResponses"))
+                if(await _kafkaRequestService.Produce(requestTopic,message,responseTopic))
                 {
                     _logger.LogDebug("Message sent :{messageId}",messageId.ToString());
                     while (!_kafkaRequestService.IsMessageRecieved(messageId.ToString()))
@@ -40,12 +44,24 @@ namespace ApiGatewayService.Services.UserService.Account
                         Thread.Sleep(200);
                     }
                     _logger.LogDebug("Message recieved :{messageId}",messageId.ToString());
-                    return _kafkaRequestService.GetMessage<AccountAccessDataResponse>(messageId.ToString(),"userServiceAccountsResponses");
+                    return _kafkaRequestService.GetMessage<Q>(messageId.ToString(),responseTopic);
                 }
-                throw new AccountAccessDataException("Message not recieved");
+                throw new Exception("Message not recieved");
             }
             catch (Exception)
             {
+                throw;
+            }
+        }
+        public async Task<AccountAccessDataResponse> AccountAccessData(AccountAccessDataRequest request)
+        {
+            try
+            {
+                return await SendRequest<AccountAccessDataRequest,AccountAccessDataResponse>("accountAccessData",request);
+            }
+            catch(Exception)
+            {
+                _logger.LogError("Error in AccountAccessData");
                 throw;
             }
         }
@@ -54,28 +70,7 @@ namespace ApiGatewayService.Services.UserService.Account
         {
             try
             {
-                Guid messageId = Guid.NewGuid();
-                Message<string,string> message = new Message<string, string>()
-                {
-                    Key = messageId.ToString(),
-                    Value = JsonConvert.SerializeObject(request),
-                    Headers = new Headers()
-                    {
-                        new Header("method",Encoding.UTF8.GetBytes("BeginPasswordReset")),
-                        new Header("sender",Encoding.UTF8.GetBytes("ApiGatewayService"))
-                    }
-                };
-                if(await _kafkaRequestService.Produce("userServiceAccountsRequests",message,"userServiceAccountsResponses"))
-                {
-                    _logger.LogDebug("Message sent :{messageId}",messageId.ToString());
-                    while (!_kafkaRequestService.IsMessageRecieved(messageId.ToString()))
-                    {
-                        Thread.Sleep(200);
-                    }
-                    _logger.LogDebug("Message recieved :{messageId}",messageId.ToString());
-                    return _kafkaRequestService.GetMessage<BeginPasswordResetResponse>(messageId.ToString(),"userServiceAccountsResponses");
-                }
-                throw new BeginPasswordResetException("Message not recieved");
+                return await SendRequest<BeginPasswordResetRequest,BeginPasswordResetResponse>("beginPasswordReset",request);
             }
             catch(Exception)
             {
@@ -87,28 +82,7 @@ namespace ApiGatewayService.Services.UserService.Account
         {
             try
             {
-                Guid messageId = Guid.NewGuid();
-                Message<string,string> message = new Message<string, string>()
-                {
-                    Key = messageId.ToString(),
-                    Value = JsonConvert.SerializeObject(request),
-                    Headers = new Headers()
-                    {
-                        new Header("method",Encoding.UTF8.GetBytes("BeginRegistration")),
-                        new Header("sender",Encoding.UTF8.GetBytes("ApiGatewayService"))
-                    }
-                };
-                if(await _kafkaRequestService.Produce("userServiceAccountsRequests",message,"userServiceAccountsResponses"))
-                {
-                    _logger.LogDebug("Message sent :{messageId}",messageId.ToString());
-                    while (!_kafkaRequestService.IsMessageRecieved(messageId.ToString()))
-                    {
-                        Thread.Sleep(200);
-                    }
-                    _logger.LogDebug("Message recieved :{messageId}",messageId.ToString());
-                    return _kafkaRequestService.GetMessage<BeginRegistrationResponse>(messageId.ToString(),"userServiceAccountsResponses");
-                }
-                throw new BeginRegistrationException("Message not recieved");
+                return await SendRequest<BeginRegistrationRequest,BeginRegistrationResponse>("beginRegistration",request);
             }
             catch(Exception)
             {
@@ -120,28 +94,7 @@ namespace ApiGatewayService.Services.UserService.Account
         {
             try
             {
-                Guid messageId = Guid.NewGuid();
-                Message<string,string> message = new Message<string, string>()
-                {
-                    Key = messageId.ToString(),
-                    Value = JsonConvert.SerializeObject(request),
-                    Headers = new Headers()
-                    {
-                        new Header("method",Encoding.UTF8.GetBytes("ChangePassword")),
-                        new Header("sender",Encoding.UTF8.GetBytes("ApiGatewayService"))
-                    }
-                };
-                if(await _kafkaRequestService.Produce("userServiceAccountsRequests",message,"userServiceAccountsResponses"))
-                {
-                    _logger.LogDebug("Message sent :{messageId}",messageId.ToString());
-                    while (!_kafkaRequestService.IsMessageRecieved(messageId.ToString()))
-                    {
-                        Thread.Sleep(200);
-                    }
-                    _logger.LogDebug("Message recieved :{messageId}",messageId.ToString());
-                    return _kafkaRequestService.GetMessage<ChangePasswordResponse>(messageId.ToString(),"userServiceAccountsResponses");
-                }
-                throw new ChangePasswordException("Message not recieved");
+                return await SendRequest<ChangePasswordRequest,ChangePasswordResponse>("changePassword",request);
             }
             catch(Exception)
             {
@@ -153,28 +106,7 @@ namespace ApiGatewayService.Services.UserService.Account
         {
             try
             {
-                Guid messageId = Guid.NewGuid();
-                Message<string,string> message = new Message<string, string>()
-                {
-                    Key = messageId.ToString(),
-                    Value = JsonConvert.SerializeObject(request),
-                    Headers = new Headers()
-                    {
-                        new Header("method",Encoding.UTF8.GetBytes("CompletePasswordReset")),
-                        new Header("sender",Encoding.UTF8.GetBytes("ApiGatewayService"))
-                    }
-                };
-                if(await _kafkaRequestService.Produce("userServiceAccountsRequests",message,"userServiceAccountsResponses"))
-                {
-                    _logger.LogDebug("Message sent :{messageId}",messageId.ToString());
-                    while (!_kafkaRequestService.IsMessageRecieved(messageId.ToString()))
-                    {
-                        Thread.Sleep(200);
-                    }
-                    _logger.LogDebug("Message recieved :{messageId}",messageId.ToString());
-                    return _kafkaRequestService.GetMessage<CompletePasswordResetResponse>(messageId.ToString(),"userServiceAccountsResponses");
-                }
-                throw new CompletePasswordResetException("Message not recieved");
+                return await SendRequest<CompletePasswordResetRequest,CompletePasswordResetResponse>("completePasswordReset",request);
             }            
             catch(Exception)
             {
@@ -186,28 +118,7 @@ namespace ApiGatewayService.Services.UserService.Account
         {
             try
             {
-                Guid messageId = Guid.NewGuid();
-                Message<string,string> message = new Message<string, string>()
-                {
-                    Key = messageId.ToString(),
-                    Value = JsonConvert.SerializeObject(request),
-                    Headers = new Headers()
-                    {
-                        new Header("method",Encoding.UTF8.GetBytes("CompleteRegistration")),
-                        new Header("sender",Encoding.UTF8.GetBytes("ApiGatewayService"))
-                    }
-                };
-                if(await _kafkaRequestService.Produce("userServiceAccountsRequests",message,"userServiceAccountsResponses"))
-                {
-                    _logger.LogDebug("Message sent :{messageId}",messageId.ToString());
-                    while (!_kafkaRequestService.IsMessageRecieved(messageId.ToString()))
-                    {
-                        Thread.Sleep(200);
-                    }
-                    _logger.LogDebug("Message recieved :{messageId}",messageId.ToString());
-                    return _kafkaRequestService.GetMessage<CompleteRegistrationResponse>(messageId.ToString(),"userServiceAccountsResponses");
-                }
-                throw new CompleteRegistrationException("Message not recieved");
+                return await SendRequest<CompleteRegistrationRequest,CompleteRegistrationResponse>("completeRegistration",request);
             }
             catch(Exception)
             {
@@ -215,38 +126,24 @@ namespace ApiGatewayService.Services.UserService.Account
             }
         }
 
-        public Task<GetUserResponse> GetUser(GetUserRequest request)
+        public async Task<GetUserResponse> GetUser(GetUserRequest request)
         {
-            // TODO: implement method
-            throw new NotImplementedException();
+            try
+            {
+                return await SendRequest<GetUserRequest,GetUserResponse>("getUser",request);
+            }
+            catch(Exception)
+            {
+                throw;
+            }
+            
         }
 
         public async Task<ResendPasswordResetCodeResponse> ResendPasswordResetCode(ResendPasswordResetCodeRequest request)
         {
             try
             {
-                Guid messageId = Guid.NewGuid();
-                Message<string,string> message = new Message<string, string>()
-                {
-                    Key = messageId.ToString(),
-                    Value = JsonConvert.SerializeObject(request),
-                    Headers = new Headers()
-                    {
-                        new Header("method",Encoding.UTF8.GetBytes("ResendPasswordResetCode")),
-                        new Header("sender",Encoding.UTF8.GetBytes("ApiGatewayService"))
-                    }
-                };
-                if(await _kafkaRequestService.Produce("userServiceAccountsRequests",message,"userServiceAccountsResponses"))
-                {
-                    _logger.LogDebug("Message sent :{messageId}",messageId.ToString());
-                    while (!_kafkaRequestService.IsMessageRecieved(messageId.ToString()))
-                    {
-                        Thread.Sleep(200);
-                    }
-                    _logger.LogDebug("Message recieved :{messageId}",messageId.ToString());
-                    return _kafkaRequestService.GetMessage<ResendPasswordResetCodeResponse>(messageId.ToString(),"userServiceAccountsResponses");
-                }
-                throw new ResendPasswordResetCodeException("Message not recieved");
+                return await SendRequest<ResendPasswordResetCodeRequest,ResendPasswordResetCodeResponse>("resendPasswordResetCode",request);
             }
             catch(Exception)
             {
@@ -258,28 +155,7 @@ namespace ApiGatewayService.Services.UserService.Account
         {
             try
             {
-                Guid messageId = Guid.NewGuid();
-                Message<string,string> message = new Message<string, string>()
-                {
-                    Key = messageId.ToString(),
-                    Value = JsonConvert.SerializeObject(request),
-                    Headers = new Headers()
-                    {
-                        new Header("method",Encoding.UTF8.GetBytes("ResendRegistrationCode")),
-                        new Header("sender",Encoding.UTF8.GetBytes("ApiGatewayService"))
-                    }
-                };
-                if(await _kafkaRequestService.Produce("userServiceAccountsRequests",message,"userServiceAccountsResponses"))
-                {
-                    _logger.LogDebug("Message sent :{messageId}",messageId.ToString());
-                    while (!_kafkaRequestService.IsMessageRecieved(messageId.ToString()))
-                    {
-                        Thread.Sleep(200);
-                    }
-                    _logger.LogDebug("Message recieved :{messageId}",messageId.ToString());
-                    return _kafkaRequestService.GetMessage<ResendRegistrationCodeResponse>(messageId.ToString(),"userServiceAccountsResponses");
-                }
-                throw new ResendRegistrationCodeException("Message not recieved");
+                return await SendRequest<ResendRegistrationCodeRequest,ResendRegistrationCodeResponse>("resendRegistrationCode",request);
             }
             catch(Exception)
             {
@@ -291,28 +167,7 @@ namespace ApiGatewayService.Services.UserService.Account
         {
             try
             {
-                Guid messageId = Guid.NewGuid();
-                Message<string,string> message = new Message<string, string>()
-                {
-                    Key = messageId.ToString(),
-                    Value = JsonConvert.SerializeObject(request),
-                    Headers = new Headers()
-                    {
-                        new Header("method",Encoding.UTF8.GetBytes("VerifyPasswordResetCode")),
-                        new Header("sender",Encoding.UTF8.GetBytes("ApiGatewayService"))
-                    }
-                };
-                if(await _kafkaRequestService.Produce("userServiceAccountsRequests",message,"userServiceAccountsResponses"))
-                {
-                    _logger.LogDebug("Message sent :{messageId}",messageId.ToString());
-                    while (!_kafkaRequestService.IsMessageRecieved(messageId.ToString()))
-                    {
-                        Thread.Sleep(200);
-                    }
-                    _logger.LogDebug("Message recieved :{messageId}",messageId.ToString());
-                    return _kafkaRequestService.GetMessage<VerifyPasswordResetCodeResponse>(messageId.ToString(),"userServiceAccountsResponses");
-                }
-                throw new VerifyPasswordResetCodeException("Message not recieved");
+                return await SendRequest<VerifyPasswordResetCodeRequest,VerifyPasswordResetCodeResponse>("verifyPasswordResetCode",request);
             }
             catch(Exception)
             {
@@ -324,28 +179,7 @@ namespace ApiGatewayService.Services.UserService.Account
         {
             try
             {
-                Guid messageId = Guid.NewGuid();
-                Message<string,string> message = new Message<string, string>()
-                {
-                    Key = messageId.ToString(),
-                    Value = JsonConvert.SerializeObject(request),
-                    Headers = new Headers()
-                    {
-                        new Header("method",Encoding.UTF8.GetBytes("VerifyRegistrationCode")),
-                        new Header("sender",Encoding.UTF8.GetBytes("ApiGatewayService"))
-                    }
-                };
-                if(await _kafkaRequestService.Produce("userServiceAccountsRequests",message,"userServiceAccountsResponses"))
-                {
-                    _logger.LogDebug("Message sent :{messageId}",messageId.ToString());
-                    while (!_kafkaRequestService.IsMessageRecieved(messageId.ToString()))
-                    {
-                        Thread.Sleep(200);
-                    }
-                    _logger.LogDebug("Message recieved :{messageId}",messageId.ToString());
-                    return _kafkaRequestService.GetMessage<VerifyRegistrationCodeResponse>(messageId.ToString(),"userServiceAccountsResponses");
-                }
-                throw new VerifyRegistrationCodeException("Message not recieved");
+                return await SendRequest<VerifyRegistrationCodeRequest,VerifyRegistrationCodeResponse>("verifyRegistrationCode",request);
             }
             catch(Exception)
             {

@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using TourService.Database.Models;
-using TourService.Exceptions.Database;
-using TourService.Models.PaymentVariant;
-using TourService.Models.PaymentVariant.Requests;
+using EntertaimentService.Database.Models;
+using EntertaimentService.Exceptions.Database;
+using EntertaimentService.Models.PaymentVariant;
+using EntertaimentService.Models.PaymentVariant.Requests;
 using UserService.Repositories;
 
-namespace TourService.Services.PaymentVariantService
+namespace EntertaimentService.Services.PaymentVariantService
 {
     public class PaymentVariantService(IUnitOfWork unitOfWork, ILogger<PaymentVariantService> logger, IMapper mapper) : IPaymentVariantService
     {

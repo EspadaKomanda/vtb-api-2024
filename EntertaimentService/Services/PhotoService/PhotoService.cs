@@ -8,8 +8,8 @@ using EntertaimentService.Exceptions.Database;
 using EntertaimentService.Exceptions.S3ServiceExceptions;
 using EntertaimentService.Models.DTO;
 using EntertaimentService.Models.Photos.Requests;
-using TourService.Services.S3;
-using TourService.Utils.Models;
+using EntertaimentService.Services.S3;
+using EntertaimentService.Utils.Models;
 using UserService.Repositories;
 
 namespace EntertaimentService.Services.PhotoService
@@ -27,9 +27,9 @@ namespace EntertaimentService.Services.PhotoService
             {
                 List<Bucket> buckets = _configuration.GetSection("Buckets").Get<List<Bucket>>() ?? throw new NullReferenceException();
                
-                if(await _s3Service.UploadImageToS3Bucket(addPhoto.PhotoBytes,buckets.FirstOrDefault(x=>x.BucketName=="TourImages")!.BucketId.ToString(),addPhoto.PhotoName))
+                if(await _s3Service.UploadImageToS3Bucket(addPhoto.PhotoBytes,buckets.FirstOrDefault(x=>x.BucketName=="EntertaimentImages")!.BucketId.ToString(),addPhoto.PhotoName))
                 {
-                    var photo =  await _s3Service.GetImageFromS3Bucket(addPhoto.PhotoName,buckets.FirstOrDefault(x=>x.BucketName=="TourImages")!.BucketId.ToString());
+                    var photo =  await _s3Service.GetImageFromS3Bucket(addPhoto.PhotoName,buckets.FirstOrDefault(x=>x.BucketName=="EntertaimentImages")!.BucketId.ToString());
                     var result = await _unitOfWork.Photos.AddAsync(photo);
                     if(_unitOfWork.Save()>=0)
                     {
@@ -84,7 +84,7 @@ namespace EntertaimentService.Services.PhotoService
                 Photo currentPhoto = _unitOfWork.Photos.FindOneAsync(x=>x.Id == removePhoto.PhotoId).Result;
                 List<Bucket> buckets = _configuration.GetSection("Buckets").Get<List<Bucket>>() ?? throw new NullReferenceException();
                
-                if(_s3Service.DeleteImageFromS3Bucket(currentPhoto.Title, buckets.FirstOrDefault(x=>x.BucketName=="TourImages")!.BucketId.ToString()).Result)
+                if(_s3Service.DeleteImageFromS3Bucket(currentPhoto.Title, buckets.FirstOrDefault(x=>x.BucketName=="EntertaimentImages")!.BucketId.ToString()).Result)
                 {
                     _unitOfWork.Photos.Delete(currentPhoto);
                      if(_unitOfWork.Save()>=0)
@@ -118,11 +118,11 @@ namespace EntertaimentService.Services.PhotoService
                 
                 if(updatePhoto.PhotoBytes != null)
                 {
-                    if(_s3Service.DeleteImageFromS3Bucket(currentPhoto.Title,buckets.FirstOrDefault(x=>x.BucketName=="TourImages")!.BucketId.ToString()).Result)
+                    if(_s3Service.DeleteImageFromS3Bucket(currentPhoto.Title,buckets.FirstOrDefault(x=>x.BucketName=="EntertaimentImages")!.BucketId.ToString()).Result)
                     {
-                        if(_s3Service.UploadImageToS3Bucket(updatePhoto.PhotoBytes,currentPhoto.Title,buckets.FirstOrDefault(x=>x.BucketName=="TourImages")!.BucketId.ToString()).Result)
+                        if(_s3Service.UploadImageToS3Bucket(updatePhoto.PhotoBytes,currentPhoto.Title,buckets.FirstOrDefault(x=>x.BucketName=="EntertaimentImages")!.BucketId.ToString()).Result)
                         {
-                            var newPhoto = _s3Service.GetImageFromS3Bucket(currentPhoto.Title,buckets.FirstOrDefault(x=>x.BucketName=="TourImages")!.BucketId.ToString()).Result;
+                            var newPhoto = _s3Service.GetImageFromS3Bucket(currentPhoto.Title,buckets.FirstOrDefault(x=>x.BucketName=="EntertaimentImages")!.BucketId.ToString()).Result;
                             currentPhoto.FileLink = newPhoto.FileLink;
                         }
                         _logger.LogError("Error uploading new image version");

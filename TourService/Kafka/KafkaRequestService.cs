@@ -20,6 +20,7 @@ namespace TourService.Kafka
         private readonly KafkaTopicManager _kafkaTopicManager;
         private readonly HashSet<PendingMessagesBus> _pendingMessagesBus;
         private readonly HashSet<RecievedMessagesBus> _recievedMessagesBus;
+        private int topicCount;
         private readonly HashSet<IConsumer<string,string>> _consumerPool;
         public KafkaRequestService(
             IProducer<string, string> producer,
@@ -32,21 +33,22 @@ namespace TourService.Kafka
             _logger = logger;
             _kafkaTopicManager = kafkaTopicManager;
             _recievedMessagesBus = ConfigureRecievedMessages(responseTopics);
-            _pendingMessagesBus = ConfigurePendingMessages(requestsTopics);
+            _pendingMessagesBus = ConfigurePendingMessages(responseTopics);
             _consumerPool = ConfigureConsumers(responseTopics.Count());
             
         }
         public void BeginRecieving(List<string> responseTopics)
         {
-            int topicCount = 0;
+            topicCount = 0;
             foreach(var consumer in _consumerPool)
             {
-
+                
                 Thread thread = new Thread(async x=>{
+
+                    
                     await Consume(consumer,responseTopics[topicCount]);
                 });
                 thread.Start();
-                topicCount++;
             }
         }
        
@@ -66,7 +68,7 @@ namespace TourService.Kafka
                             new ConsumerConfig()
                             {
                                 BootstrapServers = Environment.GetEnvironmentVariable("KAFKA_BROKERS"),
-                                GroupId = "gatewayConsumer"+Guid.NewGuid().ToString(), 
+                                GroupId = "tour"+Guid.NewGuid().ToString(), 
                                 EnableAutoCommit = true,
                                 AutoCommitIntervalMs = 10,
                                 EnableAutoOffsetStore = true,
@@ -98,6 +100,10 @@ namespace TourService.Kafka
             var PendingMessages = new HashSet<PendingMessagesBus>();
             foreach(var requestTopic in ResponseTopics)
             {
+                 if(!IsTopicAvailable(requestTopic))
+                {
+                    _kafkaTopicManager.CreateTopic(requestTopic, 3, 1);
+                }
                 PendingMessages.Add(new PendingMessagesBus(){ TopicName=requestTopic, MessageKeys = new HashSet<Utils.MethodKeyPair>()});
             }
             return PendingMessages;
@@ -111,18 +117,32 @@ namespace TourService.Kafka
             HashSet<RecievedMessagesBus> Responses = new HashSet<RecievedMessagesBus>();
             foreach(var RequestTopic in ResponseTopics)
             {
+                if(!IsTopicAvailable(RequestTopic))
+                {
+                    _kafkaTopicManager.CreateTopic(RequestTopic, 3, 1);
+                }
                 Responses.Add(new RecievedMessagesBus() { TopicName = RequestTopic, Messages = new HashSet<Message<string, string>>()});
             }
             return Responses;
         }
-
+        public T GetMessage<T>(string MessageKey, string topicName)
+        {
+            if(IsMessageRecieved(MessageKey))
+            {
+                var message = _recievedMessagesBus.FirstOrDefault(x=>x.TopicName == topicName)!.Messages.FirstOrDefault(x=>x.Key==MessageKey);
+                _recievedMessagesBus.FirstOrDefault(x=>x.TopicName == topicName)!.Messages.Remove(message);
+                return JsonConvert.DeserializeObject<T>(message.Value);
+            }
+            throw new ConsumerException("Message not recieved");
+        }
         private bool IsTopicAvailable(string topicName)
         {
             try
             {
-                if(_kafkaTopicManager.CheckTopicExists(topicName))
+                bool IsTopicExists = _kafkaTopicManager.CheckTopicExists(topicName);
+                if (IsTopicExists)
                 {
-                    return true;
+                    return IsTopicExists;
                 }
                 _logger.LogError("Unable to subscribe to topic");
                 throw new ConsumerTopicUnavailableException("Topic unavailable");
@@ -208,24 +228,13 @@ namespace TourService.Kafka
                 throw;
             }
         }
-        
-        public T GetMessage<T>(string MessageKey, string topicName)
-        {
-            if(IsMessageRecieved(MessageKey))
-            {
-                var message = _recievedMessagesBus.FirstOrDefault(x=>x.TopicName == topicName)!.Messages.FirstOrDefault(x=>x.Key==MessageKey);
-                _recievedMessagesBus.FirstOrDefault(x=>x.TopicName == topicName)!.Messages.Remove(message);
-                return JsonConvert.DeserializeObject<T>(message.Value);
-            }
-            throw new ConsumerException("Message not recieved");
-        }
-
         private bool IsTopicPendingMessageBusExist(string responseTopic)
         {
             return _pendingMessagesBus.Any(x => x.TopicName == responseTopic);
         }
         private async Task Consume(IConsumer<string,string> localConsumer,string topicName)
         {   
+            topicCount++;
             localConsumer.Subscribe(topicName);
             while (true)
             {

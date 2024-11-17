@@ -1,5 +1,6 @@
 using ApiGatewayService.Models.UserService.Profile.Requests;
-using ApiGatewayService.Models.UserService.Profile.Responses;
+using UserService.Models.Profile.Requests;
+using UserService.Models.Profile.Responses;
 
 namespace ApiGatewayService.Services.UserService.Profile
 {

@@ -2,6 +2,7 @@ using ApiGatewayService.Models.UserService.Profile.Requests;
 using ApiGatewayService.Services.UserService.Profile;
 using Microsoft.AspNetCore.Mvc;
 using TourService.KafkaException;
+using UserService.Models.Profile.Requests;
 
 namespace ApiGatewayService.Controllers.UserService
 {

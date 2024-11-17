@@ -13,6 +13,8 @@ using EntertaimentService.KafkaException.ConsumerException;
 using EntertaimentService.Models.PaymentMethod.Requests;
 using EntertaimentService.Models.PaymentMethod.Responses;
 using EntertaimentService.Services.PaymentMethodService;
+using TourService.Models.PaymentMethod.Responses;
+using TourService.Kafka;
 
 namespace EntertaimentService.KafkaServices
 {

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using EntertaimentService.Database.Models;
 using EntertaimentService.Models.DTO;
 using EntertaimentService.Models.Entertaiment.Requests;
+using EntertaimentService.Models.Tour.Requests;
 
 namespace EntertaimentService.Services.EntertaimentServices
 {

@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using EntertaimentService.Database.Models;
 using EntertaimentService.Models.Category;
 using EntertaimentService.Models.Category.Requests;
+using TourService.Models.Category;
+using TourService.Models.Category.Requests;
 
 namespace EntertaimentService.Services.CategoryService
 {

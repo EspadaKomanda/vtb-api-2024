@@ -1,34 +1,116 @@
+using ApiGatewayService.Services.EntertaimentService.Reviews;
+using EntertaimentService.Models.Review.Requests;
+using EntertaimentService.TourReview.Requests;
 using Microsoft.AspNetCore.Mvc;
+using TourService.KafkaException;
 
 namespace ApiGatewayService.Controllers.EntertainmentService;
 
 [ApiController]
-[Route("api/[controller]")]
-public class ReviewController : ControllerBase
+[Route("api/[controller]/ent")]
+public class ReviewController(ILogger<ReviewController> logger, IEntertaimentReviewsService entertainmentReviewsService) : ControllerBase
 {
-    public Task<IActionResult> AddReview()
+    private readonly ILogger<ReviewController> _logger = logger;
+    private readonly IEntertaimentReviewsService _entertainmentReviewsService = entertainmentReviewsService;
+
+    [HttpPost]
+    [Route("reviews")]
+    public async Task<IActionResult> AddReview(AddReviewEntertaimentRequest request)
     {
-        throw new NotImplementedException();
-    }
-    public Task<IActionResult> GetReview()
-    {
-        throw new NotImplementedException();
+        try
+        {
+            var result = await _entertainmentReviewsService.AddReview(request);
+            return Ok(result);
+        }
+        catch(Exception ex)
+        {
+            if(ex is MyKafkaException)
+            {
+                return StatusCode(500, ex.Message);
+            }
+            return BadRequest(ex.Message);
+        }
     }
 
-    public IQueryable<IActionResult> GetReviews()
+    [HttpGet]
+    [Route("reviews/{reviewId}")]
+    public async Task<IActionResult> GetReview([FromRoute] long reviewId)
     {
-        throw new NotImplementedException();
+        GetReviewEntertainmentRequest request = new() { ReviewId = reviewId };
+        try
+        {
+            var result = await _entertainmentReviewsService.GetReview(request);
+            return Ok(result);
+        }
+        catch(Exception ex)
+        {
+            if(ex is MyKafkaException)
+            {
+                return StatusCode(500, ex.Message);
+            }
+            return BadRequest(ex.Message);
+        }
     }
-    public Task<IActionResult> RateReview()
+
+    [HttpGet]
+    [Route("reviews/entertainment/{entertainmentId}/page/{pageId}")]
+    public async Task<IActionResult> GetReviews([FromRoute] long entertainmentId, [FromRoute] int pageId)
     {
-        throw new NotImplementedException();
+        GetReviewsEntertaimentRequest request = new()
+        {
+            EntertaimentId = entertainmentId,
+            Page = pageId
+        };
+        try
+        {
+            var result = await _entertainmentReviewsService.GetReviews(request);
+            return Ok(result);
+        }
+        catch(Exception ex)
+        {
+            if(ex is MyKafkaException)
+            {
+                return StatusCode(500, ex.Message);
+            }
+            return BadRequest(ex.Message);
+        }
     }
-    public IActionResult RemoveReview()
+
+    [HttpDelete]
+    [Route("reviews")]
+    public async Task<IActionResult> RemoveReview(RemoveReviewEntertainmentRequest request)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var result = await _entertainmentReviewsService.RemoveReview(request);
+            return Ok(result);
+        }
+        catch(Exception ex)
+        {
+            if(ex is MyKafkaException)
+            {
+                return StatusCode(500, ex.Message);
+            }
+            return BadRequest(ex.Message);
+        }
     }
-    public IActionResult UpdateReview()
+
+    [HttpPatch]
+    [Route("reviews")]
+    public async Task<IActionResult> UpdateReview(UpdateReviewEntertainmentRequest request)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var result = await _entertainmentReviewsService.UpdateReview(request);
+            return Ok(result);
+        }
+        catch(Exception ex)
+        {
+            if(ex is MyKafkaException)
+            {
+                return StatusCode(500, ex.Message);
+            }
+            return BadRequest(ex.Message);
+        }
     }
 }

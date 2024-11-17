@@ -1,4 +1,6 @@
 using ApiGatewayService.Models.AccessDataCache;
+using ApiGatewayService.Models.AuthService.AccessDataCache.Requests;
+using ApiGatewayService.Models.AuthService.AccessDataCache.Responses;
 
 namespace AuthService.Services.AccessDataCache;
 
@@ -7,20 +9,10 @@ namespace AuthService.Services.AccessDataCache;
 /// </summary>
 public interface IAccessDataCacheService
 {
-
-    /// <summary>
-    /// Возвращает данные доступа пользователя по имени пользователя.
-    /// </summary>
-    Task<UserAccessData?> Get(string username);
-
-    /// <summary>
-    /// Позволяет запросить данные доступа пользователя у UserService, при этом автоматически кеширует их.
-    /// </summary>
-    Task<UserAccessData?> RequestAndCacheUser(string username);
-
     /// <summary>
     /// Открытый эндпоинт для микросервисов, который позволяет кешировать данные доступа пользователя (в том числе повторно, если они были обновлены).
     /// </summary>
-    Task RecacheUser();
-    
+    Task<RecacheUserResponse> RecacheUser(RecacheUserRequest recacheUserRequest);
+    Task<UserAccessData?> Get(string username);
+    Task<UserAccessData?> RequestAndCacheUser(string username);
 }
