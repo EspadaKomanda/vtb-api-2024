@@ -13,7 +13,7 @@ public class RegistrationCode
     // FIXME: Match the six-character registration code template
     [Required]
     [Column(TypeName = "VARCHAR(6)")]
-    public string Code { get; set; } = Guid.NewGuid().ToString();
+    public string Code { get; set; } = Guid.NewGuid().ToString()[..6];
 
     public DateTime ExpirationDate { get; set; } = DateTime.Now.AddMinutes(10);
 
