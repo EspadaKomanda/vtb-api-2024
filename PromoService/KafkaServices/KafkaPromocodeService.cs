@@ -73,7 +73,7 @@ namespace PromoService.KafkaServices
                                             break;
                                         }
                                     }
-                                    throw new MyKafkaException("Invalid request");
+                                    _logger.LogError("Invalid request");
                                 }
                                 catch (Exception e)
                                 {
@@ -114,7 +114,7 @@ namespace PromoService.KafkaServices
                                             break;
                                         }
                                     }
-                                    throw new MyKafkaException("Invalid request");
+                                    _logger.LogError("Invalid request");
                                 }
                                 catch (Exception e)
                                 {
@@ -154,7 +154,7 @@ namespace PromoService.KafkaServices
                                             break;
                                         }
                                     }
-                                    throw new MyKafkaException("Invalid request");
+                                    _logger.LogError("Invalid request");
                                 }
                                 catch (Exception e)
                                 {
@@ -194,7 +194,7 @@ namespace PromoService.KafkaServices
                                             break;
                                         }
                                     }
-                                    throw new MyKafkaException("Invalid request");
+                                    _logger.LogError("Invalid request");
                                 
                                 }
                                 catch (Exception e)
@@ -235,7 +235,7 @@ namespace PromoService.KafkaServices
                                             break;
                                         }
                                     }
-                                    throw new MyKafkaException("Invalid request");
+                                    _logger.LogError("Invalid request");
                                 }
                                 catch (Exception e)
                                 {
@@ -256,7 +256,7 @@ namespace PromoService.KafkaServices
                             default: 
                                 _consumer.Commit(consumeResult);
                                 
-                                throw new ConsumerRecievedMessageInvalidException("Invalid message received");
+                                break;
                         }
 
                     }

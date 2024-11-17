@@ -68,7 +68,7 @@ namespace TourService.Kafka
                             new ConsumerConfig()
                             {
                                 BootstrapServers = Environment.GetEnvironmentVariable("KAFKA_BROKERS"),
-                                GroupId = "apigateway"+Guid.NewGuid().ToString(), 
+                                GroupId = "apigateway"+_pendingMessagesBus.ElementAt(i).TopicName, 
                                 EnableAutoCommit = true,
                                 AutoCommitIntervalMs = 10,
                                 EnableAutoOffsetStore = true,

@@ -78,7 +78,7 @@ namespace TourService.KafkaServices
                                         }
                                     }
                                     _logger.LogError("Request validation error");
-                                    throw new RequestValidationException("Request validation error");
+                                   
                                 }
                                 catch (Exception e)
                                 {
@@ -123,7 +123,7 @@ namespace TourService.KafkaServices
                                         }
                                     }
                                     _logger.LogError("Request validation error");
-                                    throw new RequestValidationException("Invalid request");
+                                    
                                 }
                                 catch (Exception e)
                                 {
@@ -167,7 +167,7 @@ namespace TourService.KafkaServices
                                         }
                                     }
                                     _logger.LogError("Request validation error");
-                                    throw new RequestValidationException("Invalid request");
+                                    
                                 }
                                 catch (Exception e)
                                 {
@@ -211,7 +211,7 @@ namespace TourService.KafkaServices
                                         }
                                     }
                                     _logger.LogError("Request validation error");
-                                    throw new RequestValidationException("Invalid request");
+                                    
                                 }
                                 catch (Exception e)
                                 {
@@ -255,7 +255,7 @@ namespace TourService.KafkaServices
                                         }
                                     }
                                     _logger.LogError("Request validation error");
-                                    throw new RequestValidationException("Invalid request");
+                                    
                                 }
                                 catch (Exception e)
                                 {
@@ -276,7 +276,7 @@ namespace TourService.KafkaServices
                             default: 
                                 _consumer.Commit(consumeResult);
                                 
-                                throw new ConsumerRecievedMessageInvalidException("Invalid message received");
+                                break;
                         }
 
                     }

@@ -81,7 +81,6 @@ namespace EntertaimentService.KafkaServices
                                         }
                                     }
                                     _logger.LogError("Request validation error");
-                                    throw new RequestValidationException("Request validation error");
                                 }
                                 catch (Exception e)
                                 {
@@ -127,7 +126,6 @@ namespace EntertaimentService.KafkaServices
                                         }
                                     }
                                     _logger.LogError("Request validation error");
-                                    throw new RequestValidationException("Invalid request");
                                 }
                                 catch (Exception e)
                                 {
@@ -172,7 +170,6 @@ namespace EntertaimentService.KafkaServices
                                         }
                                     }
                                     _logger.LogError("Request validation error");
-                                    throw new RequestValidationException("Invalid request");
                                 }
                                 catch (Exception e)
                                 {
@@ -217,7 +214,6 @@ namespace EntertaimentService.KafkaServices
                                         }
                                     }
                                     _logger.LogError("Request validation error");
-                                    throw new RequestValidationException("Invalid request");
                                 }
                                 catch (Exception e)
                                 {
@@ -262,7 +258,6 @@ namespace EntertaimentService.KafkaServices
                                         }
                                     }
                                     _logger.LogError("Request validation error");
-                                    throw new RequestValidationException("Invalid request");
                                 }
                                 catch (Exception e)
                                 {
@@ -283,8 +278,7 @@ namespace EntertaimentService.KafkaServices
                                 break;
                             default: 
                                 _consumer.Commit(consumeResult);
-                                
-                                throw new ConsumerRecievedMessageInvalidException("Invalid message received");
+                                break;
                         }
 
                     }

@@ -71,7 +71,6 @@ namespace MailService.KafkaServices
                                         }
                                     }
                                     _logger.LogError("Request validation error");
-                                    throw new RequestValidationException("Request validation error");
                                 }
                                 catch (Exception e)
                                 {
@@ -94,7 +93,7 @@ namespace MailService.KafkaServices
                             default: 
                                 _consumer.Commit(consumeResult);
                                 
-                                throw new ConsumerRecievedMessageInvalidException("Invalid message received");
+                                break;
                         }
 
                     }
@@ -106,12 +105,12 @@ namespace MailService.KafkaServices
                 if (ex is MyKafkaException)
                 {
                     _logger.LogError(ex,"Consumer error");
-                    throw new ConsumerException("Consumer error ",ex);
+                   
                 }
                 else
                 {
                     _logger.LogError(ex,"Unhandled error");
-                    throw;
+                    
                 }
             }
         }

@@ -21,7 +21,7 @@ public abstract class KafkaService(ILogger<KafkaService> logger, IProducer<strin
         {
             var config = new ConsumerConfig
             {
-                GroupId = "apigateway-service-consumer-group"+Guid.NewGuid().ToString(),
+                GroupId = "apigateway-service-consumer-group",
                 BootstrapServers = Environment.GetEnvironmentVariable("KAFKA_BROKERS"),
                 AutoOffsetReset = AutoOffsetReset.Earliest
             };

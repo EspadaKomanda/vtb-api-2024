@@ -69,7 +69,7 @@ namespace TourService.Kafka
                             new ConsumerConfig()
                             {
                                 BootstrapServers = Environment.GetEnvironmentVariable("KAFKA_BROKERS"),
-                                GroupId = "entertaiment"+Guid.NewGuid().ToString(), 
+                                GroupId = "entertaiment"+_pendingMessagesBus.ElementAt(i).TopicName, 
                                 EnableAutoCommit = true,
                                 AutoCommitIntervalMs = 10,
                                 EnableAutoOffsetStore = true,

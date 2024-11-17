@@ -1,0 +1,13 @@
+{
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "212.109.196.0",
+            "port": 5432,
+            "driver": "PostgreSQL",
+            "name": "5432",
+            "database": "tourdb",
+            "username": "postgres"
+        }
+    ]
+}

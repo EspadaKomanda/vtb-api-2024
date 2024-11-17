@@ -74,7 +74,7 @@ namespace UserService.KafkaServices
                                         }
                                     }
                                     _logger.LogError("Invalid request");
-                                    throw new ConsumerException("Invalid request");
+                                   
                                 }
                                 catch (Exception e)
                                 {
@@ -116,8 +116,7 @@ namespace UserService.KafkaServices
 
                                     }
                                     _logger.LogError("Invalid request");
-                                    throw new ConsumerException("Invalid request");
-                                    
+                                   
                                 }
                                 catch (Exception e)
                                 {
@@ -158,7 +157,7 @@ namespace UserService.KafkaServices
                                         }
                                     }
                                     _logger.LogError("Invalid request");
-                                    throw new ConsumerException("Invalid request");
+                                   
                                 }
                                 catch (Exception e)
                                 {
@@ -200,7 +199,7 @@ namespace UserService.KafkaServices
                                         }
                                     }
                                     _logger.LogError("Invalid request");
-                                    throw new ConsumerException("Invalid request");
+                                    
                                 }
                                 catch (Exception e)
                                 {
@@ -241,7 +240,7 @@ namespace UserService.KafkaServices
                                         }
                                     }
                                     _logger.LogError("Invalid request");
-                                    throw new ConsumerException("Invalid request");
+                                   
                                 }
                                 catch (Exception e)
                                 {
@@ -282,7 +281,7 @@ namespace UserService.KafkaServices
                                         }
                                     }
                                     _logger.LogError("Invalid request");
-                                    throw new ConsumerException("Invalid request");
+                                   
                                 }
                                 catch (Exception e)
                                 {
@@ -322,7 +321,7 @@ namespace UserService.KafkaServices
                                             break;
                                         }
                                     }
-                                    
+                                    _logger.LogError("Invalid request");
                                 }
                                 catch (Exception e)
                                 {
@@ -364,7 +363,7 @@ namespace UserService.KafkaServices
                                         }
                                     }
                                     _logger.LogError("Invalid request");
-                                    throw new ConsumerException("Invalid request");
+                                    
                                 }   
                                 catch (Exception e)
                                 {
@@ -405,7 +404,7 @@ namespace UserService.KafkaServices
                                         }
                                     }
                                     _logger.LogError("Invalid request");
-                                    throw new ConsumerException("Invalid request");
+                                   
                                 }
                                 catch (Exception e)
                                 {
@@ -446,7 +445,7 @@ namespace UserService.KafkaServices
                                         }
                                     }
                                     _logger.LogError("Invalid request");
-                                    throw new ConsumerException("Invalid request");
+                                   
                                 }
                                 catch (Exception e)
                                 {
@@ -486,7 +485,7 @@ namespace UserService.KafkaServices
                                         }
                                     }
                                      _logger.LogError("Invalid request");
-                                    throw new ConsumerException("Invalid request");
+                                   
                                 }
                                 catch (Exception e)
                                 {
@@ -508,7 +507,7 @@ namespace UserService.KafkaServices
                             default: 
                                 _consumer.Commit(consumeResult);
                                 
-                                throw new ConsumerRecievedMessageInvalidException("Invalid message received");
+                                break;
                         }
 
                     }

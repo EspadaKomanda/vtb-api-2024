@@ -20,7 +20,7 @@ public abstract class KafkaService(ILogger<KafkaService> logger, IProducer<strin
         {
             var config = new ConsumerConfig
             {
-                GroupId = "tour-service-consumer-group"+Guid.NewGuid().ToString(),
+                GroupId = "tour-service-consumer-group",
                 BootstrapServers = Environment.GetEnvironmentVariable("KAFKA_BROKERS"),
                 AutoOffsetReset = AutoOffsetReset.Earliest
             };
