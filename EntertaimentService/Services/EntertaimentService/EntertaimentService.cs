@@ -59,14 +59,14 @@ namespace EntertaimentService.Services.EntertaimentServices
         }
         public IQueryable<EntertaimentDto> GetEntertaiments(GetEntertaimentsRequest getEntertaiments)
         {
+            IQueryable<Entertaiment>? entertaiments;
             try
             {
-                IQueryable<Entertaiment> entertaiments;
                 if(getEntertaiments.Categories!=null)
                 {
-                    entertainments = _unitOfWork.Entertaiments.GetAll()
+                    entertaiments = _unitOfWork.Entertaiments.GetAll()
                         .Where(e => 
-                            _unitOfWork.EntertaimentCategories.GetAll()
+                            _unitOfWork.EntertaimentCategories.GetAll(new FindOptions())
                                 .Where(ec => getEntertaiments.Categories.Contains(ec.CategoryId))
                                 .Select(ec => ec.EntertaimentId)
                                 .Contains(e.Id)
@@ -75,26 +75,22 @@ namespace EntertaimentService.Services.EntertaimentServices
                         .Where(e => e.Price >= getEntertaiments.MinimalPrice && e.Price <= getEntertaiments.MaximalPrice)
                         .Distinct()
                         .Skip((getEntertaiments.Page - 1) * 10)
-                        .Take(10)
-                        .ToList();
-
+                        .Take(10);
                 }
                 else
                 {
-                    entertainments = _unitOfWork.Entertaiments.GetAll()
+                    entertaiments = _unitOfWork.Entertaiments.GetAll()
                         .Where(e => 
                             e.Rating >= getEntertaiments.MinimalRating && e.Rating <= getEntertaiments.MaximalRating &&
                             e.Price >= getEntertaiments.MinimalPrice && e.Price <= getEntertaiments.MaximalPrice &&
-                            _unitOfWork.EntertaimentCategories.GetAll()
+                            _unitOfWork.EntertaimentCategories.GetAll(new FindOptions())
                                 .Where(ec => getEntertaiments.Categories.Contains(ec.CategoryId))
                                 .Select(ec => ec.EntertaimentId)
                                 .Contains(e.Id)
                         )
                         .Distinct()
                         .Skip((getEntertaiments.Page - 1) * 10)
-                        .Take(10)
-                        .ToList();
-
+                        .Take(10);
                 }
                 var entertaimentDtos = _mapper.ProjectTo<EntertaimentDto>(entertaiments);
                 foreach(var entertaimentDto in entertaimentDtos)
