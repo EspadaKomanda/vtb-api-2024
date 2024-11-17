@@ -100,46 +100,60 @@ namespace TourService.Services.TourService
             try
             {
                 List<Tour> tours;
-                /*
                 if( getTours.Categories!=null && getTours.TourTags!=null)
                 {
-                    tours = _unitOfWork.Tours.GetAll()
-                    .Join(_unitOfWork.TourCategories.GetAll(), t => t.Id, tc => tc.TourId, (t, tc) => new { Tour = t, Category = tc })
-                    .Where(x => getTours.Categories.Contains(x.Category.CategoryId))
-                    .Join(_unitOfWork.TourTags.GetAll(), x => x.Tour.Id, tt => tt.TourId, (x, tt) => new { Tour = x.Tour, Tag = tt })
-                    .Where(x => getTours.TourTags.Contains(x.Tag.TagId))
-                    .Select(x => x.Tour)
-                    .Distinct()
-                    .Where(x=>x.Rating>= getTours.MinimalRating && x.Rating<=getTours.MaximalRating)
-                    .Where(x=>x.Price>=getTours.MinimalPrice && x.Price<=getTours.MaximalPrice)
-                    .Skip((getTours.Page - 1) * 10)
-                    .Take(10);
+                    var allTours = _unitOfWork.Tours.GetAll();
+
+                    var selectedCategories = _unitOfWork.TourCategories.GetAll()
+                        .Where(tc => getTours.Categories.Contains(tc.CategoryId))
+                        .Select(tc => tc.TourId);
+
+                    var selectedTags = _unitOfWork.TourTags.GetAll()
+                        .Where(tt => getTours.TourTags.Contains(tt.TagId))
+                        .Select(tt => tt.TourId);
+
+                    var tours = allTours
+                        .Where(t => selectedCategories.Contains(t.Id) && selectedTags.Contains(t.Id))
+                        .Where(t => t.Rating >= getTours.MinimalRating && t.Rating <= getTours.MaximalRating)
+                        .Where(t => t.Price >= getTours.MinimalPrice && t.Price <= getTours.MaximalPrice)
+                        .Distinct()
+                        .Skip((getTours.Page - 1) * 10)
+                        .Take(10)
+                        .ToList();
                 }
                 else if(getTours.Categories!=null)
                 {
-                    tours = _unitOfWork.Tours.GetAll()
-                    .Join(_unitOfWork.TourCategories.GetAll(), t => t.Id, tc => tc.TourId, (t, tc) => new { Tour = t, Category = tc })
-                    .Where(x => getTours.Categories.Contains(x.Category.CategoryId))
-                    .Select(x => x.Tour)
-                    .Distinct()
-                    .Where(x=>x.Rating>= getTours.MinimalRating && x.Rating<=getTours.MaximalRating)
-                    .Where(x=>x.Price>=getTours.MinimalPrice && x.Price<=getTours.MaximalPrice)
-                    .Skip((getTours.Page - 1) * 10)
-                    .Take(10);
+                    var tours = _unitOfWork.Tours.GetAll()
+                        .Where(t => 
+                            _unitOfWork.TourCategories.GetAll()
+                                .Where(tc => getTours.Categories.Contains(tc.CategoryId))
+                                .Select(tc => tc.TourId)
+                                .Contains(t.Id)
+                        )
+                        .Where(t => t.Rating >= getTours.MinimalRating && t.Rating <= getTours.MaximalRating)
+                        .Where(t => t.Price >= getTours.MinimalPrice && t.Price <= getTours.MaximalPrice)
+                        .Distinct()
+                        .Skip((getTours.Page - 1) * 10)
+                        .Take(10)
+                        .ToList();
                 }
                 else if(getTours.TourTags!=null)
                 {
-                    tours = _unitOfWork.Tours.GetAll()
-                    .Join(_unitOfWork.TourTags.GetAll(), t => t.Id, tt => tt.TourId, (t, tt) => new { Tour = t, Tag = tt })
-                    .Where(x => getTours.TourTags.Contains(x.Tag.TagId))
-                    .Select(x => x.Tour)
-                    .Distinct()
-                    .Where(x=>x.Rating>= getTours.MinimalRating && x.Rating<=getTours.MaximalRating)
-                    .Where(x=>x.Price>=getTours.MinimalPrice && x.Price<=getTours.MaximalPrice)
-                    .Skip((getTours.Page - 1) * 10)
-                    .Take(10);
+                    var tours = _unitOfWork.Tours.GetAll()
+                        .Where(t => 
+                            _unitOfWork.TourTags.GetAll()
+                                .Where(tt => getTours.TourTags.Contains(tt.TagId))
+                                .Select(tt => tt.TourId)
+                                .Contains(t.Id)
+                        )
+                        .Where(t => t.Rating >= getTours.MinimalRating && t.Rating <= getTours.MaximalRating)
+                        .Where(t => t.Price >= getTours.MinimalPrice && t.Price <= getTours.MaximalPrice)
+                        .Distinct()
+                        .Skip((getTours.Page - 1) * 10)
+                        .Take(10)
+                        .ToList();
+
                 }
-                */
                 
                 tours = _unitOfWork.Tours.GetAll()
                 .Skip((getTours.Page - 1) * 10)

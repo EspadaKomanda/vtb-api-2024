@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/ereshkigal/hakathon/vtb/vtb-api-2024/TourService/TourService.csproj": {}
+    "/home/greg/Desktop/vtb/TourService/TourService.csproj": {}
   },
   "projects": {
-    "/home/ereshkigal/hakathon/vtb/vtb-api-2024/TourService/TourService.csproj": {
+    "/home/greg/Desktop/vtb/TourService/TourService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/ereshkigal/hakathon/vtb/vtb-api-2024/TourService/TourService.csproj",
+        "projectUniqueName": "/home/greg/Desktop/vtb/TourService/TourService.csproj",
         "projectName": "TourService",
-        "projectPath": "/home/ereshkigal/hakathon/vtb/vtb-api-2024/TourService/TourService.csproj",
-        "packagesPath": "/home/ereshkigal/.nuget/packages/",
-        "outputPath": "/home/ereshkigal/hakathon/vtb/vtb-api-2024/TourService/obj/",
+        "projectPath": "/home/greg/Desktop/vtb/TourService/TourService.csproj",
+        "packagesPath": "/home/greg/.nuget/packages/",
+        "outputPath": "/home/greg/Desktop/vtb/TourService/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/ereshkigal/.nuget/NuGet/NuGet.Config"
+          "/home/greg/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -45,6 +45,10 @@
             "AWSSDK.S3": {
               "target": "Package",
               "version": "[3.7.309.1, )"
+            },
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[12.0.1, )"
             },
             "Confluent.Kafka": {
               "target": "Package",
