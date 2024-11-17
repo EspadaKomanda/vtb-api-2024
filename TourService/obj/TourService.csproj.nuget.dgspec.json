@@ -46,6 +46,10 @@
               "target": "Package",
               "version": "[3.7.309.1, )"
             },
+            "AutoMapper.Extensions.Microsoft.DependencyInjection": {
+              "target": "Package",
+              "version": "[12.0.1, )"
+            },
             "Confluent.Kafka": {
               "target": "Package",
               "version": "[2.4.0, )"

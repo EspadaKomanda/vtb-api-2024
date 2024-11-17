@@ -138,4 +138,5 @@ public abstract class KafkaService(ILogger<KafkaService> logger, IProducer<strin
         return isValid;
     }
     
+    
 }

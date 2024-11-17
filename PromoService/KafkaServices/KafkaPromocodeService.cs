@@ -268,12 +268,10 @@ namespace PromoService.KafkaServices
                 if (ex is MyKafkaException)
                 {
                     _logger.LogError(ex,"Consumer error");
-                    throw new ConsumerException("Consumer error ",ex);
                 }
                 else
                 {
                     _logger.LogError(ex,"Unhandled error");
-                    throw;
                 }
             }
         }

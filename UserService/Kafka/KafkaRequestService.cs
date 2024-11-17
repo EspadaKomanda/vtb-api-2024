@@ -104,7 +104,7 @@ namespace TourService.Kafka
                 {
                     _kafkaTopicManager.CreateTopic(requestTopic, 3, 1);
                 }
-                PendingMessages.Add(new PendingMessagesBus(){ TopicName=requestTopic, MessageKeys = new HashSet<Utils.MethodKeyPair>()});
+                PendingMessages.Add(new PendingMessagesBus(){ TopicName=requestTopic, MessageKeys = new HashSet<MethodKeyPair>()});
             }
             return PendingMessages;
         }
@@ -262,8 +262,12 @@ namespace TourService.Kafka
                                 _recievedMessagesBus.FirstOrDefault(x=>x.TopicName== topicName).Messages.Add(result.Message);
                                 _pendingMessagesBus.FirstOrDefault(x=>x.TopicName==topicName).MessageKeys.Remove(pendingMessage);
                             }
-                            _logger.LogError("Wrong message method");
-                            throw new ConsumerException("Wrong message method");
+                            else
+                            {
+
+                                _logger.LogError("Wrong message method");
+                                throw new ConsumerException("Wrong message method");
+                            }
                         }   
                     }
                     catch (Exception e)
@@ -275,7 +279,6 @@ namespace TourService.Kafka
                         }
                         _logger.LogError(e,"Unhandled error");
                         localConsumer.Commit(result);
-                        throw;
                     }
                    
                 }
