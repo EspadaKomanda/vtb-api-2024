@@ -70,18 +70,14 @@ namespace PromoService.KafkaServices
 
                                             _logger.LogDebug("Successfully sent message {Key}",consumeResult.Message.Key);
                                             _consumer.Commit(consumeResult);
+                                            break;
                                         }
                                     }
                                     throw new MyKafkaException("Invalid request");
                                 }
                                 catch (Exception e)
                                 {
-                                    if(e is MyKafkaException)
-                                    {
-                                        _logger.LogError(e,"Error sending message");
-                                        throw;
-                                    }
-                                     _ = await base.Produce(_promocodeResponseTopic, new Message<string, string>()
+                                    _ = await base.Produce(_promocodeResponseTopic, new Message<string, string>()
                                     {
                                         Key = consumeResult.Message.Key,
                                         Value = JsonConvert.SerializeObject(new MessageResponse(){ Message = e.Message}),
@@ -115,18 +111,14 @@ namespace PromoService.KafkaServices
 
                                             _logger.LogDebug("Successfully sent message {Key}",consumeResult.Message.Key);
                                             _consumer.Commit(consumeResult);
+                                            break;
                                         }
                                     }
                                     throw new MyKafkaException("Invalid request");
                                 }
                                 catch (Exception e)
                                 {
-                                    if(e is MyKafkaException)
-                                    {
-                                        _logger.LogError(e,"Error sending message");
-                                        throw;
-                                    }
-                                     _ = await base.Produce(_promocodeResponseTopic, new Message<string, string>()
+                                    _ = await base.Produce(_promocodeResponseTopic, new Message<string, string>()
                                     {
                                         Key = consumeResult.Message.Key,
                                         Value = JsonConvert.SerializeObject(new MessageResponse(){ Message = e.Message}),
@@ -159,18 +151,14 @@ namespace PromoService.KafkaServices
 
                                             _logger.LogDebug("Successfully sent message {Key}",consumeResult.Message.Key);
                                             _consumer.Commit(consumeResult);
+                                            break;
                                         }
                                     }
                                     throw new MyKafkaException("Invalid request");
                                 }
                                 catch (Exception e)
                                 {
-                                    if(e is MyKafkaException)
-                                    {
-                                        _logger.LogError(e,"Error sending message");
-                                        throw;
-                                    }
-                                     _ = await base.Produce(_promocodeResponseTopic, new Message<string, string>()
+                                    _ = await base.Produce(_promocodeResponseTopic, new Message<string, string>()
                                     {
                                         Key = consumeResult.Message.Key,
                                         Value = JsonConvert.SerializeObject(new MessageResponse(){ Message = e.Message}),
@@ -203,6 +191,7 @@ namespace PromoService.KafkaServices
 
                                             _logger.LogDebug("Successfully sent message {Key}",consumeResult.Message.Key);
                                             _consumer.Commit(consumeResult);
+                                            break;
                                         }
                                     }
                                     throw new MyKafkaException("Invalid request");
@@ -210,12 +199,7 @@ namespace PromoService.KafkaServices
                                 }
                                 catch (Exception e)
                                 {
-                                    if(e is MyKafkaException)
-                                    {
-                                        _logger.LogError(e,"Error sending message");
-                                        throw;
-                                    }
-                                     _ = await base.Produce(_promocodeResponseTopic, new Message<string, string>()
+                                    _ = await base.Produce(_promocodeResponseTopic, new Message<string, string>()
                                     {
                                         Key = consumeResult.Message.Key,
                                         Value = JsonConvert.SerializeObject(new MessageResponse(){ Message = e.Message}),
@@ -248,18 +232,14 @@ namespace PromoService.KafkaServices
 
                                             _logger.LogDebug("Successfully sent message {Key}",consumeResult.Message.Key);
                                             _consumer.Commit(consumeResult);
+                                            break;
                                         }
                                     }
                                     throw new MyKafkaException("Invalid request");
                                 }
                                 catch (Exception e)
                                 {
-                                    if(e is MyKafkaException)
-                                    {
-                                        _logger.LogError(e,"Error sending message");
-                                        throw;
-                                    }
-                                     _ = await base.Produce(_promocodeResponseTopic, new Message<string, string>()
+                                    _ = await base.Produce(_promocodeResponseTopic, new Message<string, string>()
                                     {
                                         Key = consumeResult.Message.Key,
                                         Value = JsonConvert.SerializeObject(new MessageResponse(){ Message = e.Message}),
@@ -284,10 +264,7 @@ namespace PromoService.KafkaServices
             }
             catch(Exception ex)
             {
-                if(_consumer != null)
-                { 
-                    _consumer.Dispose();
-                }
+
                 if (ex is MyKafkaException)
                 {
                     _logger.LogError(ex,"Consumer error");
