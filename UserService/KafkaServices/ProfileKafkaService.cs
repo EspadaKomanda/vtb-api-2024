@@ -56,29 +56,31 @@ namespace UserService.KafkaServices
                             case "getProfile":
                                 try
                                 {
-                                    if(await base.Produce(_profileResponseTopic,new Message<string, string>()
+                                    var result = JsonConvert.DeserializeObject<GetProfileRequest>(consumeResult.Message.Value);
+                                    if(base.IsValid(result))
                                     {
-                                        Key = consumeResult.Message.Key,
-                                        Value = JsonConvert.SerializeObject( await _profileService.GetMyProfile(JsonConvert.DeserializeObject<GetProfileRequest>(consumeResult.Message.Value).UserId)),
-                                        Headers = [
-                                            new Header("method",Encoding.UTF8.GetBytes("getProfile")),
-                                            new Header("sender",Encoding.UTF8.GetBytes("userService")),
-                                        ]
-                                    }))
-                                    {
+                                        if(await base.Produce(_profileResponseTopic,new Message<string, string>()
+                                        {
+                                            Key = consumeResult.Message.Key,
+                                            Value = JsonConvert.SerializeObject( await _profileService.GetMyProfile(result.UserId)),
+                                            Headers = [
+                                                new Header("method",Encoding.UTF8.GetBytes("getProfile")),
+                                                new Header("sender",Encoding.UTF8.GetBytes("userService")),
+                                            ]
+                                        }))
+                                        {
 
-                                        _logger.LogDebug("Successfully sent message {Key}",consumeResult.Message.Key);
-                                        _consumer.Commit(consumeResult);
+                                            _logger.LogDebug("Successfully sent message {Key}",consumeResult.Message.Key);
+                                            _consumer.Commit(consumeResult);
+                                            break;
+                                        }
                                     }
+                                    _logger.LogError("Invalid request");
+                                    throw new ConsumerException("Invalid request");
                                 }
                                 catch (Exception e)
                                 {
-                                    if(e is MyKafkaException)
-                                    {
-                                        _logger.LogError(e,"Error sending message");
-                                        throw;
-                                    }
-                                     _ = await base.Produce(_profileResponseTopic, new Message<string, string>()
+                                    _ = await base.Produce(_profileResponseTopic, new Message<string, string>()
                                     {
                                         Key = consumeResult.Message.Key,
                                         Value = JsonConvert.SerializeObject(new MessageResponse(){ Message = e.Message}),
@@ -97,27 +99,29 @@ namespace UserService.KafkaServices
                                 try
                                 {
                                     var request = JsonConvert.DeserializeObject<UpdateProfileRequest>(consumeResult.Message.Value);
-                                    if(await base.Produce(_profileResponseTopic,new Message<string, string>()
+                                    if(base.IsValid(request))
                                     {
-                                        Key = consumeResult.Message.Key,
-                                        Value = JsonConvert.SerializeObject( await _profileService.UpdateProfile(request.UserId, request)),
-                                        Headers = [
-                                            new Header("method",Encoding.UTF8.GetBytes("updateProfile")),
-                                            new Header("sender",Encoding.UTF8.GetBytes("userService")),
-                                        ]
-                                    }))
-                                    {
-                                        _logger.LogDebug("Successfully sent message {Key}",consumeResult.Message.Key);
-                                        _consumer.Commit(consumeResult);
+                                        if(await base.Produce(_profileResponseTopic,new Message<string, string>()
+                                        {
+                                            Key = consumeResult.Message.Key,
+                                            Value = JsonConvert.SerializeObject( await _profileService.UpdateProfile(request.UserId, request)),
+                                            Headers = [
+                                                new Header("method",Encoding.UTF8.GetBytes("updateProfile")),
+                                                new Header("sender",Encoding.UTF8.GetBytes("userService")),
+                                            ]
+                                        }))
+                                        {
+                                            _logger.LogDebug("Successfully sent message {Key}",consumeResult.Message.Key);
+                                            _consumer.Commit(consumeResult);
+                                            break;
+                                        }
                                     }
+                                    _logger.LogError("Invalid request");
+                                    throw new ConsumerException("Invalid request");
                                 }
                                 catch (Exception e)
                                 {
-                                    if(e is MyKafkaException)
-                                    {
-                                        _logger.LogError(e,"Error sending message");
-                                        throw;
-                                    }
+                                    
                                     _ = await base.Produce(_profileResponseTopic, new Message<string, string>()
                                     {
                                         Key = consumeResult.Message.Key,
@@ -136,27 +140,27 @@ namespace UserService.KafkaServices
                                 try
                                 {
                                     var request = JsonConvert.DeserializeObject<UploadAvatarRequest>(consumeResult.Message.Value);
-                                    if(await base.Produce(_profileResponseTopic,new Message<string, string>()
+                                    if(base.IsValid(request))
                                     {
-                                        Key = consumeResult.Message.Key,
-                                        Value = JsonConvert.SerializeObject( await _profileService.UploadAvatar(request.UserId, request)),
-                                        Headers = [
-                                            new Header("method",Encoding.UTF8.GetBytes("uploadAvatar")),
-                                            new Header("sender",Encoding.UTF8.GetBytes("userService")),
-                                        ]
-                                    }))
-                                    {
-                                        _logger.LogDebug("Successfully sent message {Key}",consumeResult.Message.Key);
-                                        _consumer.Commit(consumeResult);
+                                        if(await base.Produce(_profileResponseTopic,new Message<string, string>()
+                                        {
+                                            Key = consumeResult.Message.Key,
+                                            Value = JsonConvert.SerializeObject( await _profileService.UploadAvatar(request.UserId, request)),
+                                            Headers = [
+                                                new Header("method",Encoding.UTF8.GetBytes("uploadAvatar")),
+                                                new Header("sender",Encoding.UTF8.GetBytes("userService")),
+                                            ]
+                                        }))
+                                        {
+                                            _logger.LogDebug("Successfully sent message {Key}",consumeResult.Message.Key);
+                                            _consumer.Commit(consumeResult);
+                                            break;
+                                        }
                                     }
                                 }
                                 catch (Exception e)
                                 {
-                                    if(e is MyKafkaException)
-                                    {
-                                        _logger.LogError(e,"Error sending message");
-                                        throw;
-                                    }
+                                    
                                     _ = await base.Produce(_profileResponseTopic, new Message<string, string>()
                                     {
                                         Key = consumeResult.Message.Key,
@@ -175,30 +179,30 @@ namespace UserService.KafkaServices
                                 try
                                 {
                                     var profile = await _profileService.GetMyProfile(JsonConvert.DeserializeObject<GetUserName>(consumeResult.Message.Value).UserId);
-                                    if(await base.Produce(_profileResponseTopic,new Message<string, string>()
+                                    if(base.IsValid(profile))
                                     {
-                                        Key = consumeResult.Message.Key,
-                                        Value = JsonConvert.SerializeObject( new GetUsernameAndAvatarResponse(){
-                                            Username = profile.Name,
-                                            Avatar = profile.Avatar
-                                        }),
-                                        Headers = [
-                                            new Header("method",Encoding.UTF8.GetBytes("getUsernameAvatar")),
-                                            new Header("sender",Encoding.UTF8.GetBytes("userService")),
-                                        ]
-                                    }))
-                                    {
-                                        _logger.LogDebug("Successfully sent message {Key}",consumeResult.Message.Key);
-                                        _consumer.Commit(consumeResult);
+                                        if(await base.Produce(_profileResponseTopic,new Message<string, string>()
+                                        {
+                                            Key = consumeResult.Message.Key,
+                                            Value = JsonConvert.SerializeObject( new GetUsernameAndAvatarResponse(){
+                                                Username = profile.Name,
+                                                Avatar = profile.Avatar
+                                            }),
+                                            Headers = [
+                                                new Header("method",Encoding.UTF8.GetBytes("getUsernameAvatar")),
+                                                new Header("sender",Encoding.UTF8.GetBytes("userService")),
+                                            ]
+                                        }))
+                                        {
+                                            _logger.LogDebug("Successfully sent message {Key}",consumeResult.Message.Key);
+                                            _consumer.Commit(consumeResult);
+                                            break;
+                                        }
                                     }
                                 }
                                 catch (Exception e)
                                 {
-                                    if(e is MyKafkaException)
-                                    {
-                                        _logger.LogError(e,"Error sending message");
-                                        throw;
-                                    }
+                                    
                                     _ = await base.Produce(_profileResponseTopic, new Message<string, string>()
                                     {
                                         Key = consumeResult.Message.Key,
@@ -225,19 +229,13 @@ namespace UserService.KafkaServices
             }
             catch(Exception ex)
             {
-                if(_consumer != null)
-                { 
-                    _consumer.Dispose();
-                }
                 if (ex is MyKafkaException)
                 {
                     _logger.LogError(ex,"Consumer error");
-                    throw new ConsumerException("Consumer error ",ex);
                 }
                 else
                 {
                     _logger.LogError(ex,"Unhandled error");
-                    throw;
                 }
             }
         }

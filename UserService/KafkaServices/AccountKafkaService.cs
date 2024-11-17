@@ -54,29 +54,31 @@ namespace UserService.KafkaServices
                             case "accountAccessData":
                                 try
                                 {
-                                    if(await base.Produce(_accountResponseTopic,new Message<string, string>()
+                                    var result = JsonConvert.DeserializeObject<AccountAccessDataRequest>(consumeResult.Message.Value);
+                                    if(base.IsValid(result))
                                     {
-                                        Key = consumeResult.Message.Key,
-                                        Value = JsonConvert.SerializeObject( await _accountService.AccountAccessData(JsonConvert.DeserializeObject<AccountAccessDataRequest>(consumeResult.Message.Value))),
-                                        Headers = [
-                                            new Header("method",Encoding.UTF8.GetBytes("accountAccessData")),
-                                            new Header("sender",Encoding.UTF8.GetBytes("userService")),
-                                        ]
-                                    }))
-                                    {
+                                        if(await base.Produce(_accountResponseTopic,new Message<string, string>()
+                                        {
+                                            Key = consumeResult.Message.Key,
+                                            Value = JsonConvert.SerializeObject(await _accountService.AccountAccessData(result) ),
+                                            Headers = [
+                                                new Header("method",Encoding.UTF8.GetBytes("accountAccessData")),
+                                                new Header("sender",Encoding.UTF8.GetBytes("userService")),
+                                            ]
+                                        }))
+                                        {
 
-                                        _logger.LogDebug("Successfully sent message {Key}",consumeResult.Message.Key);
-                                        _consumer.Commit(consumeResult);
+                                            _logger.LogDebug("Successfully sent message {Key}",consumeResult.Message.Key);
+                                            _consumer.Commit(consumeResult);
+                                            break;
+                                        }
                                     }
+                                    _logger.LogError("Invalid request");
+                                    throw new ConsumerException("Invalid request");
                                 }
                                 catch (Exception e)
                                 {
-                                    if(e is MyKafkaException)
-                                    {
-                                        _logger.LogError(e,"Error sending message");
-                                        throw;
-                                    }
-                                     _ = await base.Produce(_accountResponseTopic, new Message<string, string>()
+                                    _ = await base.Produce(_accountResponseTopic, new Message<string, string>()
                                     {
                                         Key = consumeResult.Message.Key,
                                         Value = JsonConvert.SerializeObject(new MessageResponse(){ Message = e.Message}),
@@ -94,27 +96,32 @@ namespace UserService.KafkaServices
                             case "beginPasswordReset":
                                 try
                                 {
-                                    if(await base.Produce(_accountResponseTopic,new Message<string, string>()
+                                    var result = JsonConvert.DeserializeObject<BeginPasswordResetRequest>(consumeResult.Message.Value);
+                                    if(base.IsValid(result))
                                     {
-                                        Key = consumeResult.Message.Key,
-                                        Value = JsonConvert.SerializeObject( await _accountService.BeginPasswordReset(JsonConvert.DeserializeObject<BeginPasswordResetRequest>(consumeResult.Message.Value))),
-                                        Headers = [
-                                            new Header("method",Encoding.UTF8.GetBytes("beginPasswordReset")),
-                                            new Header("sender",Encoding.UTF8.GetBytes("userService")),
-                                        ]
-                                    }))
-                                    {
-                                        _logger.LogDebug("Successfully sent message {Key}",consumeResult.Message.Key);
-                                        _consumer.Commit(consumeResult);
+                                        if(await base.Produce(_accountResponseTopic,new Message<string, string>()
+                                        {
+                                            Key = consumeResult.Message.Key,
+                                            Value = JsonConvert.SerializeObject( await _accountService.BeginPasswordReset(result)),
+                                            Headers = [
+                                                new Header("method",Encoding.UTF8.GetBytes("beginPasswordReset")),
+                                                new Header("sender",Encoding.UTF8.GetBytes("userService")),
+                                            ]
+                                        }))
+                                        {
+                                            _logger.LogDebug("Successfully sent message {Key}",consumeResult.Message.Key);
+                                            _consumer.Commit(consumeResult);
+                                            break;
+                                        }
+
                                     }
+                                    _logger.LogError("Invalid request");
+                                    throw new ConsumerException("Invalid request");
+                                    
                                 }
                                 catch (Exception e)
                                 {
-                                    if(e is MyKafkaException)
-                                    {
-                                        _logger.LogError(e,"Error sending message");
-                                        throw;
-                                    }
+                                    
                                     _ = await base.Produce(_accountResponseTopic, new Message<string, string>()
                                     {
                                         Key = consumeResult.Message.Key,
@@ -132,27 +139,30 @@ namespace UserService.KafkaServices
                             case "beginRegistration":
                                 try
                                 {
-                                    if(await base.Produce(_accountResponseTopic,new Message<string, string>()
+                                    var result = JsonConvert.DeserializeObject<BeginRegistrationRequest>(consumeResult.Message.Value);
+                                    if(base.IsValid(result))
                                     {
-                                        Key = consumeResult.Message.Key,
-                                        Value = JsonConvert.SerializeObject( await _accountService.BeginRegistration(JsonConvert.DeserializeObject<BeginRegistrationRequest>(consumeResult.Message.Value))),
-                                        Headers = [
-                                            new Header("method",Encoding.UTF8.GetBytes("beginRegistration")),
-                                            new Header("sender",Encoding.UTF8.GetBytes("userService")),
-                                        ]
-                                    }))
-                                    {
-                                        _logger.LogDebug("Successfully sent message {Key}",consumeResult.Message.Key);
-                                        _consumer.Commit(consumeResult);
+                                        if(await base.Produce(_accountResponseTopic,new Message<string, string>()
+                                        {
+                                            Key = consumeResult.Message.Key,
+                                            Value = JsonConvert.SerializeObject( await _accountService.BeginRegistration(result)),
+                                            Headers = [
+                                                new Header("method",Encoding.UTF8.GetBytes("beginRegistration")),
+                                                new Header("sender",Encoding.UTF8.GetBytes("userService")),
+                                            ]
+                                        }))
+                                        {
+                                            _logger.LogDebug("Successfully sent message {Key}",consumeResult.Message.Key);
+                                            _consumer.Commit(consumeResult);
+                                            break;
+                                        }
                                     }
+                                    _logger.LogError("Invalid request");
+                                    throw new ConsumerException("Invalid request");
                                 }
                                 catch (Exception e)
                                 {
-                                    if(e is MyKafkaException)
-                                    {
-                                        _logger.LogError(e,"Error sending message");
-                                        throw;
-                                    }
+                                    
                                     _ = await base.Produce(_accountResponseTopic, new Message<string, string>()
                                     {
                                         Key = consumeResult.Message.Key,
@@ -170,27 +180,31 @@ namespace UserService.KafkaServices
                             case "changePassword":
                                 try
                                 {
-                                    if(await base.Produce(_accountResponseTopic,new Message<string, string>()
+                                    var result = JsonConvert.DeserializeObject<ChangePasswordRequest>(consumeResult.Message.Value);
+                                    if(base.IsValid(result))
                                     {
-                                        Key = consumeResult.Message.Key,
-                                        Value = JsonConvert.SerializeObject( await _accountService.ChangePassword(JsonConvert.DeserializeObject<ChangePasswordRequest>(consumeResult.Message.Value))),
-                                        Headers = [
-                                            new Header("method",Encoding.UTF8.GetBytes("changePassword")),
-                                            new Header("sender",Encoding.UTF8.GetBytes("userService")),
-                                        ]
-                                    }))
-                                    {
-                                        _logger.LogDebug("Successfully sent message {Key}",consumeResult.Message.Key);
-                                        _consumer.Commit(consumeResult);
+
+                                        if(await base.Produce(_accountResponseTopic,new Message<string, string>()
+                                        {
+                                            Key = consumeResult.Message.Key,
+                                            Value = JsonConvert.SerializeObject( await _accountService.ChangePassword(result)),
+                                            Headers = [
+                                                new Header("method",Encoding.UTF8.GetBytes("changePassword")),
+                                                new Header("sender",Encoding.UTF8.GetBytes("userService")),
+                                            ]
+                                        }))
+                                        {
+                                            _logger.LogDebug("Successfully sent message {Key}",consumeResult.Message.Key);
+                                            _consumer.Commit(consumeResult);
+                                            break;
+                                        }
                                     }
+                                    _logger.LogError("Invalid request");
+                                    throw new ConsumerException("Invalid request");
                                 }
                                 catch (Exception e)
                                 {
-                                    if(e is MyKafkaException)
-                                    {
-                                        _logger.LogError(e,"Error sending message");
-                                        throw;
-                                    }
+                                    
                                     _ = await base.Produce(_accountResponseTopic, new Message<string, string>()
                                     {
                                         Key = consumeResult.Message.Key,
@@ -208,28 +222,30 @@ namespace UserService.KafkaServices
                             case "completePasswordReset":
                                 try
                                 {
-                                    if(await base.Produce(_accountResponseTopic,new Message<string, string>()
+                                    var result = JsonConvert.DeserializeObject<CompletePasswordResetRequest>(consumeResult.Message.Value);
+                                    if(base.IsValid(result))
                                     {
-                                        Key = consumeResult.Message.Key, 
-                                        Value = JsonConvert.SerializeObject(await _accountService.CompletePasswordReset(JsonConvert.DeserializeObject<CompletePasswordResetRequest>(consumeResult.Message.Value))),
-                                        Headers = [
-                                            new Header("method",Encoding.UTF8.GetBytes("completePasswordReset")),
-                                            new Header("sender",Encoding.UTF8.GetBytes("userService")),
-                                        ]
-                                    }))
-                                    {
-                                        _logger.LogDebug("Successfully sent message {Key}",consumeResult.Message.Key);
-                                        _consumer.Commit(consumeResult);
+                                        if(await base.Produce(_accountResponseTopic,new Message<string, string>()
+                                        {
+                                            Key = consumeResult.Message.Key, 
+                                            Value = JsonConvert.SerializeObject(await _accountService.CompletePasswordReset(result)),
+                                            Headers = [
+                                                new Header("method",Encoding.UTF8.GetBytes("completePasswordReset")),
+                                                new Header("sender",Encoding.UTF8.GetBytes("userService")),
+                                            ]
+                                        }))
+                                        {
+                                            _logger.LogDebug("Successfully sent message {Key}",consumeResult.Message.Key);
+                                            _consumer.Commit(consumeResult);
+                                            break;
+                                        }
                                     }
-
+                                    _logger.LogError("Invalid request");
+                                    throw new ConsumerException("Invalid request");
                                 }
                                 catch (Exception e)
                                 {
-                                    if(e is MyKafkaException)
-                                    {
-                                        _logger.LogError(e,"Error sending message");
-                                        throw;
-                                    }
+                                    
                                     _ = await base.Produce(_accountResponseTopic, new Message<string, string>()
                                     {
                                         Key = consumeResult.Message.Key,
@@ -247,28 +263,30 @@ namespace UserService.KafkaServices
                             case "completeRegistration":
                                 try
                                 {
-                                    if(await base.Produce(_accountResponseTopic,new Message<string, string>()
+                                    var result = JsonConvert.DeserializeObject<CompleteRegistrationRequest>(consumeResult.Message.Value);
+                                    if(base.IsValid(result))
                                     {
-                                        Key = consumeResult.Message.Key,
-                                        Value = JsonConvert.SerializeObject( await _accountService.CompleteRegistration(JsonConvert.DeserializeObject<CompleteRegistrationRequest>(consumeResult.Message.Value))),
-                                        Headers = [
-                                            new Header("method",Encoding.UTF8.GetBytes("completeRegistration")),
-                                            new Header("sender",Encoding.UTF8.GetBytes("userService")),
-                                        ]
-                                    }))
-                                    {
-                                        _logger.LogDebug("Successfully sent message {Key}",consumeResult.Message.Key);
-                                        _consumer.Commit(consumeResult);
-                                        
+                                        if(await base.Produce(_accountResponseTopic,new Message<string, string>()
+                                        {
+                                            Key = consumeResult.Message.Key,
+                                            Value = JsonConvert.SerializeObject( await _accountService.CompleteRegistration(result)),
+                                            Headers = [
+                                                new Header("method",Encoding.UTF8.GetBytes("completeRegistration")),
+                                                new Header("sender",Encoding.UTF8.GetBytes("userService")),
+                                            ]
+                                        }))
+                                        {
+                                            _logger.LogDebug("Successfully sent message {Key}",consumeResult.Message.Key);
+                                            _consumer.Commit(consumeResult);
+                                            break;
+                                        }
                                     }
+                                    _logger.LogError("Invalid request");
+                                    throw new ConsumerException("Invalid request");
                                 }
                                 catch (Exception e)
                                 {
-                                    if(e is MyKafkaException)
-                                    {
-                                        _logger.LogError(e,"Error sending message");
-                                        throw;
-                                    }
+                                   
                                     _ = await base.Produce(_accountResponseTopic, new Message<string, string>()
                                     {
                                         Key = consumeResult.Message.Key,
@@ -286,27 +304,29 @@ namespace UserService.KafkaServices
                             case "resendPasswordResetCode":
                                 try
                                 {
-                                    if(await base.Produce(_accountResponseTopic,new Message<string, string>()
+                                    var result = JsonConvert.DeserializeObject<ResendPasswordResetCodeRequest>(consumeResult.Message.Value);
+                                    if(base.IsValid(result))
                                     {
-                                        Key = consumeResult.Message.Key,
-                                        Value  = JsonConvert.SerializeObject(await _accountService.ResendPasswordResetCode(JsonConvert.DeserializeObject<ResendPasswordResetCodeRequest>(consumeResult.Message.Value))),
-                                        Headers = [
-                                            new Header("method",Encoding.UTF8.GetBytes("resendPasswordResetCode")),
-                                            new Header("sender",Encoding.UTF8.GetBytes("userService")),
-                                        ]
-                                    }))
-                                    {
-                                        _logger.LogDebug("Successfully sent message {Key}",consumeResult.Message.Key);
-                                        _consumer.Commit(consumeResult);
+                                        if(await base.Produce(_accountResponseTopic,new Message<string, string>()
+                                        {
+                                            Key = consumeResult.Message.Key,
+                                            Value  = JsonConvert.SerializeObject(await _accountService.ResendPasswordResetCode(result)),
+                                            Headers = [
+                                                new Header("method",Encoding.UTF8.GetBytes("resendPasswordResetCode")),
+                                                new Header("sender",Encoding.UTF8.GetBytes("userService")),
+                                            ]
+                                        }))
+                                        {
+                                            _logger.LogDebug("Successfully sent message {Key}",consumeResult.Message.Key);
+                                            _consumer.Commit(consumeResult);
+                                            break;
+                                        }
                                     }
+                                    
                                 }
                                 catch (Exception e)
                                 {
-                                    if(e is MyKafkaException)
-                                    {
-                                        _logger.LogError(e,"Error sending message");
-                                        throw;
-                                    }
+                                    
                                     _ = await base.Produce(_accountResponseTopic, new Message<string, string>()
                                     {
                                         Key = consumeResult.Message.Key,
@@ -324,27 +344,31 @@ namespace UserService.KafkaServices
                             case "resendRegistrationCode":
                                 try
                                 {
-                                    if(await base.Produce(_accountResponseTopic,new Message<string, string>()
+                                    var result = JsonConvert.DeserializeObject<ResendRegistrationCodeRequest>(consumeResult.Message.Value);
+                                    if(base.IsValid(result))
                                     {
-                                        Key = consumeResult.Message.Key, 
-                                        Value = JsonConvert.SerializeObject( await _accountService.ResendRegistrationCode(JsonConvert.DeserializeObject<ResendRegistrationCodeRequest>(consumeResult.Message.Value))),
-                                        Headers = [
-                                            new Header("method",Encoding.UTF8.GetBytes("resendRegistrationCode")),
-                                            new Header("sender",Encoding.UTF8.GetBytes("userService")),
-                                        ]
-                                    }))
-                                    {
-                                        _logger.LogDebug("Successfully sent message {Key}",consumeResult.Message.Key);
-                                        _consumer.Commit(consumeResult);
+
+                                        if(await base.Produce(_accountResponseTopic,new Message<string, string>()
+                                        {
+                                            Key = consumeResult.Message.Key, 
+                                            Value = JsonConvert.SerializeObject( await _accountService.ResendRegistrationCode(result)),
+                                            Headers = [
+                                                new Header("method",Encoding.UTF8.GetBytes("resendRegistrationCode")),
+                                                new Header("sender",Encoding.UTF8.GetBytes("userService")),
+                                            ]
+                                        }))
+                                        {
+                                            _logger.LogDebug("Successfully sent message {Key}",consumeResult.Message.Key);
+                                            _consumer.Commit(consumeResult);
+                                            break;
+                                        }
                                     }
+                                    _logger.LogError("Invalid request");
+                                    throw new ConsumerException("Invalid request");
                                 }   
                                 catch (Exception e)
                                 {
-                                    if(e is MyKafkaException)
-                                    {
-                                        _logger.LogError(e,"Error sending message");
-                                        throw;
-                                    }
+                                    
                                     _ = await base.Produce(_accountResponseTopic, new Message<string, string>()
                                     {
                                         Key = consumeResult.Message.Key,
@@ -362,27 +386,30 @@ namespace UserService.KafkaServices
                             case "verifyPasswordResetCode":
                                 try
                                 {
-                                    if(await base.Produce(_accountResponseTopic,new Message<string, string>()
+                                    var result = JsonConvert.DeserializeObject<VerifyPasswordResetCodeRequest>(consumeResult.Message.Value);
+                                    if(base.IsValid(result))
                                     {
-                                        Key = consumeResult.Message.Key,
-                                        Value = JsonConvert.SerializeObject( await _accountService.VerifyPasswordResetCode(JsonConvert.DeserializeObject<VerifyPasswordResetCodeRequest>(consumeResult.Message.Value))),
-                                        Headers = [
-                                            new Header("method",Encoding.UTF8.GetBytes("verifyPasswordResetCode")),
-                                            new Header("sender",Encoding.UTF8.GetBytes("userService")),
-                                        ]
-                                    }))
-                                    {
-                                        _logger.LogDebug("Successfully sent message {Key}",consumeResult.Message.Key);
-                                        _consumer.Commit(consumeResult);
+                                        if(await base.Produce(_accountResponseTopic,new Message<string, string>()
+                                        {
+                                            Key = consumeResult.Message.Key,
+                                            Value = JsonConvert.SerializeObject( await _accountService.VerifyPasswordResetCode(result)),
+                                            Headers = [
+                                                new Header("method",Encoding.UTF8.GetBytes("verifyPasswordResetCode")),
+                                                new Header("sender",Encoding.UTF8.GetBytes("userService")),
+                                            ]
+                                        }))
+                                        {
+                                            _logger.LogDebug("Successfully sent message {Key}",consumeResult.Message.Key);
+                                            _consumer.Commit(consumeResult);
+                                            break;
+                                        }
                                     }
+                                    _logger.LogError("Invalid request");
+                                    throw new ConsumerException("Invalid request");
                                 }
                                 catch (Exception e)
                                 {
-                                    if(e is MyKafkaException)
-                                    {
-                                        _logger.LogError(e,"Error sending message");
-                                        throw;
-                                    }
+                                    
                                     _ = await base.Produce(_accountResponseTopic, new Message<string, string>()
                                     {
                                         Key = consumeResult.Message.Key,
@@ -400,27 +427,29 @@ namespace UserService.KafkaServices
                             case "verifyRegistrationCode":
                                 try
                                 {
-                                    if(await base.Produce(_accountResponseTopic,new Message<string, string>()
+                                    var result = JsonConvert.DeserializeObject<VerifyRegistrationCodeRequest>(consumeResult.Message.Value);
+                                    if(base.IsValid(result))
                                     {
-                                        Key = consumeResult.Message.Key,
-                                        Value = JsonConvert.SerializeObject( await _accountService.VerifyRegistrationCode(JsonConvert.DeserializeObject<VerifyRegistrationCodeRequest>(consumeResult.Message.Value))),
-                                        Headers = [
-                                            new Header("method",Encoding.UTF8.GetBytes("verifyRegistrationCode")),
-                                            new Header("sender",Encoding.UTF8.GetBytes("userService")),
-                                        ]
-                                    }))
-                                    {
-                                        _logger.LogDebug("Successfully sent message {Key}",consumeResult.Message.Key);
-                                        _consumer.Commit(consumeResult);
+                                        if(await base.Produce(_accountResponseTopic,new Message<string, string>()
+                                        {
+                                            Key = consumeResult.Message.Key,
+                                            Value = JsonConvert.SerializeObject( await _accountService.VerifyRegistrationCode(result)),
+                                            Headers = [
+                                                new Header("method",Encoding.UTF8.GetBytes("verifyRegistrationCode")),
+                                                new Header("sender",Encoding.UTF8.GetBytes("userService")),
+                                            ]
+                                        }))
+                                        {
+                                            _logger.LogDebug("Successfully sent message {Key}",consumeResult.Message.Key);
+                                            _consumer.Commit(consumeResult);
+                                            break;
+                                        }
                                     }
+                                    _logger.LogError("Invalid request");
+                                    throw new ConsumerException("Invalid request");
                                 }
                                 catch (Exception e)
                                 {
-                                    if(e is MyKafkaException)
-                                    {
-                                        _logger.LogError(e,"Error sending message");
-                                        throw;
-                                    }
                                     _ = await base.Produce(_accountResponseTopic, new Message<string, string>()
                                     {
                                         Key = consumeResult.Message.Key,
@@ -439,27 +468,29 @@ namespace UserService.KafkaServices
                                 try
                                 {
                                     var request = JsonConvert.DeserializeObject<GetUserRequest>(consumeResult.Message.Value);
-                                    if(await base.Produce(_accountResponseTopic,new Message<string, string>()
+                                    if(base.IsValid(request))
                                     {
-                                        Key = consumeResult.Message.Key,
-                                        Value = JsonConvert.SerializeObject( await _accountService.GetUser(request.UserId,request)),
-                                        Headers = [
-                                            new Header("method",Encoding.UTF8.GetBytes("getUser")),
-                                            new Header("sender",Encoding.UTF8.GetBytes("userService")),
-                                        ]
-                                    }))
-                                    {
-                                        _logger.LogDebug("Successfully sent message {Key}",consumeResult.Message.Key);
-                                        _consumer.Commit(consumeResult);
+                                        if(await base.Produce(_accountResponseTopic,new Message<string, string>()
+                                        {
+                                            Key = consumeResult.Message.Key,
+                                            Value = JsonConvert.SerializeObject( await _accountService.GetUser(request.UserId,request)),
+                                            Headers = [
+                                                new Header("method",Encoding.UTF8.GetBytes("getUser")),
+                                                new Header("sender",Encoding.UTF8.GetBytes("userService")),
+                                            ]
+                                        }))
+                                        {
+                                            _logger.LogDebug("Successfully sent message {Key}",consumeResult.Message.Key);
+                                            _consumer.Commit(consumeResult);
+                                            break;
+                                        }
                                     }
+                                     _logger.LogError("Invalid request");
+                                    throw new ConsumerException("Invalid request");
                                 }
                                 catch (Exception e)
                                 {
-                                    if(e is MyKafkaException)
-                                    {
-                                        _logger.LogError(e,"Error sending message");
-                                        throw;
-                                    }
+                                    
                                     _ = await base.Produce(_accountResponseTopic, new Message<string, string>()
                                     {
                                         Key = consumeResult.Message.Key,
@@ -485,19 +516,14 @@ namespace UserService.KafkaServices
             }
             catch(Exception ex)
             {
-                if(_consumer != null)
-                { 
-                    _consumer.Dispose();
-                }
+               
                 if (ex is MyKafkaException)
                 {
                     _logger.LogError(ex,"Consumer error");
-                    throw new ConsumerException("Consumer error ",ex);
                 }
                 else
                 {
                     _logger.LogError(ex,"Unhandled error");
-                    throw;
                 }
             }
         }

@@ -1,8 +1,0 @@
-/home/ereshkigal/hakathon/vtb/vtb-api-2024/TourService/obj/Debug/net8.0/TourService.csproj.AssemblyReference.cache
-/home/ereshkigal/hakathon/vtb/vtb-api-2024/TourService/obj/Debug/net8.0/TourService.GeneratedMSBuildEditorConfig.editorconfig
-/home/ereshkigal/hakathon/vtb/vtb-api-2024/TourService/obj/Debug/net8.0/TourService.AssemblyInfoInputs.cache
-/home/ereshkigal/hakathon/vtb/vtb-api-2024/TourService/obj/Debug/net8.0/TourService.AssemblyInfo.cs
-/home/ereshkigal/hakathon/vtb/vtb-api-2024/TourService/obj/Debug/net8.0/TourService.csproj.CoreCompileInputs.cache
-/home/ereshkigal/hakathon/vtb/vtb-api-2024/TourService/obj/Debug/net8.0/TourService.MvcApplicationPartsAssemblyInfo.cs
-/home/ereshkigal/hakathon/vtb/vtb-api-2024/TourService/obj/Debug/net8.0/TourService.MvcApplicationPartsAssemblyInfo.cache
-/home/ereshkigal/hakathon/vtb/vtb-api-2024/TourService/obj/Debug/net8.0/TourService.sourcelink.json
