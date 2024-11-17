@@ -112,7 +112,7 @@ namespace TourService.Services.TourService
                         .Where(tt => getTours.TourTags.Contains(tt.TagId))
                         .Select(tt => tt.TourId);
 
-                    var tours = allTours
+                    tours = allTours
                         .Where(t => selectedCategories.Contains(t.Id) && selectedTags.Contains(t.Id))
                         .Where(t => t.Rating >= getTours.MinimalRating && t.Rating <= getTours.MaximalRating)
                         .Where(t => t.Price >= getTours.MinimalPrice && t.Price <= getTours.MaximalPrice)
@@ -123,7 +123,7 @@ namespace TourService.Services.TourService
                 }
                 else if(getTours.Categories!=null)
                 {
-                    var tours = _unitOfWork.Tours.GetAll()
+                    tours = _unitOfWork.Tours.GetAll()
                         .Where(t => 
                             _unitOfWork.TourCategories.GetAll()
                                 .Where(tc => getTours.Categories.Contains(tc.CategoryId))
@@ -139,7 +139,7 @@ namespace TourService.Services.TourService
                 }
                 else if(getTours.TourTags!=null)
                 {
-                    var tours = _unitOfWork.Tours.GetAll()
+                    tours = _unitOfWork.Tours.GetAll()
                         .Where(t => 
                             _unitOfWork.TourTags.GetAll()
                                 .Where(tt => getTours.TourTags.Contains(tt.TagId))
