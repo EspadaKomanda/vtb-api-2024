@@ -72,7 +72,7 @@ namespace TourService.Kafka
                                 EnableAutoCommit = true,
                                 AutoCommitIntervalMs = 10,
                                 EnableAutoOffsetStore = true,
-                                AutoOffsetReset = AutoOffsetReset.Earliest
+                                AutoOffsetReset = AutoOffsetReset.Latest
 
                             }
                         ).Build()
