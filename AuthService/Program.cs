@@ -84,4 +84,5 @@ Thread thread2 = new(x => {
    });
 });
 thread1.Start();
+thread2.Start();
 app.Run();
