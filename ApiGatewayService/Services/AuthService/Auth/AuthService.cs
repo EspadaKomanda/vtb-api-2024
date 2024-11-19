@@ -1,4 +1,5 @@
 using System.Text;
+using System.Threading.Tasks;
 using ApiGatewayService.Models.AuthService.Authentication.Requests;
 using ApiGatewayService.Models.AuthService.Authentication.Responses;
 using ApiGatewayService.Services.UserService.Account;
@@ -53,6 +54,18 @@ public class AuthService(ILogger<AccountService> logger, KafkaRequestService kaf
         try
         {
             return await SendRequest<RefreshRequest,RefreshResponse>("refresh",request);
+        }
+        catch(Exception)
+        {
+            throw;
+        }
+    }
+
+    public async Task<LoginResponse> Login(LoginRequest request)
+    {
+        try
+        {
+            return await SendRequest<LoginRequest,LoginResponse>("login", request);
         }
         catch(Exception)
         {

@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using ApiGatewayService.Models.AuthService.Authentication.Requests;
 using ApiGatewayService.Models.AuthService.Authentication.Responses;
 using ApiGatewayService.Services.AuthService.Auth;
@@ -12,6 +13,25 @@ public class AuthController(ILogger<AuthController> logger, IAuthService authSer
 {
     private readonly ILogger<AuthController> _logger = logger;
     private readonly IAuthService _authService = authService;
+
+    [HttpPost]
+    [Route("login")]
+    public async Task<IActionResult> Login([FromBody] LoginRequest request)
+    {
+        try
+        {
+            var result = await _authService.Login(request);
+            return Ok(result);
+        }
+        catch(Exception ex)
+        {
+            if(ex is MyKafkaException)
+            {
+                return StatusCode(500, ex.Message);
+            }
+            return BadRequest(ex.Message);
+        }
+    }
 
     [HttpPost]
     [Route("validateAccessToken")]
