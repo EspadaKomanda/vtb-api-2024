@@ -145,12 +145,13 @@ public class AccountService(IUnitOfWork unitOfWork, ILogger<AccountService> logg
 
         using var transaction = _uow.BeginTransaction();
         
+        _logger.LogDebug("Inserting user {user.Id} with email {request.Email} and username {request.Username}",  request.Email, request.Username);
         // User creation
         user = new User
         {
             Email = request.Email,
             Username = request.Username,
-            Password = request.Password,
+            Password = BcryptUtils.HashPassword(request.Password),
             Salt = Guid.NewGuid().ToString()
         };
         try
