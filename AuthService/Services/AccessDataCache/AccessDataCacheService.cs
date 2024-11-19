@@ -103,9 +103,9 @@ public class AccessDataCacheService(IDistributedCache cache, ILogger<AccessDataC
         _logger.LogDebug("Retrieving user from cache...");
         try 
         {
-            var user = await _cache.GetStringAsync(username);
-            _logger.LogDebug(user);
-            if (user == null)
+            var user = JsonConvert.DeserializeObject<UserAccessData>(await _cache.GetStringAsync(username));
+            _logger.LogDebug(user.Username);
+            if (user.Username == null)
             {
                 _logger.LogDebug("User not found in cache, requesting user from userservice...");
                 var response = await SendRequest<AccountAccessDataRequest,AccountAccessDataResponse>("accountAccessData",new AccountAccessDataRequest { Username = username });
