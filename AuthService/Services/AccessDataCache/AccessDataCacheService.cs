@@ -1,5 +1,4 @@
 using System.Text;
-using System.Text.Json;
 using ApiGatewayService.Models.UserService.Account.Requests;
 using ApiGatewayService.Models.UserService.Account.Responses;
 using AuthService.Models.AccessDataCache.Requests;
@@ -57,11 +56,11 @@ public class AccessDataCacheService(IDistributedCache cache, ILogger<AccessDataC
         _logger.LogDebug("Retrieving user from cache...");
         try 
         {
-            var userBytes = await _cache.GetAsync(username);
+            var userBytes = await _cache.GetStringAsync(username);
 
-            return userBytes == null ? null : System.Text.Json.JsonSerializer.Deserialize<UserAccessData>(userBytes);
+            return JsonConvert.DeserializeObject<UserAccessData>(userBytes);
         }
-        catch (System.Text.Json.JsonException)
+        catch (JsonException)
         {
             // Clear cache if deserialization fails
             _logger.LogError("Deserialization failed, removing user from cache...");
@@ -105,7 +104,7 @@ public class AccessDataCacheService(IDistributedCache cache, ILogger<AccessDataC
         try 
         {
             var user = await _cache.GetStringAsync(username);
-
+            _logger.LogDebug(user);
             if (user == null)
             {
                 _logger.LogDebug("User not found in cache, requesting user from userservice...");
