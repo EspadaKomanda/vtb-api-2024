@@ -124,7 +124,7 @@ public class AccessDataCacheService(IDistributedCache cache, ILogger<AccessDataC
                 };
             }
 
-            return JsonConvert.DeserializeObject<UserAccessData>(user);   
+            return user;   
         }
         catch (Newtonsoft.Json.JsonException)
         {
