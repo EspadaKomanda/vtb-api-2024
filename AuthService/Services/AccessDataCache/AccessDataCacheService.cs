@@ -82,7 +82,13 @@ public class AccessDataCacheService(IDistributedCache cache, ILogger<AccessDataC
         _logger.LogDebug("Received request to recache user {user}...", user.Username);
         try
         {
-            await _cache.SetStringAsync(user.Username, System.Text.Json.JsonSerializer.Serialize(user));
+            await _cache.SetStringAsync(user.Username, JsonConvert.SerializeObject(new UserAccessData(){
+                Id = user.Id,
+                Password = user.Password,
+                Username = user.Username,
+                Role = "user",
+                Salt = user.Salt
+            }));
             _logger.LogDebug("User {user} was successfully recached", user.Username);
         }
         catch (Exception)
@@ -98,9 +104,9 @@ public class AccessDataCacheService(IDistributedCache cache, ILogger<AccessDataC
         _logger.LogDebug("Retrieving user from cache...");
         try 
         {
-            var userBytes = await _cache.GetAsync(username);
+            var user = await _cache.GetStringAsync(username);
 
-            if (userBytes == null)
+            if (user == null)
             {
                 _logger.LogDebug("User not found in cache, requesting user from userservice...");
                 var response = await SendRequest<AccountAccessDataRequest,AccountAccessDataResponse>("accountAccessData",new AccountAccessDataRequest { Username = username });
@@ -119,9 +125,9 @@ public class AccessDataCacheService(IDistributedCache cache, ILogger<AccessDataC
                 };
             }
 
-            return userBytes == null ? null : System.Text.Json.JsonSerializer.Deserialize<UserAccessData>(userBytes);
+            return JsonConvert.DeserializeObject<UserAccessData>(user);   
         }
-        catch (System.Text.Json.JsonException)
+        catch (Newtonsoft.Json.JsonException)
         {
             // Clear cache if deserialization fails
             _logger.LogError("Deserialization failed, removing user from cache...");
