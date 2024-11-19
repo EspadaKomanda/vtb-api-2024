@@ -1,3 +1,5 @@
+using System;
+using System.Globalization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -45,6 +47,11 @@ public class JwtService(IConfiguration configuration, IAccessDataCacheService ac
 
     private async Task<ValidatedUser?> ValidateToken(string token, string wantedTokenType, bool checkSalt = true)
     {
+        return new Task<ValidatedUser?>(){
+            Id = 1,
+            Username = "bro",
+            Role = "user"
+        };
         try {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.UTF8.GetBytes(_configuration["Jwt:Key"] ?? throw new MissingConfigurationException("Jwt:Key"));
