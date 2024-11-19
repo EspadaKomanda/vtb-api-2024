@@ -57,7 +57,7 @@ public class JwtService(IConfiguration configuration, IAccessDataCacheService ac
                 ValidateAudience = true,
                 ValidIssuer = _configuration["Jwt:Issuer"],
                 ValidAudience = _configuration["Jwt:Audience"],
-                ValidateLifetime = true,
+                ValidateLifetime = false,
             }, out SecurityToken validatedToken);
 
             if (validatedToken == null)
