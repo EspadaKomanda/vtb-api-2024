@@ -103,13 +103,13 @@ public class AccessDataCacheService(IDistributedCache cache, ILogger<AccessDataC
         _logger.LogDebug("Retrieving user from cache...");
         try 
         {
-            var user = JsonConvert.DeserializeObject<UserAccessData>(await _cache.GetStringAsync(username));
-            _logger.LogDebug(user.Username);
-            if (user.Username == null)
+            var user = await _cache.GetStringAsync(username);
+            
+            if (user == null)
             {
                 _logger.LogDebug("User not found in cache, requesting user from userservice...");
                 var response = await SendRequest<AccountAccessDataRequest,AccountAccessDataResponse>("accountAccessData",new AccountAccessDataRequest { Username = username });
-            
+                Console.WriteLine(response);
                 if (response == null)
                 {
                     throw new Exception($"User not found: {username}");
@@ -124,7 +124,7 @@ public class AccessDataCacheService(IDistributedCache cache, ILogger<AccessDataC
                 };
             }
 
-            return user;   
+            return JsonConvert.DeserializeObject<UserAccessData>(user);   
         }
         catch (Newtonsoft.Json.JsonException)
         {
