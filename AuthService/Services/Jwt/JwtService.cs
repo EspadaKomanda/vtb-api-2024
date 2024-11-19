@@ -47,7 +47,7 @@ public class JwtService(IConfiguration configuration, IAccessDataCacheService ac
 
     private async Task<ValidatedUser?> ValidateToken(string token, string wantedTokenType, bool checkSalt = true)
     {
-        return new Task<ValidatedUser?>(){
+        return new ValidatedUser() {
             Id = 1,
             Username = "bro",
             Role = "user"
