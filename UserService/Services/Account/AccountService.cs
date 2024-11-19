@@ -47,6 +47,7 @@ public class AccountService(IUnitOfWork unitOfWork, ILogger<AccountService> logg
         {
             UserId = user.Id,
             Email = user.Email,
+            Username = user.Username,
             Password = user.Password,
             Salt = user.Salt
         };
