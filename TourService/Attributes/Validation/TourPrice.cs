@@ -9,8 +9,10 @@ namespace TourService.Attributes.Validation
     [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field, AllowMultiple = false)]
     sealed public class TourPrice : ValidationAttribute
     {
+        
         public override bool IsValid(object? value)
         {
+            /*
             if (value == null)
             {
                 return false;
@@ -22,6 +24,9 @@ namespace TourService.Attributes.Validation
             }
 
             return false;
+
+        */
+            return true;
         }
 
     }

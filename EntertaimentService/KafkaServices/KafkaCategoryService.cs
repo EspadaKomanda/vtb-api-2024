@@ -10,13 +10,17 @@ using EntertaimentService.Kafka.Utils;
 using EntertaimentService.KafkaException;
 using EntertaimentService.KafkaException.ConsumerException;
 using EntertaimentService.Models.Category.Requests;
-using EntertaimentService.Models.Category.Responses;
 using EntertaimentService.Services.CategoryService;
+using TourService.Models.Category.Responses;
+using TourService.Models.Category.Requests;
+using TourService.Kafka;
 
 namespace EntertaimentService.KafkaServices
 {
     public class KafkaCegoryService : KafkaService
     {
+
+        //FIXME: If mykafkaException i have to reconfigure the producer
         private readonly string _categoryRequestTopic = Environment.GetEnvironmentVariable("CATEGORY_REQUEST_TOPIC") ?? "categoryRequestTopic";
         private readonly string _categoryResponseTopic = Environment.GetEnvironmentVariable("CATEGORY_RESPONSE_TOPIC") ?? "categoryResponseTopic"; 
         private readonly ICategoryService _categoryService;
@@ -73,18 +77,14 @@ namespace EntertaimentService.KafkaServices
 
                                             _logger.LogInformation("Successfully sent message {Key}",consumeResult.Message.Key);
                                             _consumer.Commit(consumeResult);
+                                            break;
                                         }
                                     }
                                     _logger.LogError("Request validation error");
-                                    throw new RequestValidationException("Request validation error");
                                 }
                                 catch (Exception e)
                                 {
-                                    if(e is MyKafkaException)
-                                    {
-                                        _logger.LogError(e,"Error sending message");
-                                        throw;
-                                    }
+                                   
                                      _ = await base.Produce(_categoryResponseTopic, new Message<string, string>()
                                     {
                                         Key = consumeResult.Message.Key,
@@ -122,18 +122,14 @@ namespace EntertaimentService.KafkaServices
 
                                             _logger.LogInformation("Successfully sent message {Key}",consumeResult.Message.Key);
                                             _consumer.Commit(consumeResult);
+                                            break;
                                         }
                                     }
                                     _logger.LogError("Request validation error");
-                                    throw new RequestValidationException("Invalid request");
                                 }
                                 catch (Exception e)
                                 {
-                                    if(e is MyKafkaException)
-                                    {
-                                        _logger.LogError(e,"Error sending message");
-                                        throw;
-                                    }
+                                    
                                      _ = await base.Produce(_categoryResponseTopic, new Message<string, string>()
                                     {
                                         Key = consumeResult.Message.Key,
@@ -170,18 +166,14 @@ namespace EntertaimentService.KafkaServices
 
                                             _logger.LogInformation("Successfully sent message {Key}",consumeResult.Message.Key);
                                             _consumer.Commit(consumeResult);
+                                            break;
                                         }
                                     }
                                     _logger.LogError("Request validation error");
-                                    throw new RequestValidationException("Invalid request");
                                 }
                                 catch (Exception e)
                                 {
-                                    if(e is MyKafkaException)
-                                    {
-                                        _logger.LogError(e,"Error sending message");
-                                        throw;
-                                    }
+                                   
                                      _ = await base.Produce(_categoryResponseTopic, new Message<string, string>()
                                     {
                                         Key = consumeResult.Message.Key,
@@ -218,18 +210,14 @@ namespace EntertaimentService.KafkaServices
 
                                             _logger.LogInformation("Successfully sent message {Key}",consumeResult.Message.Key);
                                             _consumer.Commit(consumeResult);
+                                            break;
                                         }
                                     }
                                     _logger.LogError("Request validation error");
-                                    throw new RequestValidationException("Invalid request");
                                 }
                                 catch (Exception e)
                                 {
-                                    if(e is MyKafkaException)
-                                    {
-                                        _logger.LogError(e,"Error sending message");
-                                        throw;
-                                    }
+                                   
                                      _ = await base.Produce(_categoryResponseTopic, new Message<string, string>()
                                     {
                                         Key = consumeResult.Message.Key,
@@ -266,18 +254,14 @@ namespace EntertaimentService.KafkaServices
 
                                             _logger.LogInformation("Successfully sent message {Key}",consumeResult.Message.Key);
                                             _consumer.Commit(consumeResult);
+                                            break;
                                         }
                                     }
                                     _logger.LogError("Request validation error");
-                                    throw new RequestValidationException("Invalid request");
                                 }
                                 catch (Exception e)
                                 {
-                                    if(e is MyKafkaException)
-                                    {
-                                        _logger.LogError(e,"Error sending message");
-                                        throw;
-                                    }
+                                    
                                      _ = await base.Produce(_categoryResponseTopic, new Message<string, string>()
                                     {
                                         Key = consumeResult.Message.Key,
@@ -294,8 +278,7 @@ namespace EntertaimentService.KafkaServices
                                 break;
                             default: 
                                 _consumer.Commit(consumeResult);
-                                
-                                throw new ConsumerRecievedMessageInvalidException("Invalid message received");
+                                break;
                         }
 
                     }
@@ -303,19 +286,15 @@ namespace EntertaimentService.KafkaServices
             }
             catch(Exception ex)
             {
-                if(_consumer != null)
-                { 
-                    _consumer.Dispose();
-                }
+                
                 if (ex is MyKafkaException)
                 {
                     _logger.LogError(ex,"Consumer error");
-                    throw new ConsumerException("Consumer error ",ex);
                 }
                 else
                 {
                     _logger.LogError(ex,"Unhandled error");
-                    throw;
+                    
                 }
             }
         }

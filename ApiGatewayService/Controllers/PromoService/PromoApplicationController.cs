@@ -1,32 +1,80 @@
+using ApiGatewayService.Models.PromoService.PromoApplication.Requests;
+using ApiGatewayService.Services.PromoService.PromoApplication;
 using Microsoft.AspNetCore.Mvc;
+using TourService.KafkaException;
 
 namespace ApiGatewayService.Controllers.PromoService;
 
 [ApiController]
 [Route("api/[controller]")]
-public class PromoApplicationController : ControllerBase
+public class PromoApplicationController(ILogger<PromoApplicationController> logger, IPromoApplicationService promoappservice) : ControllerBase
 {
+    private readonly ILogger<PromoApplicationController> _logger = logger;
+    private readonly IPromoApplicationService _promoAppService = promoappservice;
+
     /// <summary>
-    /// Фиксирует факт использования пользователем промокода для определенного набора товаров
+    /// Выполняет проверку промокода на валидность в заказе
     /// </summary>
-    public Task<IActionResult> RegisterPromoUse(long userId)
+    [HttpPost]
+    [Route("promoApplications")]
+    public async Task<IActionResult> RegisterPromoApplication(RegisterPromoUseRequest request)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var result = await _promoAppService.RegisterPromoUse(request);
+            return Ok(result);
+        }
+        catch(Exception ex)
+        {
+            if(ex is MyKafkaException)
+            {
+                return StatusCode(500, ex.Message);
+            }
+            return BadRequest(ex.Message);
+        }
     }
 
     /// <summary>
-    /// Позволяет удостовериться, что пользователь может применить промокод для данного набора товаров
+    /// Выполняет проверку промокода на валидность в заказе
     /// </summary>
-    public Task<IActionResult> ValidatePromocodeApplication(long userId)
+    [HttpPost]
+    [Route("validateApplication")]
+    public async Task<IActionResult> ValidatePromocodeApplication(ValidatePromocodeApplicationRequest request)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var result = await _promoAppService.ValidatePromocodeApplication(request);
+            return Ok(result);
+        }
+        catch(Exception ex)
+        {
+            if(ex is MyKafkaException)
+            {
+                return StatusCode(500, ex.Message);
+            }
+            return BadRequest(ex.Message);
+        }
     }
 
     /// <summary>
     /// Позволяет получить промокоды, использованные пользователем, и информацию о них
     /// </summary>
-    public Task<IActionResult> GetMyPromoApplications(long userId)
+    [HttpGet]
+    [Route("promoApplications")]
+    public IActionResult GetMyPromoApplications(GetMyPromoApplicationsRequest request)
     {
-        throw new NotImplementedException();
+        try
+        {
+            var result = _promoAppService.GetMyPromoApplications(request);
+            return Ok(result);
+        }
+        catch(Exception ex)
+        {
+            if(ex is MyKafkaException)
+            {
+                return StatusCode(500, ex.Message);
+            }
+            return BadRequest(ex.Message);
+        }
     }
 }

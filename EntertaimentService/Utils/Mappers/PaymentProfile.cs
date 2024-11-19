@@ -6,6 +6,7 @@ using AutoMapper;
 using EntertaimentService.Database.Models;
 using EntertaimentService.Models.PaymentMethod;
 using EntertaimentService.Models.PaymentVariant;
+using TourService.Models.PaymentMethod;
 
 namespace EntertaimentService.Utils.Mappers
 {

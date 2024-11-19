@@ -1,6 +1,6 @@
 ﻿using Confluent.Kafka;
 using Confluent.Kafka.Admin;
-using TourService.KafkaException;
+using EntertaimentService.KafkaException;
 
 namespace TourService.Kafka;
 
@@ -69,6 +69,6 @@ public class KafkaTopicManager(IAdminClient adminClient)
             throw new CreateTopicException("Failed to create topic");
         }
     }
-    
+
   
 }

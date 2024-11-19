@@ -15,6 +15,7 @@ namespace TourService.Attributes.Validation
 
         public override bool IsValid(object? value)
         {
+            /*
             if (value == null)
             {
                 return false;
@@ -35,7 +36,7 @@ namespace TourService.Attributes.Validation
                     return false;
                 }
             }
-
+*/
             return true;
         }
 

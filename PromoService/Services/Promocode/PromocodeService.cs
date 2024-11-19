@@ -71,7 +71,7 @@ public class PromocodeService(IUnitOfWork unitOfWork, ILogger<PromocodeService> 
         }
     }
 
-    public GetActivePromocodesResponse GetActivePromocodes(GetActivePromocodesResponse request)
+    public GetActivePromocodesResponse GetActivePromocodes(GetActivePromocodesRequest request)
     {
         try
         {

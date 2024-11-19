@@ -7,6 +7,8 @@ using Amazon.S3.Model;
 using Amazon.S3.Util;
 using EntertaimentService.Exceptions.S3ServiceExceptions;
 using EntertaimentService.Database.Models;
+using EntertaimentService.Utils.Models;
+using TourService.Exceptions.S3ServiceExceptions;
 
 namespace EntertaimentService.Services.S3
 {

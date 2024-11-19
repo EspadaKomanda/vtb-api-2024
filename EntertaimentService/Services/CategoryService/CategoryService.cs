@@ -7,6 +7,8 @@ using EntertaimentService.Database.Models;
 using EntertaimentService.Exceptions.Database;
 using EntertaimentService.Models.Category;
 using EntertaimentService.Models.Category.Requests;
+using TourService.Models.Category;
+using TourService.Models.Category.Requests;
 using UserService.Repositories;
 
 namespace EntertaimentService.Services.CategoryService

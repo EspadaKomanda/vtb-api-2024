@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using TourService.Database.Models;
-using TourService.Exceptions.Database;
+using EntertaimentService.Database.Models;
+using EntertaimentService.Exceptions.Database;
+using EntertaimentService.Models.PaymentMethod.Requests;
+using EntertaimentService.Services.PaymentMethodService;
 using TourService.Models.PaymentMethod;
-using TourService.Models.PaymentMethod.Requests;
 using UserService.Repositories;
 
 namespace TourService.Services.PaymentMethodService

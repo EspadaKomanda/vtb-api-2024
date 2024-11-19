@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using EntertaimentService.Database.Models;
 using EntertaimentService.Models.Category;
+using TourService.Models.Category;
 
 namespace EntertaimentService.Utils.Mappers
 {

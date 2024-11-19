@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using ApiGatewayService.Models.UserService.Account.Requests;
 using ApiGatewayService.Models.UserService.Account.Responses;
+using UserService.Models.Account.Requests;
+using UserService.Models.Account.Responses;
 
 namespace ApiGatewayService.Services.UserService.Account
 {

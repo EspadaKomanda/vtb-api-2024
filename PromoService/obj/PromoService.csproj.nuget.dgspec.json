@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/greg/Desktop/vtb/PromoService/PromoService.csproj": {}
+    "/home/ereshkigal/hakathon/vtb/vtb-api-2024/PromoService/PromoService.csproj": {}
   },
   "projects": {
-    "/home/greg/Desktop/vtb/PromoService/PromoService.csproj": {
+    "/home/ereshkigal/hakathon/vtb/vtb-api-2024/PromoService/PromoService.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/greg/Desktop/vtb/PromoService/PromoService.csproj",
+        "projectUniqueName": "/home/ereshkigal/hakathon/vtb/vtb-api-2024/PromoService/PromoService.csproj",
         "projectName": "PromoService",
-        "projectPath": "/home/greg/Desktop/vtb/PromoService/PromoService.csproj",
-        "packagesPath": "/home/greg/.nuget/packages/",
-        "outputPath": "/home/greg/Desktop/vtb/PromoService/obj/",
+        "projectPath": "/home/ereshkigal/hakathon/vtb/vtb-api-2024/PromoService/PromoService.csproj",
+        "packagesPath": "/home/ereshkigal/.nuget/packages/",
+        "outputPath": "/home/ereshkigal/hakathon/vtb/vtb-api-2024/PromoService/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/greg/.nuget/NuGet/NuGet.Config"
+          "/home/ereshkigal/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -38,6 +38,18 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Confluent.Kafka": {
+              "target": "Package",
+              "version": "[2.4.0, )"
+            },
+            "Confluent.SchemaRegistry": {
+              "target": "Package",
+              "version": "[2.4.0, )"
+            },
+            "Confluent.SchemaRegistry.Serdes.Json": {
+              "target": "Package",
+              "version": "[2.4.0, )"
+            },
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[8.0.10, )"

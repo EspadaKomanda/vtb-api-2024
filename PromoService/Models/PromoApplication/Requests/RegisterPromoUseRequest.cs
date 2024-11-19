@@ -4,6 +4,7 @@ namespace PromoService.Models.PromoApplication.Requests;
 
 public class RegisterPromoUseRequest
 {
+    public long UserId { get; set; }
     [Required]
     public string PromoCode { get; set; } = null!;
 

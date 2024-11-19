@@ -1,3 +1,12 @@
+using System.Text;
+using AuthService.Models.AccessDataCache.Requests;
+using AuthService.Models.AccessDataCache.Responses;
+using Confluent.Kafka;
+using MailService.Models.Mail.Requests;
+using MailService.Models.Mail.Responses;
+using Newtonsoft.Json;
+using TourService.Kafka;
+using TourService.KafkaException.ConsumerException;
 using UserService.Database.Models;
 using UserService.Exceptions.Account;
 using UserService.Models.Account.Requests;
@@ -7,10 +16,11 @@ using UserService.Utils;
 
 namespace UserService.Services.Account;
 
-public class AccountService(IUnitOfWork unitOfWork, ILogger<AccountService> logger) : IAccountService
+public class AccountService(IUnitOfWork unitOfWork, ILogger<AccountService> logger, KafkaRequestService kafkaService) : IAccountService
 {
     private readonly IUnitOfWork _uow = unitOfWork;
     private readonly ILogger<AccountService> _logger = logger;
+    private readonly KafkaRequestService _kafkaService = kafkaService;
 
     public async Task<AccountAccessDataResponse> AccountAccessData(AccountAccessDataRequest request)
     {
@@ -94,7 +104,15 @@ public class AccountService(IUnitOfWork unitOfWork, ILogger<AccountService> logg
             throw;
         }
 
-        // TODO: Send email
+        var mailRequest = new SendMailRequest()
+        {
+            Body = $"Reset code: {existingCode.Code}",
+            ToAddress = user.Email,
+            IsDummy = true,
+            Subject = "Password reset",
+            IsHtml = false
+        };
+        var response = await SendEmail(mailRequest);
         _logger.LogWarning("Mailing backend is not yet implemented, reset code {existingCode.Code} for user {user.Id} was not sent", existingCode.Code, user.Id);
 
         _logger.LogDebug("Reset code for user {user.Id} sent", user.Id);
@@ -125,6 +143,8 @@ public class AccountService(IUnitOfWork unitOfWork, ILogger<AccountService> logg
             _logger.LogDebug("Email {request.Email} and username {request.Username} are not taken, proceeding with registration", request.Email, request.Username);
         }
 
+        using var transaction = _uow.BeginTransaction();
+        
         // User creation
         user = new User
         {
@@ -151,7 +171,6 @@ public class AccountService(IUnitOfWork unitOfWork, ILogger<AccountService> logg
             UserId = user.Id
         };
 
-        using var transaction = _uow.BeginTransaction();
         try
         {
             await _uow.RegistrationCodes.AddAsync(regCode);
@@ -166,9 +185,15 @@ public class AccountService(IUnitOfWork unitOfWork, ILogger<AccountService> logg
         }
         
 
-        // TODO: Send email
-        _logger.LogWarning("Mailing backend is not yet implemented, registration code for user {user.Id} was not sent", user.Id);
-
+        var mailRequest = new SendMailRequest()
+        {
+            Body = $"Registration code: {regCode.Code}",
+            ToAddress = user.Email,
+            IsDummy = true,
+            Subject = "Registration code",
+            IsHtml = false
+        };
+        var response = await SendEmail(mailRequest);
         _logger.LogDebug("Registration code for user {user.Id} sent", user.Id);
 
         _logger.LogDebug("Replying with success");
@@ -215,17 +240,33 @@ public class AccountService(IUnitOfWork unitOfWork, ILogger<AccountService> logg
             throw;
         }
 
-        // TODO: Ask AuthService and ApiGateway to recache information
+        if(RecacheInfo(new RecacheUserRequest(){
+            Password = user.Password,
+            Salt = user.Salt,
+            Username = user.Username,
+            Role = user.Role.Name,
+
+        }).Result.IsSuccess)
+        {
+            _logger.LogWarning("Mailing backend is not yet implemented, notification for user {user.Id} was not sent", user.Id);
+            var EmailRequest = new SendMailRequest()
+            {
+                Body = "Password changed",
+                ToAddress = user.Email,
+                IsDummy = true,
+                Subject = "Password changed",
+                IsHtml = false
+            };
+            var result = await SendEmail(EmailRequest);
+            _logger.LogDebug("Replying with success");
+            return new ChangePasswordResponse
+            {
+                IsSuccess = true
+            };
+        }
         _logger.LogWarning("Warning! UserService MUST notify AuthService and ApiGateway to recache information for user {user.Id}, but this feature is not yet implemented!", user.Id);
 
-        // TODO: Send notification email
-        _logger.LogWarning("Mailing backend is not yet implemented, notification for user {user.Id} was not sent", user.Id);
-
-        _logger.LogDebug("Replying with success");
-        return new ChangePasswordResponse
-        {
-            IsSuccess = true
-        };
+        throw new Exception("Failed to recache user information");
     }
 
     public async Task<CompletePasswordResetResponse> CompletePasswordReset(CompletePasswordResetRequest request)
@@ -265,17 +306,34 @@ public class AccountService(IUnitOfWork unitOfWork, ILogger<AccountService> logg
         }
 
 
-        // TODO: Ask AuthService and ApiGateway to recache information
-        _logger.LogWarning("Warning! UserService MUST notify AuthService and ApiGateway to recache information for user {user.Id}, but this feature is not yet implemented!", user.Id);
+        if(RecacheInfo(new RecacheUserRequest(){
+            Password = user.Password,
+            Salt = user.Salt,
+            Username = user.Username,
+            Role = user.Role.Name,
 
-        // TODO: Send notification email
-        _logger.LogWarning("Mailing backend is not yet implemented, notification for user {user.Id} was not sent", user.Id);
-
-        _logger.LogDebug("Replying with success");
-        return new CompletePasswordResetResponse
+        }).Result.IsSuccess)
         {
-            IsSuccess = true
-        };
+            _logger.LogWarning("Warning! UserService MUST notify AuthService and ApiGateway to recache information for user {user.Id}, but this feature is not yet implemented!", user.Id);
+
+
+            var mailRequest = new SendMailRequest()
+            {
+                Body = "Your password has been reset",
+                ToAddress = user.Email,
+                Subject = "Password reset",
+                IsHtml = false,
+                IsDummy = true
+            };
+            var response = await SendEmail(mailRequest);
+            _logger.LogDebug("Replying with success");
+            return new CompletePasswordResetResponse
+            {
+                IsSuccess = true
+            };
+        }
+        _logger.LogWarning("Warning! UserService MUST notify AuthService and ApiGateway to recache information for user {user.Id}, but this feature is not yet implemented!", user.Id);
+        throw new Exception("Failed to recache user information");
     }
 
     public async Task<CompleteRegistrationResponse> CompleteRegistration(CompleteRegistrationRequest request)
@@ -422,7 +480,15 @@ public class AccountService(IUnitOfWork unitOfWork, ILogger<AccountService> logg
             transaction.SaveAndCommit();
             _logger.LogDebug("Updated reset code {resetCode.Id} for user {user.Id}", resetCode.Id, user.Id);
 
-            // TODO: Send email
+            var SendMailRequest = new SendMailRequest()
+            {
+                Body = $"Your password reset code: {resetCode.Code}",
+                IsDummy = true,
+                IsHtml = false,
+                ToAddress = user.Email,
+                Subject = "Password reset code"
+            };
+            var result = SendEmail(SendMailRequest);
             _logger.LogWarning("Mail service is not implemented, skipping sending password reset email with code {resetCode.Code} to user {user.Id}", resetCode.Code, user.Id);
 
             return new ResendPasswordResetCodeResponse
@@ -473,7 +539,15 @@ public class AccountService(IUnitOfWork unitOfWork, ILogger<AccountService> logg
             transaction.SaveAndCommit();
             _logger.LogDebug("Updated registration code {regCode.Id} for user {user.Id}", regCode.Id, user.Id);
 
-            // TODO: Send email
+            var SendMailRequest = new SendMailRequest()
+            {
+                Body = $"Your registration code: {regCode.Code}",
+                IsDummy = true,
+                IsHtml = false,
+                ToAddress = user.Email,
+                Subject = "Registration code"
+            };
+            var result = SendEmail(SendMailRequest);
             _logger.LogWarning("Mail service is not implemented, skipping sending registration email with code {regCode.Code} to user {user.Id}", regCode.Code, user.Id);
 
             return new ResendRegistrationCodeResponse
@@ -527,6 +601,72 @@ public class AccountService(IUnitOfWork unitOfWork, ILogger<AccountService> logg
         {
             _logger.LogDebug("No registration code {request.Code} found for user {request.Email}", request.Code, request.Email);
             throw new InvalidCodeException($"Invalid code");
+        }
+    }
+    private async Task<SendMailResponse> SendEmail(SendMailRequest request)
+    {
+        try
+        {
+            Guid messageId = Guid.NewGuid();
+            Message<string,string> message = new Message<string, string>()
+            {
+                Key = messageId.ToString(),
+                Value = JsonConvert.SerializeObject(request),
+                Headers = new Headers()
+                {
+                    new Header("method",Encoding.UTF8.GetBytes("sendMail")),
+                    new Header("sender",Encoding.UTF8.GetBytes("mailService"))
+                }
+            };
+            if(await _kafkaService.Produce(Environment.GetEnvironmentVariable("MAIL_REQUEST_TOPIC"),message,Environment.GetEnvironmentVariable("MAIL_RESPONSE_TOPIC")))
+            {
+                _logger.LogDebug("Message sent :{messageId}",messageId.ToString());
+                while (!_kafkaService.IsMessageRecieved(messageId.ToString()))
+                {
+                    Thread.Sleep(200);
+                }
+                _logger.LogDebug("Message recieved :{messageId}",messageId.ToString());
+                return _kafkaService.GetMessage<SendMailResponse>(messageId.ToString(),Environment.GetEnvironmentVariable("MAIL_RESPONSE_TOPIC"));
+            }
+            throw new ConsumerException("Message not recieved");
+        }
+        catch (Exception e)
+        {
+            _logger.LogError("Failed sending email. {e}", e);
+            throw;
+        }
+    }
+    private async Task<RecacheUserResponse> RecacheInfo(RecacheUserRequest request)
+    {
+        try
+        {
+            Guid messageId = Guid.NewGuid();
+            Message<string,string> message = new Message<string, string>()
+            {
+                Key = messageId.ToString(),
+                Value = JsonConvert.SerializeObject(request),
+                Headers = new Headers()
+                {
+                    new Header("method",Encoding.UTF8.GetBytes("recacheUser")),
+                    new Header("sender",Encoding.UTF8.GetBytes("authService"))
+                }
+            };
+            if(await _kafkaService.Produce(Environment.GetEnvironmentVariable("DATA_CACHE_REQUEST_TOPIC"),message,Environment.GetEnvironmentVariable("DATA_CACHE_RESPONSE_TOPIC")))
+            {
+                _logger.LogDebug("Message sent :{messageId}",messageId.ToString());
+                while (!_kafkaService.IsMessageRecieved(messageId.ToString()))
+                {
+                    Thread.Sleep(200);
+                }
+                _logger.LogDebug("Message recieved :{messageId}",messageId.ToString());
+                return _kafkaService.GetMessage<RecacheUserResponse>(messageId.ToString(),Environment.GetEnvironmentVariable("DATA_CACHE_RESPONSE_TOPIC"));
+            }
+            throw new ConsumerException("Message not recieved");
+        }
+        catch (Exception e)
+        {
+            _logger.LogError("Failed sending recache. {e}", e);
+            throw;
         }
     }
 }

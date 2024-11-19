@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using TourService.Database.Models;
+using EntertaimentService.Database.Models;
+using EntertaimentService.Models.DTO;
 using TourService.Models.DTO;
 
 namespace TourService.Utils.Mappers
@@ -12,7 +13,7 @@ namespace TourService.Utils.Mappers
     {
         public TourProfile()
         {
-            CreateMap<Tour, TourDto>()
+            CreateMap<Entertaiment, EntertaimentDto>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
@@ -24,7 +25,7 @@ namespace TourService.Utils.Mappers
                 .ForMember(dest => dest.IsActive, opt => opt.MapFrom(src => src.IsActive));
 
 
-            CreateProjection<Tour, TourDto>()
+            CreateProjection<Entertaiment, EntertaimentDto>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))

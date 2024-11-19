@@ -2,7 +2,7 @@ using ApiGatewayService.Services.UserService.Account;
 using Microsoft.AspNetCore.Mvc;
 using TourService.KafkaException;
 using ApiGatewayService.Models.UserService.Account.Requests;
-
+using UserService.Models.Account.Requests;
 // TODO: add GetUser and GetUsernameAndAvatar
 namespace ApiGatewayService.Controllers.UserService
 {

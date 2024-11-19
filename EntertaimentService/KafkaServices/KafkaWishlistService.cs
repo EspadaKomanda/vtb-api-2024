@@ -5,19 +5,22 @@ using System.Text;
 using System.Threading.Tasks;
 using Confluent.Kafka;
 using Newtonsoft.Json;
-using TourService.Kafka;
-using TourService.Kafka.Utils;
-using TourService.KafkaException;
-using TourService.KafkaException.ConsumerException;
-using TourService.Models.Wishlist.Requests;
-using TourService.Models.Wishlist.Responses;
+using EntertaimentService.Kafka;
+using EntertaimentService.Kafka.Utils;
+using EntertaimentService.KafkaException;
+using EntertaimentService.KafkaException.ConsumerException;
+using EntertaimentService.Models.Wishlist.Requests;
+using EntertaimentService.Models.Wishlist.Responses;
 using TourService.Services.WishlistService;
-using WishListService.Models.Wishlist.Responses;
+using EntertaimentService.Services.WishlistService;
+using TourService.Kafka;
 
 namespace TourService.KafkaServices
 {
     public class KafkaWishlistService : KafkaService
     {
+
+        //FIXME: If mykafkaException i have to reconfigure the producer
         private readonly string _wishlistRequestTopic = Environment.GetEnvironmentVariable("WHISHLIST_REQUEST_TOPIC") ?? "wishlistRequestTopic";
         private readonly string _wishlistResponseTopic = Environment.GetEnvironmentVariable("WHISHLIST_RESPONSE_TOPIC") ?? "wishlistResponseTopic"; 
         private readonly IWishlistService _wishlistService;
@@ -48,47 +51,43 @@ namespace TourService.KafkaServices
                         var methodString = Encoding.UTF8.GetString(headerBytes.GetValueBytes());
                         switch (methodString)
                         {
-                            case "wishlistTour":
+                            case "wishlistEntertaiment":
                                 try
                                 {
-                                    var request = JsonConvert.DeserializeObject<WishlistTourRequest>(consumeResult.Message.Value) ?? throw new NullReferenceException("result is null");
+                                    var request = JsonConvert.DeserializeObject<WishlistEntertaimentRequest>(consumeResult.Message.Value) ?? throw new NullReferenceException("result is null");
                                     if(base.IsValid(request))
                                     {
                                         if(await base.Produce(_wishlistResponseTopic,new Message<string, string>()
                                         {
                                             Key = consumeResult.Message.Key,
-                                            Value = JsonConvert.SerializeObject(new WishlistTourResponse() 
+                                            Value = JsonConvert.SerializeObject(new WishlistEntertaimentResponse() 
                                             {
-                                                IsSuccess = await _wishlistService.AddTourToWishlist(request)
+                                                IsSuccess = await _wishlistService.AddEntertaimentToWishlist(request)
                                             }),
                                             Headers = [
-                                                new Header("method",Encoding.UTF8.GetBytes("wishlistTour")),
-                                                new Header("sender",Encoding.UTF8.GetBytes("tourService"))
+                                                new Header("method",Encoding.UTF8.GetBytes("wishlistEntertaiment")),
+                                                new Header("sender",Encoding.UTF8.GetBytes("entertaimentService"))
                                             ]
                                         }))
                                         {
 
                                             _logger.LogInformation("Successfully sent message {Key}",consumeResult.Message.Key);
                                             _consumer.Commit(consumeResult);
+                                            break;
                                         }
                                     }
                                     _logger.LogError("Request validation error");
-                                    throw new RequestValidationException("Request validation error");
+                                    
                                 }
                                 catch (Exception e)
                                 {
-                                    if(e is MyKafkaException)
-                                    {
-                                        _logger.LogError(e,"Error sending message");
-                                        throw;
-                                    }
-                                     _ = await base.Produce(_wishlistResponseTopic, new Message<string, string>()
+                                    _ = await base.Produce(_wishlistResponseTopic, new Message<string, string>()
                                     {
                                         Key = consumeResult.Message.Key,
                                         Value = JsonConvert.SerializeObject(new MessageResponse(){ Message = e.Message}),
                                         Headers = [
-                                            new Header("method", Encoding.UTF8.GetBytes("wishlistTour")), 
-                                            new Header("sender", Encoding.UTF8.GetBytes("tourService")), 
+                                            new Header("method", Encoding.UTF8.GetBytes("wishlistEntertaiment")), 
+                                            new Header("sender", Encoding.UTF8.GetBytes("entertaimentService")), 
                                             new Header("error", Encoding.UTF8.GetBytes(e.Message))
                                         ]
                                     });
@@ -97,10 +96,10 @@ namespace TourService.KafkaServices
                                 }
 
                                 break;
-                            case "getWishlistedTours":
+                            case "getWishlistedEntertaiments":
                                 try
                                 {
-                                    var result = JsonConvert.DeserializeObject<GetWishlistedToursRequest>(consumeResult.Message.Value) ?? throw new NullReferenceException("result is null");
+                                    var result = JsonConvert.DeserializeObject<GetWishlistedEntertaimentsRequest>(consumeResult.Message.Value) ?? throw new NullReferenceException("result is null");
                                     if(base.IsValid(result))
                                     {
                                         if(await base.Produce(_wishlistResponseTopic,new Message<string, string>()
@@ -110,33 +109,29 @@ namespace TourService.KafkaServices
                                                 _wishlistService.GetWishlists(result)
                                                 ),
                                             Headers = [
-                                                new Header("method",Encoding.UTF8.GetBytes("getWishlistedTours")),
-                                                new Header("sender",Encoding.UTF8.GetBytes("tourService"))
+                                                new Header("method",Encoding.UTF8.GetBytes("getWishlistedEntertaiments")),
+                                                new Header("sender",Encoding.UTF8.GetBytes("entertaimentService"))
                                             ]
                                         }))
                                         {
 
                                             _logger.LogInformation("Successfully sent message {Key}",consumeResult.Message.Key);
                                             _consumer.Commit(consumeResult);
+                                            break;
                                         }
                                     }
                                     _logger.LogError("Request validation error");
-                                    throw new RequestValidationException("Invalid request");
+                                   
                                 }
                                 catch (Exception e)
                                 {
-                                    if(e is MyKafkaException)
-                                    {
-                                        _logger.LogError(e,"Error sending message");
-                                        throw;
-                                    }
-                                     _ = await base.Produce(_wishlistResponseTopic, new Message<string, string>()
+                                    _ = await base.Produce(_wishlistResponseTopic, new Message<string, string>()
                                     {
                                         Key = consumeResult.Message.Key,
                                         Value = JsonConvert.SerializeObject(new MessageResponse(){ Message = e.Message}),
                                         Headers = [
-                                            new Header("method", Encoding.UTF8.GetBytes("getWishlistedTours")), 
-                                            new Header("sender", Encoding.UTF8.GetBytes("tourService")), 
+                                            new Header("method", Encoding.UTF8.GetBytes("getWishlistedEntertaiments")), 
+                                            new Header("sender", Encoding.UTF8.GetBytes("entertaimentService")), 
                                             new Header("error", Encoding.UTF8.GetBytes(e.Message))
                                         ]
                                     });
@@ -144,47 +139,43 @@ namespace TourService.KafkaServices
                                     _logger.LogError(e, "Error sending message");
                                 }
                                 break;
-                            case "unwishlistTour":
+                            case "unwishlistEntertaiment":
                                 try
                                 {
-                                    var result = JsonConvert.DeserializeObject<UnwishlistTourRequest>(consumeResult.Message.Value) ?? throw new NullReferenceException("result is null");
+                                    var result = JsonConvert.DeserializeObject<UnwishlistEntertaimentRequest>(consumeResult.Message.Value) ?? throw new NullReferenceException("result is null");
                                     if(base.IsValid(result))
                                     {
                                         if(await base.Produce(_wishlistResponseTopic,new Message<string, string>()
                                         {
                                             Key = consumeResult.Message.Key,
                                             Value = JsonConvert.SerializeObject(
-                                                new UnwishlistTourResponse(){ 
-                                                    IsSuccess = _wishlistService.UnwishlistTour(result)
+                                                new UnwishlistEntertaimentResponse(){ 
+                                                    IsSuccess = _wishlistService.UnwishlistEntertaiment(result)
                                                 }),
                                             Headers = [
-                                                new Header("method",Encoding.UTF8.GetBytes("unwishlistTour")),
-                                                new Header("sender",Encoding.UTF8.GetBytes("tourService"))
+                                                new Header("method",Encoding.UTF8.GetBytes("unwishlistEntertaiment")),
+                                                new Header("sender",Encoding.UTF8.GetBytes("entertaimentService"))
                                             ]
                                         }))
                                         {
 
                                             _logger.LogInformation("Successfully sent message {Key}",consumeResult.Message.Key);
                                             _consumer.Commit(consumeResult);
+                                            break;
                                         }
                                     }
                                     _logger.LogError("Request validation error");
-                                    throw new RequestValidationException("Invalid request");
+                                    
                                 }
                                 catch (Exception e)
                                 {
-                                    if(e is MyKafkaException)
-                                    {
-                                        _logger.LogError(e,"Error sending message");
-                                        throw;
-                                    }
-                                     _ = await base.Produce(_wishlistResponseTopic, new Message<string, string>()
+                                    _ = await base.Produce(_wishlistResponseTopic, new Message<string, string>()
                                     {
                                         Key = consumeResult.Message.Key,
                                         Value = JsonConvert.SerializeObject(new MessageResponse(){ Message = e.Message}),
                                         Headers = [
-                                            new Header("method", Encoding.UTF8.GetBytes("unwishlistTour")), 
-                                            new Header("sender", Encoding.UTF8.GetBytes("tourService")), 
+                                            new Header("method", Encoding.UTF8.GetBytes("unwishlistEntertaiment")), 
+                                            new Header("sender", Encoding.UTF8.GetBytes("entertaimentService")), 
                                             new Header("error", Encoding.UTF8.GetBytes(e.Message))
                                         ]
                                     });
@@ -195,7 +186,7 @@ namespace TourService.KafkaServices
                             default: 
                                 _consumer.Commit(consumeResult);
                                 
-                                throw new ConsumerRecievedMessageInvalidException("Invalid message received");
+                                break;
                         }
 
                     }
@@ -203,19 +194,13 @@ namespace TourService.KafkaServices
             }
             catch(Exception ex)
             {
-                if(_consumer != null)
-                { 
-                    _consumer.Dispose();
-                }
                 if (ex is MyKafkaException)
                 {
                     _logger.LogError(ex,"Consumer error");
-                    throw new ConsumerException("Consumer error ",ex);
                 }
                 else
                 {
                     _logger.LogError(ex,"Unhandled error");
-                    throw;
                 }
             }
         }

@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Amazon.S3.Model;
 using EntertaimentService.Models.Category;
 using EntertaimentService.Models.PaymentMethod;
+using TourService.Models.Category;
+using TourService.Models.PaymentMethod;
 
 namespace EntertaimentService.Models.DTO
 {

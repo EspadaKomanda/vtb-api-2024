@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using TourService.Database.Models;
+using EntertaimentService.Database.Models;
+using EntertaimentService.Models.Benefits;
 using TourService.Models.Benefits;
 
 namespace TourService.Utils.Mappers
