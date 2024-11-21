@@ -179,7 +179,7 @@ namespace TourService.Kafka
                 if (IsTopicExists && IsTopicPendingMessageBusExist( responseTopic))
                 {
                     var deliveryResult = await _producer.ProduceAsync(
-                    new TopicPartition(topicName, new Partition(0)));
+                    new TopicPartition(topicName, new Partition(0)), message);
                     if (deliveryResult.Status == PersistenceStatus.Persisted)
                     {
                         _logger.LogInformation("Message delivery status: Persisted {Result}", deliveryResult.Value);
@@ -202,7 +202,7 @@ namespace TourService.Kafka
                 if (IsTopicCreated && IsTopicPendingMessageBusExist( responseTopic))
                 {
                     var deliveryResult = await _producer.ProduceAsync(
-                    new TopicPartition(topicName, new Partition(0)));
+                    new TopicPartition(topicName, new Partition(0)) , message);
                     if (deliveryResult.Status == PersistenceStatus.Persisted)
                     {
                         _logger.LogInformation("Message delivery status: Persisted {Result}", deliveryResult.Value);

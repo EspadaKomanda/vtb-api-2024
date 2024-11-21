@@ -6088,11 +6088,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/ereshkigal/hakathon/vtb/vtb-api-2024/PromoService/PromoService.csproj",
+      "projectUniqueName": "/home/ereshkigal/kafkazhivi/vtb-api-2024/PromoService/PromoService.csproj",
       "projectName": "PromoService",
-      "projectPath": "/home/ereshkigal/hakathon/vtb/vtb-api-2024/PromoService/PromoService.csproj",
+      "projectPath": "/home/ereshkigal/kafkazhivi/vtb-api-2024/PromoService/PromoService.csproj",
       "packagesPath": "/home/ereshkigal/.nuget/packages/",
-      "outputPath": "/home/ereshkigal/hakathon/vtb/vtb-api-2024/PromoService/obj/",
+      "outputPath": "/home/ereshkigal/kafkazhivi/vtb-api-2024/PromoService/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/ereshkigal/.nuget/NuGet/NuGet.Config"

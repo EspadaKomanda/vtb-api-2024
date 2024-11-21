@@ -82,7 +82,7 @@ public abstract class KafkaService(ILogger<KafkaService> logger, IProducer<strin
             if (IsTopicExists)
             {
                 var deliveryResult = await _producer.ProduceAsync(
-                    new TopicPartition(topicName, new Partition(0)));
+                    new TopicPartition(topicName, new Partition(0)), message);
                 if (deliveryResult.Status == PersistenceStatus.Persisted)
                 {
     
@@ -99,7 +99,7 @@ public abstract class KafkaService(ILogger<KafkaService> logger, IProducer<strin
             if (IsTopicCreated)
             {
                 var deliveryResult = await _producer.ProduceAsync(
-                    new TopicPartition(topicName, new Partition(0)));
+                    new TopicPartition(topicName, new Partition(0)), message);
                 if (deliveryResult.Status == PersistenceStatus.Persisted)
                 {
                     _logger.LogInformation("Message delivery status: Persisted {Result}", deliveryResult.Value);

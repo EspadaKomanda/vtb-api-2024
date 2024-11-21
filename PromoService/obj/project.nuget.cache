@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "3/069o9DJq6ihtKYjrPLM3ZE1talLMzPITrTTvRL3zCcKpnosUNfsqP0EfUqzwasvixawwNbimppih67rD+CzA==",
+  "dgSpecHash": "j3sDJ9v6EEbB4RdjSNsryTbAq6qGhjW91ykXmUvriBYzVdoUmXbtZKeuNTNn46hWQ6tS0TrngDeZ4UR+TSDLMA==",
   "success": true,
-  "projectFilePath": "/home/ereshkigal/hakathon/vtb/vtb-api-2024/PromoService/PromoService.csproj",
+  "projectFilePath": "/home/ereshkigal/kafkazhivi/vtb-api-2024/PromoService/PromoService.csproj",
   "expectedPackageFiles": [
     "/home/ereshkigal/.nuget/packages/confluent.kafka/2.4.0/confluent.kafka.2.4.0.nupkg.sha512",
     "/home/ereshkigal/.nuget/packages/confluent.schemaregistry/2.4.0/confluent.schemaregistry.2.4.0.nupkg.sha512",
