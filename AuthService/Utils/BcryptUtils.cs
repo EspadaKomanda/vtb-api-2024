@@ -4,11 +4,9 @@ public static class BcryptUtils
 {
     public static string HashPassword(string password)
     {
-        // Generate a salt
-        string salt = BCrypt.Net.BCrypt.GenerateSalt();
-
+        
         // Hash the password with the salt and a work factor of 10
-        string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password, salt);
+        string hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
 
         return hashedPassword;
     }

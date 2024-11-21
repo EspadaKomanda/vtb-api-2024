@@ -47,6 +47,7 @@ public class AccountService(IUnitOfWork unitOfWork, ILogger<AccountService> logg
         {
             UserId = user.Id,
             Email = user.Email,
+            Username = user.Username,
             Password = user.Password,
             Salt = user.Salt
         };
@@ -145,19 +146,28 @@ public class AccountService(IUnitOfWork unitOfWork, ILogger<AccountService> logg
 
         using var transaction = _uow.BeginTransaction();
         
+        _logger.LogDebug("Inserting user {user.Id} with email {request.Email} and username {request.Username}",  request.Email, request.Username);
         // User creation
         user = new User
         {
             Email = request.Email,
             Username = request.Username,
-            Password = request.Password,
+            Password = BcryptUtils.HashPassword(request.Password),
             Salt = Guid.NewGuid().ToString()
         };
-
         try
         {
             await _uow.Users.AddAsync(user);
-            _logger.LogDebug("Inserted user {user.Id} with email {request.Email} and username {request.Username}", user.Id, request.Email, request.Username);
+            if(_uow.Save()>=0)
+            {
+                _logger.LogDebug("Inserted user {user.Id} with email {request.Email} and username {request.Username}", user.Id, request.Email, request.Username);
+       
+            }
+            else
+            {
+
+                throw new Exception("Error adding user!");
+            }
         }
         catch (Exception e)
         {
