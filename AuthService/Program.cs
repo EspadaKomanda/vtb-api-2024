@@ -52,7 +52,17 @@ builder.Services.AddScoped<IAccessDataCacheService, AccessDataCacheService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddSingleton<KafkaTopicManager>();
-
+builder.Services.AddSingleton<KafkaRequestService>( sp => new KafkaRequestService(
+    sp.GetRequiredService<IProducer<string,string>>(),
+    sp.GetRequiredService<ILogger<KafkaRequestService>>(),
+    sp.GetRequiredService<KafkaTopicManager>(),
+    new List<string>(){
+        "user-service-accounts-responses",
+    },
+    new List<string>(){
+        "user-service-accounts-requests",
+    }
+));
 builder.Services.AddSingleton<KafkaAccesDataCacheService>()
                 .AddSingleton<KafkaAuthService>();
 var app = builder.Build();
@@ -67,5 +77,12 @@ Thread thread1 = new(async () => {
     var kafkaAuthService = app.Services.GetRequiredService<KafkaAuthService>();
     await kafkaAuthService.Consume();
 });
+Thread thread2 = new(x => {
+   var KafkaRequestService = app.Services.GetRequiredService<KafkaRequestService>();
+   KafkaRequestService.BeginRecieving(new List<string>(){
+    "user-service-accounts-responses"
+   });
+});
 thread1.Start();
+thread2.Start();
 app.Run();

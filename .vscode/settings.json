@@ -9,5 +9,6 @@
             "database": "tourdb",
             "username": "postgres"
         }
-    ]
+    ],
+    "dotnet.defaultSolution": "OpenApiService.sln"
 }
