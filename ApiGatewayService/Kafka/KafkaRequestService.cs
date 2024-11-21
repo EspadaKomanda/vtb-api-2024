@@ -178,7 +178,8 @@ namespace TourService.Kafka
                 bool IsTopicExists = IsTopicAvailable(topicName);
                 if (IsTopicExists && IsTopicPendingMessageBusExist( responseTopic))
                 {
-                    var deliveryResult = await _producer.ProduceAsync(topicName, message);
+                    var deliveryResult = await _producer.ProduceAsync(
+                    new TopicPartition(topicName, new Partition(0));
                     if (deliveryResult.Status == PersistenceStatus.Persisted)
                     {
                         _logger.LogInformation("Message delivery status: Persisted {Result}", deliveryResult.Value);
@@ -200,7 +201,8 @@ namespace TourService.Kafka
                 bool IsTopicCreated = _kafkaTopicManager.CreateTopic(topicName, Convert.ToInt32(Environment.GetEnvironmentVariable("PARTITIONS_STANDART")), Convert.ToInt16(Environment.GetEnvironmentVariable("REPLICATION_FACTOR_STANDART")));
                 if (IsTopicCreated && IsTopicPendingMessageBusExist( responseTopic))
                 {
-                    var deliveryResult = await _producer.ProduceAsync(topicName, message);
+                    var deliveryResult = await _producer.ProduceAsync(
+                    new TopicPartition(topicName, new Partition(0));
                     if (deliveryResult.Status == PersistenceStatus.Persisted)
                     {
                         _logger.LogInformation("Message delivery status: Persisted {Result}", deliveryResult.Value);
@@ -235,7 +237,10 @@ namespace TourService.Kafka
         private async Task Consume(IConsumer<string,string> localConsumer,string topicName)
         {   
             topicCount++;
-            localConsumer.Subscribe(topicName);
+             var partitions = new List<TopicPartition>();
+                partitions.Add(new TopicPartition(topicName, 0));
+
+            localConsumer.Assign(partitions);
             while (true)
             {
                 ConsumeResult<string, string> result = localConsumer.Consume();
